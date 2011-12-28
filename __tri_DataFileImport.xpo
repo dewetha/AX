@@ -1,0 +1,1988 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: DBE
+
+; Microsoft Dynamics AX Enumtype : triFieldSeparator unloaded
+; --------------------------------------------------------------------------------
+  ENUMTYPEVERSION 1
+  
+  ENUMTYPE #triFieldSeparator
+    Id 30033
+    PROPERTIES
+      Name                #triFieldSeparator
+      Label               #Field Separator
+      Help                #select type of separator for fields in the file
+      UseEnumValue        #Yes
+    ENDPROPERTIES
+    
+    TYPEELEMENTS
+      #Comma
+      PROPERTIES
+        Name                #Comma
+        Label               #Comma
+        EnumValue           #0
+      ENDPROPERTIES
+      
+      #Tab
+      PROPERTIES
+        Name                #Tab
+        Label               #Tab
+        EnumValue           #1
+      ENDPROPERTIES
+      
+    ENDTYPEELEMENTS
+  ENDENUMTYPE
+  
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: trbTextFileImport unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #trbTextFileImport
+    Id 30089
+    PROPERTIES
+      Name                #trbTextFileImport
+      Extends             #RunBaseBatch
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #canGoBatchJournal
+        #public boolean canGoBatchJournal()
+        #{
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class trbTextFileImport extends RunBaseBatch
+        #{
+        #   //variables
+        #    FilePath    inboundPath;
+        #    FilePath    backupPath;
+        #    FilePath    errorPath;
+        #    Boolean     batchFiles;
+        #    Boolean     hasHeader;
+        #    common      tableRecord;
+        #    int         importedRecs;
+        #    int         errorRecs;
+        #    int         allRecs;
+        #    int         skippedRecs;
+        #    Filename    inboundFile;
+        #
+        #    triFieldSeparator   fieldSeparator;
+        #    str                 delimiterValue;
+        #    StartDateTime       processStart;
+        #    StartDateTime       processEnd;
+        #
+        #    // Dialog fields
+        #    DialogField     dlgInboundPath;
+        #    DialogField     dlgBackupPath;
+        #    DialogField     dlgErrorPath;
+        #    DialogField     dlgBatchFiles;
+        #    DialogField     dlgHasHeader;
+        #    DialogField     dlgInboundFile;
+        #    DialogField     dlgfieldSeparator;
+        #
+        #
+        #    #define.CurrentVersion(2)
+        #    #define.Version1(2)
+        #    #localmacro.CurrentList
+        #        InboundPath,
+        #        BackupPath,
+        #        ErrorPath,
+        #        batchFiles,
+        #        hasHeader,
+        #        inboundFile,
+        #        FieldSeparator
+        #    #endmacro
+        #
+        #    #File
+        #}
+      ENDSOURCE
+      SOURCE #close
+        #void close()
+        #{
+        #    ;
+        #    processEnd = DateTimeUtil::getSystemDateTime();
+        #    info(this.description());
+        #    info(strfmt('process started %1 || stopped at %2',processStart,processend));
+        #    Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
+        #
+        #}
+      ENDSOURCE
+      SOURCE #description
+        #ClassDescription description()
+        #{
+        #    return 'Import process';
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.description());
+        #    dialog.addTabPage("Import Info");
+        #
+        #
+        #    dialog.addGroup('File Locations Settings');
+        #    dlgInboundFile  = dialog.addFieldValue(typeID(FilenameOpen),inboundFile,'Inbound File','Location of file to be Processed');
+        #    dlgInboundPath  = dialog.addFieldValue(typeID(FilePath),inboundPath,'Inbound Folder','Location of file(s) to be Processed');
+        #    dlgBackupPath   = dialog.addFieldValue(typeID(FilePath),backupPath,'Backup Folder','location where processed file(s) are moved to');
+        #    dlgErrorPath    = dialog.addFieldValue(typeID(FilePath),errorPath,'Error Folder','Location to hold file generated from errors');
+        #
+        #
+        #
+        #    dialog.addGroup('Settings');
+        #    dlgBatchFiles   = dialog.addFieldValue(typeID(NoYesId),batchFiles,'Batch Files','Process all files in the inbound directory');
+        #    dlgHasHeader    = dialog.addFieldValue(typeID(NoYesId),hasHeader,'File(s) have Header','Indicates a column definition row to be skipped.');
+        #    dlgfieldSeparator = dialog.addFieldValue(typeID(triFieldSeparator),fieldSeparator,'Field Separator', 'select type of separator');
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #
+        #    inboundPath     = dlgInboundPath.value();
+        #    backupPath      = dlgBackupPath.value();
+        #    errorPath       = dlgErrorPath.value();
+        #    batchFiles      = dlgBatchFiles.value();
+        #    hasHeader       = dlgHasHeader.value();
+        #    inboundFile     = dlgInboundFile.value();
+        #    fieldSeparator  = dlgfieldSeparator.value();
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #movefile
+        #/// <summary>
+        #/// this methods moves a file from one location to another.
+        #/// </summary>
+        #/// <param name="fileName">
+        #/// Name of teh file to be moved
+        #/// </param>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #void movefile(FileName fileName)
+        #{
+        #    // move file from inbound directory to the processed directory
+        #    FilePath            existFile;
+        #    FilePath            newFile;
+        #    FileIOPermission    perm;
+        #    ;
+        #
+        #    existFile = InboundPath + #FilePathDelimiter + fileName;
+        #    newFile = BackupPath + #FilePathDelimiter + fileName;
+        #
+        #
+        #
+        #    perm = new FileIOPermission(existFile,#io_write) ;
+        #    perm.assert();
+        #
+        #    if ( strlen(fileName) > 5)
+        #    {
+        #
+        #        winapi::copyFile( existFile,newFile,true);
+        #        winApi::deleteFile(existFile);
+        #
+        #    }
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #private void new()
+        #{
+        #    super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #parmAllRecs
+        #public Int parmAllRecs(Int _allRecs = allRecs)
+        #{
+        #    ;
+        #    allRecs = _allRecs;
+        #
+        #    return allRecs;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmBackupPath
+        #public Filepath parmBackupPath(Filepath _backupPath = backupPath)
+        #{
+        #    ;
+        #    backupPath = _backupPath;
+        #
+        #    return backupPath;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmBatchFiles
+        #public Boolean parmBatchFiles(Boolean _batchFiles = batchFiles)
+        #{
+        #    ;
+        #    batchFiles = _batchFiles;
+        #
+        #    return batchFiles;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmErrorPath
+        #public Filepath parmErrorPath(Filepath _errorPath = errorPath)
+        #{
+        #    ;
+        #    errorPath = _errorPath;
+        #
+        #    return errorPath;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmErrorRecs
+        #public Int parmErrorRecs(Int _errorRecs = errorRecs)
+        #{
+        #    ;
+        #    errorRecs = _errorRecs;
+        #
+        #    return errorRecs;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmHasHeader
+        #public Boolean parmHasHeader(Boolean _hasHeader = hasHeader)
+        #{
+        #    ;
+        #    hasHeader = _hasHeader;
+        #
+        #    return hasHeader;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmImportedRecs
+        #public Int parmImportedRecs(Int _importedRecs = importedRecs)
+        #{
+        #    ;
+        #    importedRecs = _importedRecs;
+        #
+        #    return importedRecs;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmInboundFile
+        #public Filename parmInboundFile(Filename _inboundFile = inboundFile)
+        #{
+        #    ;
+        #    inboundFile = _inboundFile;
+        #
+        #    return inboundFile;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmInboundPath
+        #public Filepath parmInboundPath(Filepath _inboundPath = inboundPath)
+        #{
+        #    ;
+        #    inboundPath = _inboundPath;
+        #
+        #    return inboundPath;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmSkippedRecs
+        #public Int parmSkippedRecs(Int _skippedRecs = skippedRecs)
+        #{
+        #    ;
+        #    skippedRecs = _skippedRecs;
+        #
+        #    return skippedRecs;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmTableRecord
+        #public Common parmTableRecord(Common _tableRecord = tableRecord)
+        #{
+        #    ;
+        #    tableRecord = _tableRecord;
+        #
+        #    return tableRecord;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #processData
+        #/// <summary>
+        #/// This is the stub for the class that inherits it to use for data processing
+        #/// </summary>
+        #/// <param name="inRecord">
+        #/// contains a single row of data from a text file
+        #/// </param>
+        #/// <returns>
+        #/// true if a record is accepted for processing. return flase if a record is intentionally
+        #/// skipped by buisness logic. any errors should be thrown to calling method
+        #/// </returns>
+        #/// <remarks>
+        #/// called from method processFile
+        #/// </remarks>
+        #boolean processData(Container inRecord)
+        #{
+        #    boolean ret;
+        #
+        #    return ret;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #processFile
+        #/// <summary>
+        #///
+        #/// </summary>
+        #/// <param name="filename">
+        #///  a reference to the the file
+        #/// </param>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #///
+        #/// </exception>
+        #void processFile(filepath filename)
+        #{
+        #    FileIoPermission    perm;
+        #    CommaIo             infile;
+        #    container           inRecord;
+        #    boolean             isFirstRow = true;
+        #    ;
+        #
+        #
+        #    perm = new FileIoPermission(filename, #io_read);
+        #    perm.assert();
+        #
+        #    infile = new CommaIo(filename,#io_read);
+        #
+        #    infile.inFieldDelimiter(delimiterValue);
+        #
+        #    if (!infile|| infile.status() != IO_Status::Ok)
+        #        throw error (strFmt("@SYS55831",filename));
+        #
+        #    while (infile.status() == IO_STATUS::Ok)
+        #    {
+        #        inRecord = infile.read();
+        #
+        #
+        #        if(isFirstRow)
+        #        {
+        #            if(hasHeader)// skip line
+        #            {
+        #                this.writeError(inRecord,fileName);
+        #                inRecord =  connull();
+        #            }
+        #            isFirstRow = false;
+        #        }
+        #        if (inRecord == connull()) // skip blank lines
+        #            continue;
+        #
+        #        allRecs = allRecs + 1;
+        #        try
+        #        {
+        #            if(this.ProcessData(inRecord))
+        #            {
+        #                importedRecs = importedRecs + 1;
+        #            }
+        #            else
+        #            {
+        #                skippedRecs = skippedRecs + 1;
+        #            }
+        #        }
+        #        catch (Exception::Error)
+        #        {
+        #            this.writeError(inRecord,filename);
+        #            errorRecs = errorRecs + 1;
+        #        }
+        #
+        #        inRecord =  connull();
+        #    }
+        #
+        #    this.close();
+        #
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    int                 hdl; // file handle
+        #    FileName            fileName;
+        #    FileIoPermission    perm;
+        #    filepath            existFullPath;
+        #    ;
+        #
+        #
+        #    super();
+        #
+        #
+        #    perm = new FileIoPermission(filename, #io_read);
+        #    perm.assert();
+        #
+        #    if (! this.validate())
+        #        throw error("");
+        #
+        #    switch (fieldSeparator)
+        #    {
+        #        case triFieldSeparator::Tab :
+        #            delimiterValue = #delimiterTab;
+        #            break;
+        #        default :
+        #            delimiterValue = ',';
+        #    }
+        #
+        #
+        #
+        #    processStart = DateTimeUtil::getSystemDateTime();
+        #    //setPrefix(this.description() + strfmt( " started at: %1",processStart));
+        #    try
+        #    {
+        #        if(batchFiles)
+        #        {
+        #            existFullPath = InboundPath + #FilePathDelimiter + #AllFilesName + #AllFilesExt;
+        #            [hdl, fileName ] = winapi::findFirstFile(existFullPath);
+        #
+        #            if(!fileName)
+        #                throw error('@PHR9178');
+        #
+        #
+        #
+        #            do
+        #            {
+        #                if ( strlen(fileName) > 5)
+        #                {
+        #                    // load data
+        #                    this.processFile(InboundPath + #FilePathDelimiter + fileName);
+        #                    this.movefile(fileName);
+        #                }
+        #                filename = WinApi::findNextFile(hdl);
+        #            }
+        #            while (fileName);
+        #
+        #            winApi::findClose(hdl);
+        #        }
+        #        else
+        #        {
+        #            this.processFile(inboundFile);
+        #        }
+        #
+        #    }
+        #    catch(Exception::Deadlock)
+        #    {
+        #        retry;
+        #    }
+        #
+        #    CodeAccessPermission::revertAssert();
+        #
+        #}
+      ENDSOURCE
+      SOURCE #runsImpersonated
+        #public boolean runsImpersonated()
+        #{
+        #    boolean ret;
+        #
+        #    ret = true;//ret = super();
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #validate
+        #/// <summary>
+        #/// validate method to be sure that all pre=process
+        #/// </summary>
+        #/// <returns>
+        #///  true if all validations are passed. fasle and will throw an error to calling code.
+        #/// </returns>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #public boolean validate()
+        #{
+        #    boolean   ok = true;
+        #    ;
+        #    //TODO add check for file directors and see if the exist
+        #
+        #
+        #    return ok;
+        #}
+      ENDSOURCE
+      SOURCE #value
+        #anytype value(Types _types, container con, int pos )
+        #{
+        #    anytype     retunValue;
+        #
+        #    ;
+        #
+        #    switch(_types )
+        #    {
+        #        case Types::Guid :
+        #            retunValue = str2guid(conpeek(con,pos));
+        #            break;
+        #        case Types::Int64 :
+        #            retunValue = str2int64(conpeek(con,pos));
+        #            break;
+        #        case Types::Date :
+        #            retunValue =  str2Date(conpeek(con,pos),321);
+        #            break;
+        #        case Types::Integer :
+        #            retunValue = str2int(conpeek(con,pos));
+        #        case Types::Real :
+        #            retunValue = str2num(conpeek(con,pos));
+        #        case Types::UtcDateTime :
+        #            retunValue =  str2datetime(conpeek(con,pos),321);
+        #
+        #        default :
+        #            retunValue = conpeek(con,pos);
+        #            break;
+        #
+        #    }
+        #
+        #    return retunValue;
+        #}
+      ENDSOURCE
+      SOURCE #writeError
+        #/// <summary>
+        #/// write a log of thrown errors by file being processed
+        #/// </summary>
+        #/// <param name="InRecord">
+        #/// contain a row of data that was thrown by error
+        #/// </param>
+        #/// <param name="_filename">
+        #/// the file name and path where the error happened
+        #/// </param>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #///
+        #/// </exception>
+        #
+        #void writeError(container InRecord,FileName _filename)
+        #{
+        #
+        #
+        #    TextIo              file;
+        #    FileIoPermission    perm;
+        #    ErrorMSg            txt;
+        #    FilePath            fullPathName;
+        #    Filename            fileSplitPath;
+        #    Filename            fileExt;
+        #    Filename            filename;
+        #    #define.dot('.')
+        #    ;
+        #
+        #
+        #    //if a error path has been set
+        #
+        #    [fileSplitPath, filename, fileExt] = fileNameSplit(_filename);
+        #
+        #    if(errorPath)
+        #        fullPathName = errorPath + #FilePathDelimiter + 'error_' + filename + #dot + fileExt;
+        #   // else
+        #   //     fullPathName = inboundPath + #FilePathDelimiter + 'error_' + filename + #dot + fileExt;
+        #
+        #    perm = new FileIoPermission(fullPathName , #io_append);
+        #    perm.assert();
+        #
+        #    file = new TextIo(fullPathName, #io_append);
+        #    file.outFieldDelimiter(#delimiterTab);
+        #
+        #    if (!file || file.status() != IO_Status::Ok)
+        #    {
+        #        throw error("File cannot be opened.");
+        #    }
+        #
+        #    txt =   infolog.text();
+        #    infolog.clear(0);
+        #    inRecord =  conins(inRecord,conlen(inRecord) +1,strltrim(txt));
+        #
+        #
+        #
+        #    file.writeExp(InRecord);
+        #
+        #    CodeAccessPermission::revertAssert();
+        #
+        #}
+      ENDSOURCE
+      SOURCE #construct
+        #/// <summary>
+        #/// this will construct any class that extends this class
+        #/// </summary>
+        #/// <param name="_className">
+        #///  this is the name passed in via Args from something like a menuitem parameter property
+        #/// </param>
+        #/// <returns>
+        #/// a class object
+        #/// </returns>
+        #/// <remarks>
+        #/// if nothing is called the base class will run
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #///  the class called must extend this class
+        #/// </exception>
+        #public static trbTextFileImport construct(ClassName _className = '')
+        #{
+        #    trbTextFileImport   trbTextFileImport;
+        #    classId             classId;
+        #    ;
+        #
+        #    if( _className == '')
+        #        trbTextFileImport =  new trbTextFileImport();
+        #    else
+        #    {
+        #        classId  = className2Id(_className);
+        #
+        #        if (! SysDictClass::isSuperclass(classId,  classnum(trbTextFileImport)))
+        #            {
+        #               throw error("unknow Class name");
+        #            }
+        #
+        #        trbTextFileImport = new DictClass(classId).makeObject();
+        #    }
+        #
+        #    return trbTextFileImport;
+        #
+        #}
+        #
+      ENDSOURCE
+      SOURCE #main
+        #public client server static void main(Args args)
+        #{
+        #    trbTextFileImport   fileProcess;
+        #    ClassName           className;
+        #
+        #    ;
+        #
+        #    // get the intended class to construct
+        #    if(args.parm())
+        #        classname = args.parm();
+        #
+        #    fileProcess = trbTextFileImport::construct(className);
+        #
+        #
+        #    //set any passed in buffer.
+        #    if(args.record())
+        #       fileprocess.parmTableRecord(args.record());
+        #
+        #    if( fileProcess.prompt())
+        #        fileProcess.run();
+        #
+        #}
+        #
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Path %1 does not exist</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS55831</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: trbTextFileImport_test unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #trbTextFileImport_test
+    Id 30090
+    PROPERTIES
+      Name                #trbTextFileImport_test
+      Extends             #trbTextFileImport
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class trbTextFileImport_test extends trbTextFileImport
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #description
+        #ClassDescription description()
+        #{
+        #    return 'test Import process';
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    Object ret;
+        #
+        #    ret = super();
+        #    dlgErrorPath.visible(false);
+        #/*
+        #
+        #    dialog.addTabPage("Import Info");
+        #
+        #
+        #
+        #    dialog.addGroup('File Locations Settings');
+        #    dlgInboundPath  = dialog.addFieldValue(typeID(FilePath),inboundPath,'Inbound Folder','Location of file(s) to be Processed');
+        #    dlgBackupPath   = dialog.addFieldValue(typeID(FilePath),backupPath,'Backup Folder','location where processed file(s) are moved to');
+        #    dlgErrorPath    = dialog.addFieldValue(typeID(FilePath),errorPath,'Error Folder','Location to hold file generated from errors');
+        #
+        #
+        #    dialog.addGroup('Settings');
+        #    dlgBatchFiles   = dialog.addFieldValue(typeID(NoYesId),batchFiles,'Batch Files','Process all files in the inbound directory');
+        #    dlgHasHeader    = dialog.addFieldValue(typeID(NoYesId),hasHeader,'File(s) have Header','Indicates a column definition row to be skipped.');
+        #*/
+        #    return ret;
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triTextFileImpInterface unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  INTERFACE #triTextFileImpInterface
+    Id 30099
+    PROPERTIES
+      Name                #triTextFileImpInterface
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #interface triTextFileImpInterface 
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #description
+        #ClassDescription description()
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #Object dialog()
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #processData
+        #boolean processData(container inRecord)
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triUtilDataImport unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triUtilDataImport
+    Id 30100
+    PROPERTIES
+      Name                #triUtilDataImport
+      Extends             #
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class triUtilDataImport 
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #existsEnumValue
+        #/// <summary>
+        #/// verifies if a enums value exists
+        #/// </summary>
+        #/// <param name="_enumNum">
+        #/// the integer value of the enum to check
+        #/// </param>
+        #/// <param name="_value">
+        #/// the string value to compare against enum value
+        #/// </param>
+        #/// <returns>
+        #/// boolean- true if they match. false if they don't
+        #/// </returns>
+        #/// <remarks>
+        #/// version 1.0
+        #/// this is used when a string, from some user entered text needs to be matched
+        #/// against an enums value. typical of data imports.
+        #/// </remarks>
+        #boolean existsEnumValue(int _enumNum, str _value)
+        #{
+        #    SysDictEnum dictEmun;
+        #    int         i;
+        #    boolean     ret;
+        #    ;
+        #    _value = strLRTrim(_value);
+        #
+        #    dictEmun = new SysDictEnum(_enumNum);
+        #
+        #    for (i=0; i <=  dictEmun.values(); i++ )
+        #    {
+        #       if(_value == dictEmun.index2Name(i))
+        #       {
+        #            ret = true;
+        #       }
+        #    }
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #setFieldValue
+        #static common setFieldValue(Common _common,  int _fieldNum, container _con,int _pos)
+        #{
+        #    DictTable       dTable = new DictTable(_common.TableId);
+        #    DictField       dField;
+        #    int             field;
+        #    ;
+        #
+        #
+        #    field = dTable.fieldCnt2Id(_fieldNum);
+        #    dField = dTable.fieldObject(field);
+        #    switch (dField.baseType())
+        #    {
+        #        case Types::Guid    : _common.(field) = str2guid(conpeek(_con, _pos)); break;
+        #        case Types::Int64   : _common.(field) = str2Int64(conpeek(_con, _pos)); break;
+        #        case Types::Date    : _common.(field) = str2Date(conpeek(_con, _pos),321);break;
+        #        case Types::Integer : _common.(field) = str2int(conpeek(_con, _pos));break;
+        #        case Types::String  :
+        #        default             : _common.(field) = strfmt(conpeek(_con, _pos));break;
+        #     }
+        #
+        #    return _common;
+        #}
+      ENDSOURCE
+      SOURCE #validateInventLocationId
+        #public static InventLocationId validateInventLocationId (InventLocationId inventLocationId)
+        #{
+        #    ;
+        #    if(!InventLocation::checkExist(inventLocationID ))
+        #        throw error(strfmt( "Invalid Invent Location : %1",inventLocationId ));
+        #
+        #    return InventLocation::find(inventLocationId).InventLocationId ;
+        #}
+      ENDSOURCE
+      SOURCE #validateInvetoryBatch
+        #public static InventBatchId validateInvetoryBatch(ItemId itemId,InventBatchId inventBatchId )
+        #{
+        #    //possible add check for expiry data
+        #    ;
+        #    if(!InventBatch::checkExist(itemId,inventBatchId) )
+        #        throw error(strfmt("Invalid Inventory Batch : %1 for item %2 ",inventBatchId,itemId));
+        #
+        #    return InventBatch::find(inventBatchId,itemId).inventBatchId;
+        #}
+      ENDSOURCE
+      SOURCE #validateItemID
+        #public static itemId validateItemID(itemId itemId)
+        #{
+        #
+        #    if(!InventTable::checkExist(itemId))
+        #        throw error(strfmt("Missing Item : %1",itemId));
+        #
+        #    return InventTable::find(itemId).ItemId;
+        #}
+      ENDSOURCE
+      SOURCE #validateLedgerAccount
+        #public static LedgerAccount validateLedgerAccount(LedgerAccount accountNum)
+        #{
+        #    ;
+        #    if(!LedgerTable::find(accountNum) )
+        #        throw error(strfmt("Invalid ledger account %1:",accountNum ));
+        #
+        #    return LedgerTable::find(accountNum).AccountNum;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #validateSite
+        #public static InventSiteId validateSite(InventSiteId inventSiteId)
+        #{
+        #    ;
+        #    if(!InventSite::checkExist(inventSiteId))
+        #        throw error(strfmt("invalid site Id :%1" ,inventsiteId) );
+        #
+        #    return InventSite::find(inventSiteId).SiteId;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #validateWMSlocation
+        #public static WMSLocationId validateWMSlocation(WMSLocationId WMSLocationId, InventLocationId inventLocationId )
+        #{
+        #    ;
+        #    if(!WMSLocation::exist(WMSLocationId,inventLocationId))
+        #        throw error(strfmt("invlaid location %1 for warehouse %2",WMSLocationId,inventLocationId) );
+        #
+        #    return WMSLocation::find(WMSLocationId,inventLocationId).wMSLocationId ;
+        #
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: trbTextFileImport_test unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #trbTextFileImport_test
+    Id 30090
+    PROPERTIES
+      Name                #trbTextFileImport_test
+      Extends             #trbTextFileImport
+      RunOn               #Called from
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #classDeclaration
+        #class trbTextFileImport_test extends trbTextFileImport
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #description
+        #ClassDescription description()
+        #{
+        #    return 'test Import process';
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    Object ret;
+        #
+        #    ret = super();
+        #    dlgErrorPath.visible(false);
+        #/*
+        #
+        #    dialog.addTabPage("Import Info");
+        #
+        #
+        #
+        #    dialog.addGroup('File Locations Settings');
+        #    dlgInboundPath  = dialog.addFieldValue(typeID(FilePath),inboundPath,'Inbound Folder','Location of file(s) to be Processed');
+        #    dlgBackupPath   = dialog.addFieldValue(typeID(FilePath),backupPath,'Backup Folder','location where processed file(s) are moved to');
+        #    dlgErrorPath    = dialog.addFieldValue(typeID(FilePath),errorPath,'Error Folder','Location to hold file generated from errors');
+        #
+        #
+        #    dialog.addGroup('Settings');
+        #    dlgBatchFiles   = dialog.addFieldValue(typeID(NoYesId),batchFiles,'Batch Files','Process all files in the inbound directory');
+        #    dlgHasHeader    = dialog.addFieldValue(typeID(NoYesId),hasHeader,'File(s) have Header','Indicates a column definition row to be skipped.');
+        #*/
+        #    return ret;
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: trbExcelFileImport unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #trbExcelFileImport
+    Id 30087
+    PROPERTIES
+      Name                #trbExcelFileImport
+      Extends             #RunBaseBatch
+      RunOn               #Client
+    ENDPROPERTIES
+    
+    METHODS
+      Version: 3
+      SOURCE #canGoBatch
+        #public boolean canGoBatch()
+        #{
+        #    boolean ret;
+        #
+        #    ret = true;
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #canGoBatchJournal
+        #public boolean canGoBatchJournal()
+        #{
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = 'Custom Excel Data Import';
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class trbExcelFileImport extends RunBaseBatch
+        #{
+        #    //variables
+        #    FilePath    errorPath;
+        #
+        #    int         startRow;
+        #    int         lastCol;
+        #    int         importedRecs;
+        #    int         errorRecs;
+        #    int         allRecs;
+        #    int         skippedRecs;
+        #    int         keyColumn;
+        #    int         wrkSheetNum;
+        #    Filename    inboundFile;
+        #
+        #    StartDateTime processStart;
+        #    StartDateTime processEnd;
+        #
+        #    // Dialog fields
+        #    DialogField     dlgInboundPath;
+        #    DialogField     dlgErrorPath;
+        #    DialogField     dlgLastCol;
+        #    DialogField     dlgstartRow;
+        #    DialogField     dlgInboundFile;
+        #    DialogField     dlgkeyColumn;
+        #    DialogField     dlgWrkSheetNum;
+        #
+        #    #define.CurrentVersion(5)
+        #    #define.Version1(5)
+        #    #localmacro.CurrentList
+        #        ErrorPath,
+        #        startRow,
+        #        lastCol,
+        #        keyColumn,
+        #        wrkSheetNum,
+        #        inboundFile
+        #    #endmacro
+        #
+        #    #File
+        #}
+      ENDSOURCE
+      SOURCE #close
+        #void close()
+        #{
+        #    ;
+        #    processEnd = DateTimeUtil::getSystemDateTime();
+        #    info(this.caption());
+        #    info(strfmt('process started %1 || stopped at %2',processStart,processend));
+        #    Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
+        #
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dialog.addTabPage("@LSG232");
+        #
+        #
+        #    dialog.addGroup('@LSG217');
+        #    dlgInboundFile  = dialog.addFieldValue(typeID(FilenameOpen),inboundFile,'@LSG218','@LSG219');
+        #
+        #
+        #    dlgErrorPath    = dialog.addFieldValue(typeID(FilePath),errorPath,'@LSG220','@LSG221');
+        #
+        #
+        #
+        #    dialog.addGroup('@LSG222');
+        #
+        #    dlgstartRow     = dialog.addFieldValue(typeID(integer),startRow,'@LSG223','@LSG224');
+        #    dlgLastCol      = dialog.addFieldValue(typeid(integer),lastCol,'@LSG225','@LSG226');
+        #    dlgkeyColumn    = dialog.addFieldValue(typeID(integer),keyColumn,'@LSG227','@LSG229');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(typeID(integer),wrkSheetNum,'@LSG228','@LSG230');
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #    keyColumn   = dlgkeyColumn.value();
+        #    wrkSheetNum = dlgWrkSheetNum.value();
+        #
+        #    errorPath   = dlgErrorPath.value();
+        #
+        #    startRow    = dlgstartRow.value();
+        #    lastCol     = dlgLastCol.value();
+        #    inboundFile = dlgInboundFile.value();
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #movefile
+        #/// <summary>
+        #/// this methods moves a file from one location to another.
+        #/// </summary>
+        #/// <param name="fileName">
+        #/// Name of teh file to be moved
+        #/// </param>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #void movefile(FileName fileName)
+        #{
+        #    // move file from inbound directory to the processed directory
+        #
+        #    FilePath            newFile;
+        #    FileIOPermission    perm;
+        #    ;
+        #/*
+        #    existFile = InboundPath + #FilePathDelimiter + fileName;
+        #    newFile = BackupPath + #FilePathDelimiter + fileName;
+        #
+        #
+        #
+        #    perm = new FileIOPermission(existFile,#io_write) ;
+        #    perm.assert();
+        #
+        #    if ( strlen(fileName) > 5)
+        #    {
+        #
+        #        winapi::copyFile( existFile,newFile,true);
+        #        winApi::deleteFile(existFile);
+        #
+        #    }
+        #*/
+        #
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #private void new()
+        #{
+        #    super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #processData
+        #/// <summary>
+        #/// This is the stub for the class that inherits it to use for data processing
+        #/// </summary>
+        #/// <param name="cells">
+        #///
+        #/// </param>
+        #/// <returns>
+        #/// true if a record is accepted for processing. return flase if a record is intentionally
+        #/// skipped by buisness logic. any errors should be thrown to calling method
+        #/// </returns>
+        #/// <remarks>
+        #/// called from method processFile
+        #/// </remarks>
+        #boolean processData(SysExcelCells  cells, int row)
+        #{
+        #    boolean ret;
+        #
+        #    return ret;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #processFile
+        #/// <summary>
+        #/// main process to open the excel file and import data
+        #/// </summary>
+        #/// <param name="filename">
+        #///  a reference to the the file
+        #/// </param>
+        #
+        #void processFile(filepath filename)
+        #{
+        #    SysExcelApplication     application;
+        #    SysExcelWorkbooks       workbooks;
+        #    SysExcelWorkbook        workbook;
+        #    SysExcelWorksheets      worksheets;
+        #    SysExcelWorksheet       worksheet;
+        #    SysExcelCells           cells;
+        #    COMVariantType          type;
+        #    ExecutePermission         perm;
+        #
+        #    boolean                 isFirstRow = true;
+        #    int                     row = 0 ;
+        #    ;
+        #
+        #
+        #   // perm = new FileIoPermission(filename, #io_read);
+        #    perm = new ExecutePermission();
+        #    perm.assert();
+        #
+        #    application = SysExcelApplication::construct();
+        #    workbooks = application.workbooks();
+        #    try
+        #    {
+        #        workbooks.open(filename);
+        #    }
+        #    catch (Exception::Error)
+        #    {
+        #        throw error("@SYS19358");
+        #    }
+        #
+        #    workbook    = workbooks.item(1);
+        #    worksheets  = workbook.worksheets();
+        #    worksheet   = worksheets.itemFromNum(wrkSheetNum);
+        #    cells       = worksheet.cells();
+        #    row         = startRow;
+        #
+        #    do
+        #    {
+        #
+        #        allRecs = allRecs + 1;
+        #        try
+        #        {
+        #            if(this.ProcessData(cells,row))
+        #            {
+        #                importedRecs = importedRecs + 1;
+        #            }
+        #            else
+        #            {
+        #                skippedRecs = skippedRecs + 1;
+        #            }
+        #        }
+        #        catch (Exception::Error)
+        #        {
+        #
+        #            this.writeError(cells,row,filename);
+        #            errorRecs = errorRecs + 1;
+        #        }
+        #        row++;
+        #        // see if this is the last row
+        #        type = cells.item(row, keyColumn).value().variantType();
+        #    }
+        #    while (type != COMVariantType::VT_EMPTY);
+        #    application.quit();
+        #    this.close();
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #
+        #    FileName            fileName;
+        #    FileIoPermission    perm;
+        #
+        #    ;
+        #
+        #
+        #    super();
+        #
+        #
+        #    perm = new FileIoPermission(filename, #io_read);
+        #    perm.assert();
+        #
+        #    if (! this.validate())
+        #        throw error("");
+        #
+        #
+        #    processStart = DateTimeUtil::getSystemDateTime();
+        #    //setPrefix(this.description() + strfmt( " started at: %1",processStart));
+        #    try
+        #    {
+        #
+        #        this.processFile(inboundFile);
+        #
+        #    }
+        #    catch(Exception::Deadlock)
+        #    {
+        #        retry;
+        #    }
+        #
+        #    CodeAccessPermission::revertAssert();
+        #
+        #}
+      ENDSOURCE
+      SOURCE #runsImpersonated
+        #public boolean runsImpersonated()
+        #{
+        #    boolean ret;
+        #
+        #    ret = false;
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #validate
+        #/// <summary>
+        #/// validate method to be sure that all pre=process
+        #/// </summary>
+        #/// <returns>
+        #///  true if all validations are passed. fasle and will throw an error to calling code.
+        #/// </returns>
+        #
+        #public boolean validate()
+        #{
+        #    boolean   ok = true;
+        #    ;
+        #    //TODO add check for file directors and see if the exist
+        #
+        #
+        #    return ok;
+        #}
+      ENDSOURCE
+      SOURCE #value
+        #anytype value(COMVariant  value)
+        #{
+        #
+        #    ;
+        #
+        #    switch (value.variantType())
+        #    {
+        #        case COMVariantType::VT_I2:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_I4:
+        #            return value.int();
+        #
+        #        case COMVariantType::VT_R4, COMVariantType::VT_R8:
+        #            return value.double();
+        #
+        #        case COMVariantType::VT_CY:
+        #            return value.currency();
+        #
+        #        case COMVariantType::VT_DATE:
+        #            return value.date();
+        #
+        #        case COMVariantType::VT_BSTR:
+        #            return value.bStr();
+        #
+        #        case COMVariantType::VT_BOOL:
+        #            return value.boolean();
+        #
+        #        case COMVariantType::VT_DECIMAL:
+        #            return value.decimal();
+        #
+        #        case COMVariantType::VT_I1:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_UI1:
+        #            return value.uInt();
+        #
+        #        case COMVariantType::VT_UI2:
+        #            return value.uShort();
+        #
+        #        case COMVariantType::VT_UI4:
+        #            return value.uLong();
+        #
+        #    }
+        #    return '';
+        #}
+      ENDSOURCE
+      SOURCE #writeError
+        #/// <summary>
+        #/// write a log of thrown errors by file being processed
+        #/// </summary>
+        #/// <param name="InRecord">
+        #/// contain a row of data that was thrown by error
+        #/// </param>
+        #/// <param name="_filename">
+        #/// the file name and path where the error happened
+        #/// </param>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #///
+        #/// </exception>
+        #
+        #void writeError(SysExcelCells  cells, int row,FileName _filename)
+        #{   /*
+        #    FileIoPermission    perm;
+        #    ErrorMSg            txt;
+        #    FilePath            fullPathName;
+        #    Filename            fileSplitPath;
+        #    Filename            fileExt;
+        #    Filename            filename;
+        #
+        #    SysExcelApplication     sysExcelApplication;
+        #    SysExcelWorkbooks       sysExcelWorkBooks;
+        #    SysExcelWorkbook        sysExcelWorkBook;
+        #    SysExcelWorkSheets      sysExcelWorkSheets;
+        #    SysExcelWorkSheet       sysExcelWorkSheet;
+        #    int                     i;
+        #    #define.dot('.')
+        #*/
+        #    ;
+        #return;
+        #    //TODO: open excel only once.
+        #
+        #/*
+        #
+        #    //if a error path has been set
+        #
+        #    [fileSplitPath, filename, fileExt] = fileNameSplit(_filename);
+        #
+        #    if(errorPath)
+        #        fullPathName = errorPath + #FilePathDelimiter +  'error_' + filename + #dot + fileExt;
+        #    //else
+        #    //    fullPathName = inboundPath + #FilePathDelimiter + 'error_' + filename + #dot + fileExt;
+        #
+        #    perm = new FileIoPermission(fullPathName , #io_append);
+        #    perm.assert();
+        #
+        #    // deal with excel
+        #    sysExcelApplication = SysExcelApplication::construct();
+        #    sysExcelWorkBooks   = sysExcelApplication.workbooks();
+        #    sysExcelWorkBook    = sysExcelWorkBooks.add();
+        #    sysExcelWorkSheets  = sysExcelWorkbook.worksheets();
+        #    sysExcelWorkSheet   = sysExcelWorkSheets.itemFromNum(1);
+        #    sysExcelApplication.visible(false);
+        #    // house keeping of error vars.
+        #    txt =   infolog.text();
+        #    infolog.clear(0);
+        #
+        #    for (i = 1; i <= lastCol ;i++ )
+        #    {
+        #        sysExcelWorkSheet.cells().item(row,i).value(this.value(cells.item(row,i).value()));
+        #    }
+        #    i = lastcol +1 ;
+        #
+        #
+        #    sysExcelWorkSheet.cells().item(row,i).value(txt);
+        #    // close excel operations
+        #    // Suppress the pop-up window:
+        #    // A file named foo already exists in this location. Do you want to replace it?
+        #    sysExcelApplication.displayAlerts(false);
+        #    // Save the Excel file
+        #    sysExcelWorkbook.saveAs(fileName);
+        #    sysExcelWorkBook.comObject().save();
+        #    sysExcelWorkBook.saved(true);
+        #    // Make sure you close the Excel application
+        #    // Especially if you run the job without showing Excel on the desktop
+        #    // (sysExcelApplication.visible(false))
+        #    sysExcelApplication.quit();
+        #
+        #
+        #    CodeAccessPermission::revertAssert();
+        #
+        #*/
+        #
+        #}
+      ENDSOURCE
+      SOURCE #construct
+        #/// <summary>
+        #/// this will construct any class that extends this class
+        #/// </summary>
+        #/// <param name="_className">
+        #///  this is the name passed in via Args from something like a menuitem parameter property
+        #/// </param>
+        #/// <returns>
+        #/// a class object
+        #/// </returns>
+        #/// <remarks>
+        #/// if nothing is called the base class will run
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #///  the class called must extend this class
+        #/// </exception>
+        #public static trbExcelFileImport construct(ClassName _className = '')
+        #{
+        #    trbExcelFileImport   trbExcelFileImport;
+        #    classId             classId;
+        #    ;
+        #
+        #    if( _className == '')
+        #        trbExcelFileImport =  new trbExcelFileImport();
+        #    else
+        #    {
+        #        classId  = className2Id(_className);
+        #
+        #        if (! SysDictClass::isSuperclass(classId,  classnum(trbExcelFileImport)))
+        #            {
+        #               throw error("@LSG231");
+        #            }
+        #
+        #        trbExcelFileImport = new DictClass(classId).makeObject();
+        #    }
+        #
+        #    return trbExcelFileImport;
+        #
+        #}
+        #
+      ENDSOURCE
+      SOURCE #description
+        #client server static classDescription description()
+        #{
+        #    return 'Import process';
+        #}
+      ENDSOURCE
+      SOURCE #main
+        #public static void main(Args args)
+        #{
+        #    trbExcelFileImport   fileProcess;
+        #    ClassName           className;
+        #
+        #    ;
+        #
+        #    // get the intended class to construct
+        #    if(args.parm() && args)
+        #        classname = args.parm();
+        #
+        #    fileProcess = trbExcelFileImport::construct(className);
+        #
+        #
+        #    if( fileProcess.prompt())
+        #        fileProcess.run();
+        #
+        #}
+        #
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Import Info</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG232</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">File Locations Settings</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG217</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Inbound File</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG218</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Location of file to be Processed</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG219</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Error Folder</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG220</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Location to hold file generated from errors</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG221</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Settings</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@LSG222</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Data Row Starts</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG223</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Row to start processing data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG224</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG225</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column of data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG226</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Key Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG227</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Column used to determine the end of rows</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG229</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">WorkSheet</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@LSG228</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identifiy the wrksheet to process</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG230</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">File cannot be opened.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS19358</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">unknow Class name</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@LSG231</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+
+***Element: FTM
+
+; Microsoft Dynamics AX MENUITEM : trbTextFileImport_test unloaded
+; --------------------------------------------------------------------------------
+  VERSION 1
+  
+  MENUITEM #trbTextFileImport_test
+    Type: 3
+    PROPERTIES
+      Name                #trbTextFileImport_test
+      ObjectType          #Class
+      Object              #trbTextFileImport
+      Parameters          #trbTextFileImport_test
+    ENDPROPERTIES
+    
+  ENDMENUITEM
+  
+
+***Element: FTM
+
+; Microsoft Dynamics AX MENUITEM : trbTextFileImport unloaded
+; --------------------------------------------------------------------------------
+  VERSION 1
+  
+  MENUITEM #trbTextFileImport
+    Type: 3
+    PROPERTIES
+      Name                #trbTextFileImport
+      ObjectType          #Class
+      Object              #trbTextFileImport
+    ENDPROPERTIES
+    
+  ENDMENUITEM
+  
+
+***Element: FTM
+
+; Microsoft Dynamics AX MENUITEM : trbExcelFileImport unloaded
+; --------------------------------------------------------------------------------
+  VERSION 1
+  
+  MENUITEM #trbExcelFileImport
+    Type: 3
+    PROPERTIES
+      Name                #trbExcelFileImport
+      ObjectType          #Class
+      Object              #trbExcelFileImport
+    ENDPROPERTIES
+    
+  ENDMENUITEM
+  
+
+***Element: PRN
+
+; Microsoft Dynamics AX Project : _tri_DataFileImport unloaded
+; --------------------------------------------------------------------------------
+  PROJECTVERSION 2
+  
+  PROJECT #_tri_DataFileImport
+   PRIVATE
+  PROPERTIES
+    Name                #_tri_DataFileImport
+  ENDPROPERTIES
+  
+    PROJECTCLASS ProjectNode
+    GROUP #BaseObjects
+      PROPERTIES
+        Name                #BaseObjects
+        ProjectGroupType    #All
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      GROUP #DataDictionary
+        PROPERTIES
+          Name                #DataDictionary
+          ProjectGroupType    #DataDictionary
+          GroupMask           #
+          PreventEditProperties #No
+        ENDPROPERTIES
+        
+        GROUP #Tables
+          PROPERTIES
+            Name                #Tables
+            ProjectGroupType    #Tables
+            GroupMask           #
+            PreventEditProperties #No
+          ENDPROPERTIES
+          
+          ENDGROUP
+          
+        GROUP #ExtendedDataTypes
+          PROPERTIES
+            Name                #ExtendedDataTypes
+            ProjectGroupType    #ExtendedDataTypes
+            GroupMask           #
+            PreventEditProperties #No
+          ENDPROPERTIES
+          
+          ENDGROUP
+          
+        GROUP #BaseEnums
+          PROPERTIES
+            Name                #BaseEnums
+            ProjectGroupType    #BaseEnums
+            GroupMask           #
+            PreventEditProperties #No
+          ENDPROPERTIES
+          
+          BEGINNODE
+            FILETYPE 0
+            UTILTYPE 40
+            UTILOBJECTID 30033
+            NODETYPE 209
+            NAME #triFieldSeparator
+          ENDNODE
+          ENDGROUP
+          
+        ENDGROUP
+        
+      GROUP #Classes
+        PROPERTIES
+          Name                #Classes
+          ProjectGroupType    #Classes
+          GroupMask           #
+          PreventEditProperties #No
+        ENDPROPERTIES
+        
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 45
+          UTILOBJECTID 30089
+          NODETYPE 329
+          NAME #trbTextFileImport
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 45
+          UTILOBJECTID 30090
+          NODETYPE 329
+          NAME #trbTextFileImport_test
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 45
+          UTILOBJECTID 30099
+          NODETYPE 329
+          NAME #triTextFileImpInterface
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 45
+          UTILOBJECTID 30100
+          NODETYPE 329
+          NAME #triUtilDataImport
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 45
+          UTILOBJECTID 30090
+          NODETYPE 329
+          NAME #trbTextFileImport_test
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 45
+          UTILOBJECTID 30087
+          NODETYPE 329
+          NAME #trbExcelFileImport
+        ENDNODE
+        ENDGROUP
+        
+      GROUP #MenuItems
+        PROPERTIES
+          Name                #MenuItems
+          ProjectGroupType    #MenuItems
+          GroupMask           #
+          PreventEditProperties #No
+        ENDPROPERTIES
+        
+        GROUP #Action
+          PROPERTIES
+            Name                #Action
+            ProjectGroupType    #Action
+            GroupMask           #
+            PreventEditProperties #No
+          ENDPROPERTIES
+          
+          BEGINNODE
+            FILETYPE 0
+            UTILTYPE 3
+            UTILOBJECTID 0
+            NODETYPE 296
+            NAME #trbTextFileImport_test
+          ENDNODE
+          BEGINNODE
+            FILETYPE 0
+            UTILTYPE 3
+            UTILOBJECTID 0
+            NODETYPE 296
+            NAME #trbTextFileImport
+          ENDNODE
+          BEGINNODE
+            FILETYPE 0
+            UTILTYPE 3
+            UTILOBJECTID 0
+            NODETYPE 296
+            NAME #trbExcelFileImport
+          ENDNODE
+          ENDGROUP
+          
+        ENDGROUP
+        
+      ENDGROUP
+      
+  ENDPROJECT
+  
+
+***Element: END
