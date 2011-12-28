@@ -37,14 +37,14 @@ Formatversion: 1
 
 ***Element: CLS
 
-; Microsoft Dynamics AX Class: trbTextFileImport unloaded
+; Microsoft Dynamics AX Class: triTextFileImport unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
   
-  CLASS #trbTextFileImport
+  CLASS #triTextFileImport
     Id 30089
     PROPERTIES
-      Name                #trbTextFileImport
+      Name                #triTextFileImport
       Extends             #RunBaseBatch
       RunOn               #Called from
     ENDPROPERTIES
@@ -58,7 +58,7 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #classDeclaration
-        #class trbTextFileImport extends RunBaseBatch
+        #class triTextFileImport extends RunBaseBatch
         #{
         #   //variables
         #    FilePath    inboundPath;
@@ -651,27 +651,27 @@ Formatversion: 1
         #/// <exception cref="Exception::Error">
         #///  the class called must extend this class
         #/// </exception>
-        #public static trbTextFileImport construct(ClassName _className = '')
+        #public static triTextFileImport construct(ClassName _className = '')
         #{
-        #    trbTextFileImport   trbTextFileImport;
+        #    triTextFileImport   triTextFileImport;
         #    classId             classId;
         #    ;
         #
         #    if( _className == '')
-        #        trbTextFileImport =  new trbTextFileImport();
+        #        triTextFileImport =  new triTextFileImport();
         #    else
         #    {
         #        classId  = className2Id(_className);
         #
-        #        if (! SysDictClass::isSuperclass(classId,  classnum(trbTextFileImport)))
+        #        if (! SysDictClass::isSuperclass(classId,  classnum(triTextFileImport)))
         #            {
         #               throw error("unknow Class name");
         #            }
         #
-        #        trbTextFileImport = new DictClass(classId).makeObject();
+        #        triTextFileImport = new DictClass(classId).makeObject();
         #    }
         #
-        #    return trbTextFileImport;
+        #    return triTextFileImport;
         #
         #}
         #
@@ -679,7 +679,7 @@ Formatversion: 1
       SOURCE #main
         #public client server static void main(Args args)
         #{
-        #    trbTextFileImport   fileProcess;
+        #    triTextFileImport   fileProcess;
         #    ClassName           className;
         #
         #    ;
@@ -688,7 +688,7 @@ Formatversion: 1
         #    if(args.parm())
         #        classname = args.parm();
         #
-        #    fileProcess = trbTextFileImport::construct(className);
+        #    fileProcess = triTextFileImport::construct(className);
         #
         #
         #    //set any passed in buffer.
@@ -716,22 +716,22 @@ Formatversion: 1
 
 ***Element: CLS
 
-; Microsoft Dynamics AX Class: trbTextFileImport_test unloaded
+; Microsoft Dynamics AX Class: triTextFileImport_test unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
   
-  CLASS #trbTextFileImport_test
+  CLASS #triTextFileImport_test
     Id 30090
     PROPERTIES
-      Name                #trbTextFileImport_test
-      Extends             #trbTextFileImport
+      Name                #triTextFileImport_test
+      Extends             #triTextFileImport
       RunOn               #Called from
     ENDPROPERTIES
     
     METHODS
       Version: 3
       SOURCE #classDeclaration
-        #class trbTextFileImport_test extends trbTextFileImport
+        #class triTextFileImport_test extends triTextFileImport
         #{
         #}
       ENDSOURCE
@@ -964,22 +964,22 @@ Formatversion: 1
 
 ***Element: CLS
 
-; Microsoft Dynamics AX Class: trbTextFileImport_test unloaded
+; Microsoft Dynamics AX Class: triTextFileImport_test unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
   
-  CLASS #trbTextFileImport_test
+  CLASS #triTextFileImport_test
     Id 30090
     PROPERTIES
-      Name                #trbTextFileImport_test
-      Extends             #trbTextFileImport
+      Name                #triTextFileImport_test
+      Extends             #triTextFileImport
       RunOn               #Called from
     ENDPROPERTIES
     
     METHODS
       Version: 3
       SOURCE #classDeclaration
-        #class trbTextFileImport_test extends trbTextFileImport
+        #class triTextFileImport_test extends triTextFileImport
         #{
         #}
       ENDSOURCE
@@ -1021,14 +1021,14 @@ Formatversion: 1
 
 ***Element: CLS
 
-; Microsoft Dynamics AX Class: trbExcelFileImport unloaded
+; Microsoft Dynamics AX Class: triExcelFileImport unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
   
-  CLASS #trbExcelFileImport
+  CLASS #triExcelFileImport
     Id 30087
     PROPERTIES
-      Name                #trbExcelFileImport
+      Name                #triExcelFileImport
       Extends             #RunBaseBatch
       RunOn               #Client
     ENDPROPERTIES
@@ -1062,7 +1062,7 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #classDeclaration
-        #class trbExcelFileImport extends RunBaseBatch
+        #class triExcelFileImport extends RunBaseBatch
         #{
         #    //variables
         #    FilePath    errorPath;
@@ -1542,27 +1542,27 @@ Formatversion: 1
         #/// <exception cref="Exception::Error">
         #///  the class called must extend this class
         #/// </exception>
-        #public static trbExcelFileImport construct(ClassName _className = '')
+        #public static triExcelFileImport construct(ClassName _className = '')
         #{
-        #    trbExcelFileImport   trbExcelFileImport;
+        #    triExcelFileImport   triExcelFileImport;
         #    classId             classId;
         #    ;
         #
         #    if( _className == '')
-        #        trbExcelFileImport =  new trbExcelFileImport();
+        #        triExcelFileImport =  new triExcelFileImport();
         #    else
         #    {
         #        classId  = className2Id(_className);
         #
-        #        if (! SysDictClass::isSuperclass(classId,  classnum(trbExcelFileImport)))
+        #        if (! SysDictClass::isSuperclass(classId,  classnum(triExcelFileImport)))
         #            {
         #               throw error("@LSG231");
         #            }
         #
-        #        trbExcelFileImport = new DictClass(classId).makeObject();
+        #        triExcelFileImport = new DictClass(classId).makeObject();
         #    }
         #
-        #    return trbExcelFileImport;
+        #    return triExcelFileImport;
         #
         #}
         #
@@ -1576,7 +1576,7 @@ Formatversion: 1
       SOURCE #main
         #public static void main(Args args)
         #{
-        #    trbExcelFileImport   fileProcess;
+        #    triExcelFileImport   fileProcess;
         #    ClassName           className;
         #
         #    ;
@@ -1585,7 +1585,7 @@ Formatversion: 1
         #    if(args.parm() && args)
         #        classname = args.parm();
         #
-        #    fileProcess = trbExcelFileImport::construct(className);
+        #    fileProcess = triExcelFileImport::construct(className);
         #
         #
         #    if( fileProcess.prompt())
@@ -1769,17 +1769,17 @@ Formatversion: 1
 
 ***Element: FTM
 
-; Microsoft Dynamics AX MENUITEM : trbTextFileImport_test unloaded
+; Microsoft Dynamics AX MENUITEM : triTextFileImport_test unloaded
 ; --------------------------------------------------------------------------------
   VERSION 1
   
-  MENUITEM #trbTextFileImport_test
+  MENUITEM #triTextFileImport_test
     Type: 3
     PROPERTIES
-      Name                #trbTextFileImport_test
+      Name                #triTextFileImport_test
       ObjectType          #Class
-      Object              #trbTextFileImport
-      Parameters          #trbTextFileImport_test
+      Object              #triTextFileImport
+      Parameters          #triTextFileImport_test
     ENDPROPERTIES
     
   ENDMENUITEM
@@ -1787,16 +1787,16 @@ Formatversion: 1
 
 ***Element: FTM
 
-; Microsoft Dynamics AX MENUITEM : trbTextFileImport unloaded
+; Microsoft Dynamics AX MENUITEM : triTextFileImport unloaded
 ; --------------------------------------------------------------------------------
   VERSION 1
   
-  MENUITEM #trbTextFileImport
+  MENUITEM #triTextFileImport
     Type: 3
     PROPERTIES
-      Name                #trbTextFileImport
+      Name                #triTextFileImport
       ObjectType          #Class
-      Object              #trbTextFileImport
+      Object              #triTextFileImport
     ENDPROPERTIES
     
   ENDMENUITEM
@@ -1804,16 +1804,16 @@ Formatversion: 1
 
 ***Element: FTM
 
-; Microsoft Dynamics AX MENUITEM : trbExcelFileImport unloaded
+; Microsoft Dynamics AX MENUITEM : triExcelFileImport unloaded
 ; --------------------------------------------------------------------------------
   VERSION 1
   
-  MENUITEM #trbExcelFileImport
+  MENUITEM #triExcelFileImport
     Type: 3
     PROPERTIES
-      Name                #trbExcelFileImport
+      Name                #triExcelFileImport
       ObjectType          #Class
-      Object              #trbExcelFileImport
+      Object              #triExcelFileImport
     ENDPROPERTIES
     
   ENDMENUITEM
@@ -1900,14 +1900,14 @@ Formatversion: 1
           UTILTYPE 45
           UTILOBJECTID 30089
           NODETYPE 329
-          NAME #trbTextFileImport
+          NAME #triTextFileImport
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 45
           UTILOBJECTID 30090
           NODETYPE 329
-          NAME #trbTextFileImport_test
+          NAME #triTextFileImport_test
         ENDNODE
         BEGINNODE
           FILETYPE 0
@@ -1928,14 +1928,14 @@ Formatversion: 1
           UTILTYPE 45
           UTILOBJECTID 30090
           NODETYPE 329
-          NAME #trbTextFileImport_test
+          NAME #triTextFileImport_test
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 45
           UTILOBJECTID 30087
           NODETYPE 329
-          NAME #trbExcelFileImport
+          NAME #triExcelFileImport
         ENDNODE
         ENDGROUP
         
@@ -1960,21 +1960,21 @@ Formatversion: 1
             UTILTYPE 3
             UTILOBJECTID 0
             NODETYPE 296
-            NAME #trbTextFileImport_test
+            NAME #triTextFileImport_test
           ENDNODE
           BEGINNODE
             FILETYPE 0
             UTILTYPE 3
             UTILOBJECTID 0
             NODETYPE 296
-            NAME #trbTextFileImport
+            NAME #triTextFileImport
           ENDNODE
           BEGINNODE
             FILETYPE 0
             UTILTYPE 3
             UTILOBJECTID 0
             NODETYPE 296
-            NAME #trbExcelFileImport
+            NAME #triExcelFileImport
           ENDNODE
           ENDGROUP
           
