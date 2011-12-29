@@ -1,0 +1,85 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: JOB
+
+; Microsoft Dynamics AX Job: utilScriptTableSpec unloaded
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #utilScriptTableSpec
+    #static void utilScriptTableSpec(Args _args)
+    #{
+    #    #define.NewLine('\n')
+    #    DictTable dictTable = new DictTable(tableNum(VendTable)); // change table name here
+    #
+    #    SysDictField                sysDictField;
+    #    SysDictType                 sysDictType;
+    #    DictType                    dictType;
+    #    DictEnum                    dictEnum;
+    #    str                         label;
+    #    int                         i;
+    #    str                         comment;
+    #    int                         countValues;
+    #    Counter                     counter;
+    #
+    #    setPrefix(dictTable.name());
+    #    info( "field id,form Label,help text,table field name, EDT name,size ");
+    #
+    #    for (i=1; i<=dictTable.fieldCnt(); i++)
+    #    {
+    #        sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
+    #        comment = '';
+    #        label = int2str( sysDictField.id()) + ","  ; // field id
+    #        label = label + sysDictField.label() + "," ; // form label
+    #        label = label + strReplace( strReplace( sysDictField.help(), '\r\n', ' '), ',', ' ') + "," ; // help text
+    #        label = label + sysDictField.name() + "," ; // table field name
+    #
+    #        dictType = new DictType(sysDictField.typeId());
+    #        if (dictType && dictType.baseType() == Types::Enum || sysDictField.enumId())
+    #        {
+    #            if (dictType)
+    #            {
+    #                dictEnum = new DictEnum(dictType.enumId());
+    #            }
+    #            else
+    #            {
+    #                dictEnum = new DictEnum(sysDictField.enumId());
+    #            }
+    #            countValues = dictEnum.values();
+    #
+    #            for (counter=0; counter<countValues; counter++)
+    #            {
+    #                comment += int2str(counter) + "-" + dictEnum.index2Label(counter);
+    #                comment += ";";
+    #            }
+    #            label = label + dictEnum.name() + ", int " + ", "; //+ int2str(sysDictField.fieldSize()); // enum and size
+    #            label = label + comment;
+    #
+    #        }
+    #        else
+    #        {
+    #            if(DictType.baseType() == Types::String )
+    #            {
+    #                label = label + dictType.name() + ", varchar(" + int2str(sysDictField.fieldSize()) + ")"  ; // edt and size
+    #
+    #            }
+    #            else
+    #            {
+    #
+    #                label = label + dictType.name() + ",other";
+    #            }
+    #        }
+    #
+    #
+    #        info( label);
+    #    }
+    #
+    #}
+  ENDSOURCE
+  PROPERTIES
+    Origin              #{06D50A25-BEBC-4E8B-8D65-E8E53F34965B}
+  ENDPROPERTIES
+  
+
+***Element: END

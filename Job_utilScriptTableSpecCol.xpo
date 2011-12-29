@@ -1,0 +1,43 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: JOB
+
+; Microsoft Dynamics AX Job: utilScriptTableSpecCol unloaded
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #utilScriptTableSpecCol
+    #static void utilScriptTableSpecCol(Args _args)
+    #{
+    #    // returns fields as col
+    #    #define.NewLine('\n')
+    #    DictTable dictTable = new DictTable(tableNum(VendTable)); // change table name here
+    #
+    #    SysDictField                sysDictField;
+    #    SysDictType                 sysDictType;
+    #    DictType                    dictType;
+    #    DictEnum                    dictEnum;
+    #    str                         label;
+    #    int                         i;
+    #    str                         comment;
+    #    int                         countValues;
+    #    Counter                     counter;
+    #
+    #    setPrefix(dictTable.name());
+    #
+    #
+    #    for (i=1; i<=dictTable.fieldCnt(); i++)
+    #    {
+    #        sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
+    #        label = label + sysDictField.label() + "," ; // form label
+    #    }
+    #    info( label);
+    #}
+  ENDSOURCE
+  PROPERTIES
+    Origin              #{9A0814C7-10EC-46F2-BF13-325DB3718680}
+  ENDPROPERTIES
+  
+
+***Element: END
