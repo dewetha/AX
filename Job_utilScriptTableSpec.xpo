@@ -11,7 +11,7 @@ Formatversion: 1
     #static void utilScriptTableSpec(Args _args)
     #{
     #    #define.NewLine('\n')
-    #    DictTable dictTable = new DictTable(tableNum(VendTable)); // change table name here
+    #    DictTable dictTable = new DictTable(tableNum(LedgerJournalTrans)); // change table name here
     #
     #    SysDictField                sysDictField;
     #    SysDictType                 sysDictType;
@@ -35,45 +35,48 @@ Formatversion: 1
     #        label = label + strReplace( strReplace( sysDictField.help(), '\r\n', ' '), ',', ' ') + "," ; // help text
     #        label = label + sysDictField.name() + "," ; // table field name
     #
-    #        dictType = new DictType(sysDictField.typeId());
-	#		 if (dictType)
-	#		 {
-    #        	if (dictType && dictType.baseType() == Types::Enum || sysDictField.enumId())
-    #        	{
-    #            	if (dictType)
-    #            	{
-    #                	dictEnum = new DictEnum(dictType.enumId());
-    #            	}
-    #            	else
-    #            	{
-    #                	dictEnum = new DictEnum(sysDictField.enumId());
-    #            	}
-    #            	countValues = dictEnum.values();
+    #        if( sysDictField.typeId() || sysDictField.enumId())
+    #        {
+    #            dictType = new DictType(sysDictField.typeId());
     #
-    #            	for (counter=0; counter<countValues; counter++)
-    #            	{
-    #                	comment += int2str(counter) + "-" + dictEnum.index2Label(counter);
-    #                	comment += ";";
-    #            	}
-    #            	label = label + dictEnum.name() + ", int " + ", "; //+ int2str(sysDictField.fieldSize()); // enum and size
-    #            	label = label + comment;
+    #            if (dictType && dictType.baseType() == Types::Enum || sysDictField.enumId())
+    #            {
+    #                if (dictType)
+    #                {
+    #                    dictEnum = new DictEnum(dictType.enumId());
+    #                }
+    #                else
+    #                {
+    #                    dictEnum = new DictEnum(sysDictField.enumId());
+    #                }
+    #                countValues = dictEnum.values();
     #
-    #        		}
-    #        	else
-    #        	{
-    #            	if(DictType.baseType() == Types::String )
-    #            	{
-    #                	label = label + dictType.name() + ", varchar(" + int2str(sysDictField.fieldSize()) + ")"  ; // edt and size
+    #                for (counter=0; counter<countValues; counter++)
+    #                {
+    #                    comment += int2str(counter) + "-" + dictEnum.index2Label(counter);
+    #                    comment += ";";
+    #                }
+    #                label = label + dictEnum.name() + ", int " + ", "; //+ int2str(sysDictField.fieldSize()); // enum and size
+    #                label = label + comment;
     #
-    #            	}
-    #            	else
-    #            	{
+    #            }
+    #            else
+    #            {
     #
-    #                	label = label + dictType.name() + ",other";
-    #            	}
-    #        	}
-    #		 }
+    #                    if(DictType.baseType() == Types::String )
+    #                    {
+    #                        label = label + dictType.name() + ", varchar(" + int2str(sysDictField.fieldSize()) + ")"  ; // edt and size
     #
+    #                    }
+    #                    else
+    #                    {
+    #
+    #                        label = label + dictType.name() + ",other";
+    #                    }
+    #
+    #            }
+    #
+    #        }
     #        info( label);
     #    }
     #
