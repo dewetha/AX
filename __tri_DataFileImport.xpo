@@ -8,12 +8,13 @@ Formatversion: 1
   ENUMTYPEVERSION 1
   
   ENUMTYPE #triFieldSeparator
-    Id 30033
     PROPERTIES
       Name                #triFieldSeparator
       Label               #Field Separator
       Help                #select type of separator for fields in the file
       UseEnumValue        #Yes
+      Origin              #{EB81A8D1-BA55-426F-B429-59C785D07635}
+      LegacyId            #30033
     ENDPROPERTIES
     
     TYPEELEMENTS
@@ -42,15 +43,14 @@ Formatversion: 1
   CLSVERSION 1
   
   CLASS #triTextFileImport
-    Id 30089
     PROPERTIES
       Name                #triTextFileImport
       Extends             #RunBaseBatch
-      RunOn               #Called from
+      Origin              #{44420635-49A8-4681-AFE7-0C76D8A7A81C}
+      LegacyId            #30089
     ENDPROPERTIES
     
     METHODS
-      Version: 3
       SOURCE #canGoBatchJournal
         #public boolean canGoBatchJournal()
         #{
@@ -131,17 +131,17 @@ Formatversion: 1
         #
         #
         #    dialog.addGroup('File Locations Settings');
-        #    dlgInboundFile  = dialog.addFieldValue(typeID(FilenameOpen),inboundFile,'Inbound File','Location of file to be Processed');
-        #    dlgInboundPath  = dialog.addFieldValue(typeID(FilePath),inboundPath,'Inbound Folder','Location of file(s) to be Processed');
-        #    dlgBackupPath   = dialog.addFieldValue(typeID(FilePath),backupPath,'Backup Folder','location where processed file(s) are moved to');
-        #    dlgErrorPath    = dialog.addFieldValue(typeID(FilePath),errorPath,'Error Folder','Location to hold file generated from errors');
+        #    dlgInboundFile  = dialog.addFieldValue(extendedtypestr(FilenameOpen),inboundFile,'Inbound File','Location of file to be Processed');
+        #    dlgInboundPath  = dialog.addFieldValue(extendedtypestr(FilePath),inboundPath,'Inbound Folder','Location of file(s) to be Processed');
+        #    dlgBackupPath   = dialog.addFieldValue(extendedtypestr(FilePath),backupPath,'Backup Folder','location where processed file(s) are moved to');
+        #    dlgErrorPath    = dialog.addFieldValue(extendedtypestr(FilePath),errorPath,'Error Folder','Location to hold file generated from errors');
         #
         #
         #
         #    dialog.addGroup('Settings');
-        #    dlgBatchFiles   = dialog.addFieldValue(typeID(NoYesId),batchFiles,'Batch Files','Process all files in the inbound directory');
-        #    dlgHasHeader    = dialog.addFieldValue(typeID(NoYesId),hasHeader,'File(s) have Header','Indicates a column definition row to be skipped.');
-        #    dlgfieldSeparator = dialog.addFieldValue(typeID(triFieldSeparator),fieldSeparator,'Field Separator', 'select type of separator');
+        #    dlgBatchFiles   = dialog.addFieldValue(extendedtypestr(NoYesId),batchFiles,'Batch Files','Process all files in the inbound directory');
+        #    dlgHasHeader    = dialog.addFieldValue(extendedtypestr(NoYesId),hasHeader,'File(s) have Header','Indicates a column definition row to be skipped.');
+        #    dlgfieldSeparator = dialog.addFieldValue(enumStr (triFieldSeparator),fieldSeparator,'Field Separator', 'select type of separator');
         #    return dialog;
         #}
       ENDSOURCE
@@ -517,7 +517,7 @@ Formatversion: 1
         #    return true;
         #}
       ENDSOURCE
-      SOURCE #validate
+      SOURCE #old_validate
         #/// <summary>
         #/// validate method to be sure that all pre=process
         #/// </summary>
@@ -527,7 +527,7 @@ Formatversion: 1
         #/// <remarks>
         #///
         #/// </remarks>
-        #public boolean validate()
+        #public boolean old_validate()
         #{
         #    boolean   ok = true;
         #    ;
@@ -716,79 +716,20 @@ Formatversion: 1
 
 ***Element: CLS
 
-; Microsoft Dynamics AX Class: triTextFileImport_test unloaded
-; --------------------------------------------------------------------------------
-  CLSVERSION 1
-  
-  CLASS #triTextFileImport_test
-    Id 30090
-    PROPERTIES
-      Name                #triTextFileImport_test
-      Extends             #triTextFileImport
-      RunOn               #Called from
-    ENDPROPERTIES
-    
-    METHODS
-      Version: 3
-      SOURCE #classDeclaration
-        #class triTextFileImport_test extends triTextFileImport
-        #{
-        #}
-      ENDSOURCE
-      SOURCE #description
-        #ClassDescription description()
-        #{
-        #    return 'test Import process';
-        #}
-      ENDSOURCE
-      SOURCE #dialog
-        #protected Object dialog()
-        #{
-        #    Object ret;
-        #
-        #    ret = super();
-        #    dlgErrorPath.visible(false);
-        #/*
-        #
-        #    dialog.addTabPage("Import Info");
-        #
-        #
-        #
-        #    dialog.addGroup('File Locations Settings');
-        #    dlgInboundPath  = dialog.addFieldValue(typeID(FilePath),inboundPath,'Inbound Folder','Location of file(s) to be Processed');
-        #    dlgBackupPath   = dialog.addFieldValue(typeID(FilePath),backupPath,'Backup Folder','location where processed file(s) are moved to');
-        #    dlgErrorPath    = dialog.addFieldValue(typeID(FilePath),errorPath,'Error Folder','Location to hold file generated from errors');
-        #
-        #
-        #    dialog.addGroup('Settings');
-        #    dlgBatchFiles   = dialog.addFieldValue(typeID(NoYesId),batchFiles,'Batch Files','Process all files in the inbound directory');
-        #    dlgHasHeader    = dialog.addFieldValue(typeID(NoYesId),hasHeader,'File(s) have Header','Indicates a column definition row to be skipped.');
-        #*/
-        #    return ret;
-        #
-        #}
-      ENDSOURCE
-    ENDMETHODS
-  ENDCLASS
-
-***Element: CLS
-
 ; Microsoft Dynamics AX Class: triTextFileImpInterface unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
   
   INTERFACE #triTextFileImpInterface
-    Id 30099
     PROPERTIES
       Name                #triTextFileImpInterface
-      Extends             #
-      RunOn               #Called from
+      Origin              #{9FED4C1B-D038-4F91-9642-2257F7105B68}
+      LegacyId            #30099
     ENDPROPERTIES
     
     METHODS
-      Version: 3
       SOURCE #classDeclaration
-        #interface triTextFileImpInterface 
+        #interface triTextFileImpInterface
         #{
         #}
       ENDSOURCE
@@ -817,17 +758,15 @@ Formatversion: 1
   CLSVERSION 1
   
   CLASS #triUtilDataImport
-    Id 30100
     PROPERTIES
       Name                #triUtilDataImport
-      Extends             #
-      RunOn               #Called from
+      Origin              #{106C1B36-8CF6-40A3-836C-4E90A746B227}
+      LegacyId            #30100
     ENDPROPERTIES
     
     METHODS
-      Version: 3
       SOURCE #classDeclaration
-        #class triUtilDataImport 
+        #class triUtilDataImport
         #{
         #}
       ENDSOURCE
@@ -929,10 +868,10 @@ Formatversion: 1
         #public static LedgerAccount validateLedgerAccount(LedgerAccount accountNum)
         #{
         #    ;
-        #    if(!LedgerTable::find(accountNum) )
+        #    if(!LedgerChartOfAccounts::exist(accountNum) )
         #        throw error(strfmt("Invalid ledger account %1:",accountNum ));
         #
-        #    return LedgerTable::find(accountNum).AccountNum;
+        #    return LedgerChartOfAccounts::findByName(accountNum).Name;
         #
         #}
       ENDSOURCE
@@ -969,15 +908,14 @@ Formatversion: 1
   CLSVERSION 1
   
   CLASS #triTextFileImport_test
-    Id 30090
     PROPERTIES
       Name                #triTextFileImport_test
       Extends             #triTextFileImport
-      RunOn               #Called from
+      Origin              #{103BD504-23F9-4A94-81EF-7364BB3C543F}
+      LegacyId            #30090
     ENDPROPERTIES
     
     METHODS
-      Version: 3
       SOURCE #classDeclaration
         #class triTextFileImport_test extends triTextFileImport
         #{
@@ -1026,15 +964,15 @@ Formatversion: 1
   CLSVERSION 1
   
   CLASS #triExcelFileImport
-    Id 30087
     PROPERTIES
       Name                #triExcelFileImport
       Extends             #RunBaseBatch
       RunOn               #Client
+      Origin              #{0C9BC314-6B3F-493D-9515-6F3780CB50CE}
+      LegacyId            #30087
     ENDPROPERTIES
     
     METHODS
-      Version: 3
       SOURCE #canGoBatch
         #public boolean canGoBatch()
         #{
@@ -1121,23 +1059,23 @@ Formatversion: 1
         #
         #;
         #    dialog.caption(this.caption());
-        #    dialog.addTabPage("@LSG232");
+        #    dialog.addTabPage("@SYS345639");
         #
         #
-        #    dialog.addGroup('@LSG217');
-        #    dlgInboundFile  = dialog.addFieldValue(typeID(FilenameOpen),inboundFile,'@LSG218','@LSG219');
+        #    dialog.addGroup('@SYS345624');
+        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
         #
         #
-        #    dlgErrorPath    = dialog.addFieldValue(typeID(FilePath),errorPath,'@LSG220','@LSG221');
+        #    dlgErrorPath    = dialog.addFieldValue(extendedtypestr(FilePath),errorPath,'@SYS345627','@SYS345628');
         #
         #
         #
-        #    dialog.addGroup('@LSG222');
+        #    dialog.addGroup('@SYS345629');
         #
-        #    dlgstartRow     = dialog.addFieldValue(typeID(integer),startRow,'@LSG223','@LSG224');
-        #    dlgLastCol      = dialog.addFieldValue(typeid(integer),lastCol,'@LSG225','@LSG226');
-        #    dlgkeyColumn    = dialog.addFieldValue(typeID(integer),keyColumn,'@LSG227','@LSG229');
-        #    dlgWrkSheetNum  = dialog.addFieldValue(typeID(integer),wrkSheetNum,'@LSG228','@LSG230');
+        #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,'@SYS345630','@SYS345631');
+        #    dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
+        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
         #
         #    return dialog;
         #}
@@ -1369,24 +1307,6 @@ Formatversion: 1
         #    return true;
         #}
       ENDSOURCE
-      SOURCE #validate
-        #/// <summary>
-        #/// validate method to be sure that all pre=process
-        #/// </summary>
-        #/// <returns>
-        #///  true if all validations are passed. fasle and will throw an error to calling code.
-        #/// </returns>
-        #
-        #public boolean validate()
-        #{
-        #    boolean   ok = true;
-        #    ;
-        #    //TODO add check for file directors and see if the exist
-        #
-        #
-        #    return ok;
-        #}
-      ENDSOURCE
       SOURCE #value
         #anytype value(COMVariant  value)
         #{
@@ -1556,7 +1476,7 @@ Formatversion: 1
         #
         #        if (! SysDictClass::isSuperclass(classId,  classnum(triExcelFileImport)))
         #            {
-        #               throw error("@LSG231");
+        #               throw error("@SYS345638");
         #            }
         #
         #        triExcelFileImport = new DictClass(classId).makeObject();
@@ -1601,7 +1521,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Import Info</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG232</Table:Field>
+    <Table:Field name="LabelId">@SYS345639</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1611,7 +1531,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">File Locations Settings</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG217</Table:Field>
+    <Table:Field name="LabelId">@SYS345624</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1621,7 +1541,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Inbound File</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG218</Table:Field>
+    <Table:Field name="LabelId">@SYS345625</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1631,7 +1551,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Location of file to be Processed</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG219</Table:Field>
+    <Table:Field name="LabelId">@SYS345626</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1641,7 +1561,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Error Folder</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG220</Table:Field>
+    <Table:Field name="LabelId">@SYS345627</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1651,7 +1571,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Location to hold file generated from errors</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG221</Table:Field>
+    <Table:Field name="LabelId">@SYS345628</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1661,7 +1581,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Settings</Table:Field>
     <Table:Field name="Description">tribridge</Table:Field>
-    <Table:Field name="LabelId">@LSG222</Table:Field>
+    <Table:Field name="LabelId">@SYS345629</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1671,7 +1591,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Data Row Starts</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG223</Table:Field>
+    <Table:Field name="LabelId">@SYS345630</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1681,7 +1601,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Row to start processing data</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG224</Table:Field>
+    <Table:Field name="LabelId">@SYS345631</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1691,7 +1611,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Last Column</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG225</Table:Field>
+    <Table:Field name="LabelId">@SYS345632</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1701,7 +1621,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Last Column of data</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG226</Table:Field>
+    <Table:Field name="LabelId">@SYS345633</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1711,7 +1631,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Key Column</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG227</Table:Field>
+    <Table:Field name="LabelId">@SYS345634</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1721,7 +1641,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Column used to determine the end of rows</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG229</Table:Field>
+    <Table:Field name="LabelId">@SYS345636</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1731,7 +1651,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">WorkSheet</Table:Field>
     <Table:Field name="Description">tribridge</Table:Field>
-    <Table:Field name="LabelId">@LSG228</Table:Field>
+    <Table:Field name="LabelId">@SYS345635</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1741,7 +1661,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Identifiy the wrksheet to process</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG230</Table:Field>
+    <Table:Field name="LabelId">@SYS345637</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1761,7 +1681,7 @@ Formatversion: 1
     <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">unknow Class name</Table:Field>
     <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@LSG231</Table:Field>
+    <Table:Field name="LabelId">@SYS345638</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -1780,6 +1700,7 @@ Formatversion: 1
       ObjectType          #Class
       Object              #triTextFileImport
       Parameters          #triTextFileImport_test
+      Origin              #{6280E7B7-2E13-4371-A7E5-5283A7B8D873}
     ENDPROPERTIES
     
   ENDMENUITEM
@@ -1797,6 +1718,7 @@ Formatversion: 1
       Name                #triTextFileImport
       ObjectType          #Class
       Object              #triTextFileImport
+      Origin              #{A5CBEC64-616E-48A9-B750-8250FE27DFAA}
     ENDPROPERTIES
     
   ENDMENUITEM
@@ -1814,6 +1736,7 @@ Formatversion: 1
       Name                #triExcelFileImport
       ObjectType          #Class
       Object              #triExcelFileImport
+      Origin              #{FE0D8661-09D9-4293-A830-B0D835811C21}
     ENDPROPERTIES
     
   ENDMENUITEM
@@ -1826,9 +1749,10 @@ Formatversion: 1
   PROJECTVERSION 2
   
   PROJECT #_tri_DataFileImport
-   PRIVATE
+  PRIVATE
   PROPERTIES
     Name                #_tri_DataFileImport
+    Origin              #{252CF655-519A-4D6C-A5AF-A305A82BA89B}
   ENDPROPERTIES
   
     PROJECTCLASS ProjectNode
@@ -1901,13 +1825,6 @@ Formatversion: 1
           UTILOBJECTID 30089
           NODETYPE 329
           NAME #triTextFileImport
-        ENDNODE
-        BEGINNODE
-          FILETYPE 0
-          UTILTYPE 45
-          UTILOBJECTID 30090
-          NODETYPE 329
-          NAME #triTextFileImport_test
         ENDNODE
         BEGINNODE
           FILETYPE 0
