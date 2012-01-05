@@ -38,6 +38,81 @@ Formatversion: 1
 
 ***Element: CLS
 
+; Microsoft Dynamics AX Class: triTextFileImport_ZipCode_US unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triTextFileImport_ZipCode_US
+    PROPERTIES
+      Name                #triTextFileImport_ZipCode_US
+      Extends             #triTextFileImport
+      Origin              #{74E5C1CB-0749-4D57-8E4A-A9556D5E24D6}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    Object ret;
+        #
+        #    ret = super();
+        #
+        #    ret.caption(this.caption());
+        #    dlgErrorPath.visible(false);
+        #    dlgBackupPath.visible(false);
+        #    dlgBatchFiles.visible(false);
+        #    dlgInboundPath.visible(false);
+        #
+        #/*
+        #
+        #    dialog.addTabPage("Import Info");
+        #
+        #
+        #
+        #    dialog.addGroup('File Locations Settings');
+        #    dlgInboundPath  = dialog.addFieldValue(typeID(FilePath),inboundPath,'Inbound Folder','Location of file(s) to be Processed');
+        #    dlgBackupPath   = dialog.addFieldValue(typeID(FilePath),backupPath,'Backup Folder','location where processed file(s) are moved to');
+        #    dlgErrorPath    = dialog.addFieldValue(typeID(FilePath),errorPath,'Error Folder','Location to hold file generated from errors');
+        #
+        #
+        #    dialog.addGroup('Settings');
+        #    dlgBatchFiles   = dialog.addFieldValue(typeID(NoYesId),batchFiles,'Batch Files','Process all files in the inbound directory');
+        #    dlgHasHeader    = dialog.addFieldValue(typeID(NoYesId),hasHeader,'File(s) have Header','Indicates a column definition row to be skipped.');
+        #*/
+        #    return ret;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "Import US Zip Codes";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #processData
+        #public boolean processData(container inRecord)
+        #{
+        #    boolean ret;
+        #
+        #    ret = super(inRecord);
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triTextFileImport_ZipCode_US extends triTextFileImport implements triTextFileImpInterface
+        #{
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
 ; Microsoft Dynamics AX Class: triTextFileImport unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
@@ -77,6 +152,10 @@ Formatversion: 1
         #    str                 delimiterValue;
         #    StartDateTime       processStart;
         #    StartDateTime       processEnd;
+        #    Counter             progressCounter;
+        #    Counter             icounter;
+        #    RunbaseProgress     progressbar;
+        #
         #
         #    // Dialog fields
         #    DialogField     dlgInboundPath;
@@ -101,6 +180,7 @@ Formatversion: 1
         #    #endmacro
         #
         #    #File
+        #    #macrolib.AviFiles
         #}
       ENDSOURCE
       SOURCE #close
@@ -202,6 +282,24 @@ Formatversion: 1
         #private void new()
         #{
         #    super();
+        #}
+      ENDSOURCE
+      SOURCE #validate
+        #/// <summary>
+        #/// validate method to be sure that all pre=process
+        #/// </summary>
+        #/// <returns>
+        #///  true if all validations are passed. fasle and will throw an error to calling code.
+        #/// </returns>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #public boolean validate(Object _calledFrom = null)
+        #{
+        #    boolean   ok = true;
+        #
+        #
+        #    return ok;
         #}
       ENDSOURCE
       SOURCE #pack
@@ -377,6 +475,7 @@ Formatversion: 1
         #
         #    while (infile.status() == IO_STATUS::Ok)
         #    {
+        #        this.progressUpdate();
         #        inRecord = infile.read();
         #
         #
@@ -417,6 +516,15 @@ Formatversion: 1
         #
         #}
       ENDSOURCE
+      SOURCE #progressUpdate
+        #protected void progressUpdate(boolean _incCount = 1)
+        #{
+        #    ;
+        #    progressCounter += _incCount;
+        #    progressbar.setCount(progressCounter);
+        #    progressbar.setText(strFmt("@SYS52615",progressCounter));
+        #}
+      ENDSOURCE
       SOURCE #run
         #public void run()
         #{
@@ -424,6 +532,7 @@ Formatversion: 1
         #    FileName            fileName;
         #    FileIoPermission    perm;
         #    filepath            existFullPath;
+        #    #OCCRetryCount
         #    ;
         #
         #
@@ -451,6 +560,18 @@ Formatversion: 1
         #    //setPrefix(this.description() + strfmt( " started at: %1",processStart));
         #    try
         #    {
+        #        startLengthyOperation();
+        #        if (! progressbar)
+        #        {
+        #            progressbar = RunbaseProgress::construct(1, null);
+        #        }
+        #
+        #        progressbar.setCaption("Importing data");
+        #        progressbar.setTotal(icounter);
+        #        progressbar.setAnimation(#AviFilemove);
+        #        progressbar.updateInterval(1);
+        #        progressCounter = 0;
+        #
         #        if(batchFiles)
         #        {
         #            existFullPath = InboundPath + #FilePathDelimiter + #AllFilesName + #AllFilesExt;
@@ -485,7 +606,25 @@ Formatversion: 1
         #    {
         #        retry;
         #    }
-        #
+        #     catch (Exception::UpdateConflict)
+        #    {
+        #        if (appl.ttsLevel() == 0)
+        #        {
+        #            if (xSession::currentRetryCount() >= #RetryNum)
+        #            {
+        #                throw Exception::UpdateConflictNotRecovered;
+        #            }
+        #            else
+        #            {
+        #                retry;
+        #            }
+        #        }
+        #        else
+        #        {
+        #            throw Exception::UpdateConflict;
+        #        }
+        #    }
+        #    endLengthyOperation();
         #    CodeAccessPermission::revertAssert();
         #
         #}
@@ -515,26 +654,6 @@ Formatversion: 1
         #    }
         #
         #    return true;
-        #}
-      ENDSOURCE
-      SOURCE #old_validate
-        #/// <summary>
-        #/// validate method to be sure that all pre=process
-        #/// </summary>
-        #/// <returns>
-        #///  true if all validations are passed. fasle and will throw an error to calling code.
-        #/// </returns>
-        #/// <remarks>
-        #///
-        #/// </remarks>
-        #public boolean old_validate()
-        #{
-        #    boolean   ok = true;
-        #    ;
-        #    //TODO add check for file directors and see if the exist
-        #
-        #
-        #    return ok;
         #}
       ENDSOURCE
       SOURCE #value
@@ -709,6 +828,16 @@ Formatversion: 1
     <Table:Field name="Label">Path %1 does not exist</Table:Field>
     <Table:Field name="Description"></Table:Field>
     <Table:Field name="LabelId">@SYS55831</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Records: %1</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS52615</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -916,6 +1045,16 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #
+        #
+        #    return this.description();
+        #
+        #
+        #}
+      ENDSOURCE
       SOURCE #classDeclaration
         #class triTextFileImport_test extends triTextFileImport
         #{
@@ -933,6 +1072,8 @@ Formatversion: 1
         #    Object ret;
         #
         #    ret = super();
+        #
+        #    ret.caption(this.caption());
         #    dlgErrorPath.visible(false);
         #/*
         #
@@ -1755,7 +1896,7 @@ Formatversion: 1
     Origin              #{252CF655-519A-4D6C-A5AF-A305A82BA89B}
   ENDPROPERTIES
   
-    PROJECTCLASS ProjectNode
+    PROJECTCLASS 
     GROUP #BaseObjects
       PROPERTIES
         Name                #BaseObjects
@@ -1819,6 +1960,13 @@ Formatversion: 1
           PreventEditProperties #No
         ENDPROPERTIES
         
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 45
+          UTILOBJECTID 1024403
+          NODETYPE 329
+          NAME #triTextFileImport_ZipCode_US
+        ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 45
