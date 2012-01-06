@@ -65,6 +65,7 @@ Formatversion: 1
         #
         #    ret.caption(this.caption());
         #    dlgErrorPath.visible(false);
+        #    dlgBatchFiles.visible(false);
         #/*
         #
         #    dialog.addTabPage("Import Info");
@@ -688,11 +689,13 @@ Formatversion: 1
         #            break;
         #        case Types::Integer :
         #            retunValue = str2int(conpeek(con,pos));
+        #            break;
         #        case Types::Real :
         #            retunValue = str2num(conpeek(con,pos));
+        #            break;
         #        case Types::UtcDateTime :
         #            retunValue =  str2datetime(conpeek(con,pos),321);
-        #
+        #            break;
         #        default :
         #            retunValue = conpeek(con,pos);
         #            break;
@@ -834,26 +837,6 @@ Formatversion: 1
       ENDSOURCE
     ENDMETHODS
   ENDCLASS
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Path %1 does not exist</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS55831</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Records: %1</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS52615</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
 
 ***Element: CLS
 
@@ -1601,176 +1584,6 @@ Formatversion: 1
       ENDSOURCE
     ENDMETHODS
   ENDCLASS
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Import Info</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345639</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">File Locations Settings</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345624</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Inbound File</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345625</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Location of file to be Processed</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345626</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Error Folder</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345627</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Location to hold file generated from errors</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345628</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Settings</Table:Field>
-    <Table:Field name="Description">tribridge</Table:Field>
-    <Table:Field name="LabelId">@SYS345629</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Data Row Starts</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345630</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Row to start processing data</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345631</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Last Column</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345632</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Last Column of data</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345633</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Key Column</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345634</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Column used to determine the end of rows</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345636</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">WorkSheet</Table:Field>
-    <Table:Field name="Description">tribridge</Table:Field>
-    <Table:Field name="LabelId">@SYS345635</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Identifiy the wrksheet to process</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345637</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">File cannot be opened.</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS19358</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">unknow Class name</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS345638</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
 
 ***Element: FTM
 
