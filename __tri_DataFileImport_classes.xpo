@@ -1,0 +1,810 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triTextFileImport_Vendors unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triTextFileImport_Vendors
+    PROPERTIES
+      Name                #triTextFileImport_Vendors
+      Extends             #triTextFileImport
+      Origin              #{07FF6D20-DD2A-459F-9212-436E4F103720}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #fieldType
+        #private Types fieldType(TableId _tableID, int _fieldId  )
+        #{
+        #
+        #    DictTable       dictTable = new DictTable(_tableID );
+        #    SysDictField    sysDictField;
+        #    DictType        dictType;
+        #
+        #
+        #    sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(_fieldID));
+        #
+        #    if( sysDictField.typeId() || sysDictField.enumId())
+        #    {
+        #        dictType = new DictType(sysDictField.typeId());
+        #    }
+        #
+        #    if(dictType)
+        #    {
+        #        return dictType.baseType();
+        #    }
+        #    else
+        #    {
+        #        return Types::String;
+        #    }
+        #
+        #}
+      ENDSOURCE
+      SOURCE #mapData
+        #private void mapData(container inRecord)
+        #{
+        #
+        #    MapEnumerator   en = new MapEnumerator(mapFields);
+        #
+        #
+        #    while(en.moveNext())
+        #    {
+        #        if(en.currentValue() != 0)
+        #        {
+        #            vendTable.(en.currentKey()) = this.value(this.fieldType(tableNum(VendTable), en.currentKey() ) ,inRecord, conPeek(inRecord,en.currentValue()));
+        #        }
+        #    }
+        #
+        #   // add special mappings
+        #}
+      ENDSOURCE
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = this.description();
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triTextFileImport_Vendors extends triTextFileImport
+        #{
+        #     Map            mapFields;
+        #     VendTable      vendTable;
+        #}
+      ENDSOURCE
+      SOURCE #description
+        #public ClassDescription description()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "Import vendors";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    Object ret;
+        #
+        #    ret = super();
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #initMap
+        #private void initMap()
+        #{
+        #
+        #
+        #    mapFields = new  Map(Types::Integer,Types::Integer);
+        #
+        #    //fieldID, postion    field id,form Label,help text,table field name, EDT name,size
+        #mapFields.insert(1,1);   //,Vendor account,Vendor account number.,AccountNum,VendAccount, varchar(20)
+        #mapFields.insert(2,2);   //,Name,Vendor name or company name,DEL_Name,VendName, varchar(60)
+        #mapFields.insert(3,3);   //,Address,Vendor's address,DEL_Address,Addressing, varchar(250)
+        #mapFields.insert(4,4);   //,Telephone,Vendor phone number.,DEL_Phone,Phone, varchar(20)
+        #mapFields.insert(5,5);   //,Fax,Vendor fax number,DEL_TeleFax,TeleFax, varchar(20)
+        #mapFields.insert(6,6);   //,Invoice account,Vendor account used when invoicing,InvoiceAccount,VendInvoiceAccount, varchar(20)
+        #mapFields.insert(7,7);   //,Group,Vendor group that the vendor is attached to.,VendGroup,VendGroupId, varchar(10)
+        #mapFields.insert(8,8);   //,Terms of payment,Code for terms in connection with payment,PaymTermId,VendPaymTermId, varchar(10)
+        #mapFields.insert(9,9);   //,Cash discount,Terms of cash discount on invoices from the vendor.,CashDisc,VendCashDiscCode, varchar(10)
+        #mapFields.insert(10,10);  //,Currency,The currency used by the vendor for invoicing,Currency,VendCurrencyCode, varchar(3)
+        #mapFields.insert(11,11);  //,NAF code,NAF code of the company.,DEL_CompanyIdNAF,CompanyIdNAF, varchar(5)
+        #mapFields.insert(12,12);  //,Line discount group,Line discount group used for purchase,LineDisc,VendLineDiscCode, varchar(10)
+        #mapFields.insert(13,13);  //,Enterprise number,Enterprise number used to identify Belgian companies.,EnterpriseNumber,TaxEnterpriseNumber, varchar(50)
+        #mapFields.insert(14,14);  //,Vendor hold,Specify which transaction type  if any  is on hold for the vendor,Blocked,CustVendorBlocked, int , 0-No;1-Invoice;2-All;3-Payment;4-Requisition;5-Never;
+        #mapFields.insert(15,15);  //,One-time supplier,Is the vendor a one-time supplier?,OneTimeVendor,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(16,16);  //,Department,Department number.,DEL_Dimension,Dimension, varchar(50)
+        #mapFields.insert(17,17);  //,Telex number,Vendor telex number,DEL_Telex,Telex, varchar(20)
+        #mapFields.insert(18,18);  //,Price group,Vendor's price group used for price proposal upon purchase,PriceGroup,VendPriceGroup, varchar(10)
+        #mapFields.insert(19,18);  //,Multiline discount,Multiline discount used to control discounts across several purchase lines,MultiLineDisc,VendMultiLineDiscCode, varchar(10)
+        #mapFields.insert(20,20);  //,Total discount group,Total discount attaches the vendor to a total discount group.,EndDisc,VendEndDiscCode, varchar(10)
+        #mapFields.insert(21,21);  //,Payment ID,Payment identification used upon payment.,PaymId,VendPaymId, varchar(200)
+        #mapFields.insert(22,22);  //,Customer account,Account number in customer table if vendor is also a customer.,DEL_CustAccount,CustAccount, varchar(20)
+        #mapFields.insert(23,23);  //,Tax exempt number,Vendor's tax exempt number for extracting statistics,VATNum,VATNum, varchar(20)
+        #mapFields.insert(24,24);  //,Country/region,Specifies default native country/region in connection with addresses,DEL_CountryRegionId,AddressCountryRegionId, varchar(10)
+        #mapFields.insert(25,25);  //,Warehouse,Warehouse proposal for the vendor,InventLocation,InventLocationId, varchar(10)
+        #mapFields.insert(26,26);  //,Our account number,Our account number with vendor,YourAccountNum,VendAccountExt, varchar(20)
+        #mapFields.insert(27,27);  //,Delivery terms,Specify standard terms of delivery for vendor.,DlvTerm,VendDlvTermId, varchar(10)
+        #mapFields.insert(28,28);  //,Mode of delivery,Specify normal mode of delivery for vendor.,DlvMode,VendDlvModeId, varchar(10)
+        #mapFields.insert(29,29);  //,Bank account,Identify vendor's bank account.,BankAccount,VendBankAccountId, varchar(10)
+        #mapFields.insert(30,30);  //,Method of payment,Method of payment code for vendor payment proposal,PaymMode,VendPaymMode, varchar(10)
+        #mapFields.insert(31,31);  //,Payment specification,Specify payment handling for the current method of payment.,PaymSpec,PaymSpec, varchar(10)
+        #mapFields.insert(32,32);  //,Charges group,Charges group applicable to vendor,MarkupGroup,VendMarkupGroupId, varchar(10)
+        #mapFields.insert(33,33);  //,Settle period,Terms of payment for period from due date to payment.,ClearingPeriod,VendClearingPeriod, varchar(10)
+        #mapFields.insert(34,34);  //,ZIP/postal code,Identify ZIP/postal code district,DEL_ZipCode,AddressZipCodeId, varchar(10)
+        #mapFields.insert(35,35);  //,State or province,Identification of state,DEL_State,AddressStateId, varchar(10)
+        #mapFields.insert(36,36);  //,County,Specifies a county within a state in the current country/region,DEL_County,AddressCountyId, varchar(10)
+        #mapFields.insert(37,37);  //,Internet address,WWW address for Internet homepage,DEL_URL,URL, varchar(255)
+        #mapFields.insert(38,38);  //,E-mail,Internet e-mail address,DEL_Email,Email, varchar(80)
+        #mapFields.insert(39,39);  //,Mobile phone,Number of the vendor's mobile phone,DEL_CellularPhone,PhoneMobile, varchar(20)
+        #mapFields.insert(40,40);  //,Extension,Employee's extension at work.,DEL_PhoneLocal,PhoneLocal, varchar(10)
+        #mapFields.insert(41,41);  //,French Siret,Siret number of the company.,CompanyIdSiret,CompanyIdSiret, varchar(14)
+        #mapFields.insert(42,42);  //,Sales tax group,A group of sales tax codes for calculating taxes on a sale or purchase,TaxGroup,TaxGroup, varchar(10)
+        #mapFields.insert(43,43);  //,UPS zone,Identification of UPS zone.,FreightZone,VendFreightZoneId, varchar(10)
+        #mapFields.insert(44,44);  //,Minority owned,Does the owner belong to a minority?,MinorityOwned,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(45,45);  //,Woman owner,Is the owner a woman?,FemaleOwned,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(46,46);  //,Credit rating,Credit rating of vendor.,CreditRating,VendCreditRating, varchar(10)
+        #mapFields.insert(47,47);  //,Credit limit,Vendor's credit limit to us. The amount is specified in accounting currency (0 = No maximum).,CreditMax,VendCreditMaxMST,other
+        #mapFields.insert(48,48);  //,Report 1099,Create 1099 form for purchase from vendor.,Tax1099Reports,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(49,49);  //,Federal tax ID,Registration number with federal authorities for 1099 reporting.,Tax1099RegNum,Tax1099RegNum, varchar(11)
+        #mapFields.insert(50,50);  //,Payment schedule,Payment schedule to be used when invoicing.,PaymSched,VendPaymSchedId, varchar(30)
+        #mapFields.insert(51,51);  //,1099 box,Box code on the 1099 form that the total amount is posted to.,DEL_Tax1099Box,Tax1099Box, varchar(10)
+        #mapFields.insert(52,52);  //,Search name,Find fast name applying to vendor.,DEL_NameAlias,mapFields.insert(Alias, varchar(20)
+        #mapFields.insert(53,53);  //,Buyer group,Identification of the buyer group.,ItemBuyerGroupId,ItemBuyerGroupId, varchar(10)
+        #mapFields.insert(54,54);  //,Contact ID,The contact identification number,ContactPersonId,ContactPersonId, varchar(20)
+        #mapFields.insert(55,55);  //,Purchase pool,Specify the purchase order pool that purchase orders from vendors will be placed in,PurchPoolId,VendPurchPoolId, varchar(10)
+        #mapFields.insert(56,56);  //,Purchase order prices/amount,Print prices and amounts on purchase order?,PurchAmountPurchaseOrder,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(59,57);  //,Prices include sales tax,Do prices include sales tax?,InclTax,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(60,58);  //,Item - vendor group,Vendor group for external item descriptions,VendItemGroupId,VendItemGroupId, varchar(10)
+        #mapFields.insert(62,59);  //,Number sequence group,Group for allocation of different number sequences to different customers/vendors.,numberSequenceGroup,NumberSequenceGroupId, varchar(10)
+        #mapFields.insert(63,60);  //,Language,Language used in forms to the vendor,DEL_LanguageId,VendLanguageId, varchar(7)
+        #mapFields.insert(64,61);  //,Payment day,Identification of payment days,PaymDayId,VendPaymDayId, varchar(10)
+        #mapFields.insert(65,62);  //,Destination code,Identification of destination code.,DestinationCodeId,VendDestinationCodeId, varchar(10)
+        #mapFields.insert(66,63);  //,Line of business,The line of business in which the vendor operates,LineOfBusinessId,VendLineOfBusinessId, varchar(10)
+        #mapFields.insert(67,64);  //,Supplementary item group,Manages the supplementary items for the vendor when supplementary items are calculated.,SuppItemGroupId,VendSuppItemGroupId, varchar(10)
+        #mapFields.insert(68,65);  //,Purpose text,Describe code used when reporting to the central bank.,BankCentralBankPurposeText,BankCentralBankPurposeText, varchar(140)
+        #mapFields.insert(69,66);  //,Central bank purpose code,Code used when reporting to the central bank.,BankCentralBankPurposeCode,BankCentralBankPurposeCode, varchar(10)
+        #mapFields.insert(70,67);  //,Print management,,DEL_PrintModuleType,DEL_ModuleVendPurchParameters, int , 0-Vendor;1-Purchase order;2-Parameters;3-User;4-Request for quotation;
+        #mapFields.insert(71,70);  //,City,City for ZIP/postal code,DEL_City,AddressCity, varchar(60)
+        #mapFields.insert(72,71);  //,Street ,Enter the street of the address,DEL_Street,AddressStreet, varchar(250)
+        #mapFields.insert(73,72);  //,Offset account,Default offset account suggested in daily journal.,DEL_OffsetAccount,LedgerJournalAC, varchar(20)
+        #mapFields.insert(74,73);  //,Account type,Offset account type,OffsetAccountType,LedgerJournalACType, int , 0-Ledger;1-Customer;2-Vendor;3-Project;4-Fixed assets;5-Bank;
+        #mapFields.insert(75,74);  //,Purchase calendar,Vendor's work-days calendar. Used to calculate order date and delivery date.,PurchCalendarId,PurchCalendarId, varchar(10)
+        #mapFields.insert(76,75);  //,Pager,Number of pager.,DEL_Pager,Pager, varchar(20)
+        #mapFields.insert(77,76);  //,SMS,E-mail address for sending SMS to a mobile phone.,DEL_SMS,SMS, varchar(80)
+        #mapFields.insert(78,77);  //,Organization number,The organization number of the vendor.,OrganizationNumber,OrganizationNumber, varchar(20)
+        #mapFields.insert(80,78);  //,Fiscal code,Enter fiscal code for the vendor.,FiscalCode,FiscalCode, varchar(16)
+        #mapFields.insert(81,79);  //,Party ID,Party identification,DEL_PartyId,DEL_DirPartyId, varchar(40)
+        #mapFields.insert(82,80);  //,Calculate withholding tax,Shall withholding tax be calculated for vendor payment transactions in journals?,TaxWithholdCalculate,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(83,81);  //,Withholding tax group,Withholding tax group  which will be used as default for vendor payment transactions in journals.,TaxWithholdGroup,TaxWithholdGroup, varchar(10)
+        #mapFields.insert(84,82);  //,Birth date,Enter birth date of the vendor. Used in Certification report.,BirthDate,TransDate,other
+        #mapFields.insert(85,83);  //,Birth place,Enter birth place of the vendor. Used in Certification report.,BirthPlace,AddressCity, varchar(60)
+        #mapFields.insert(86,84);  //,Residence foreign country/region,Enter the country/region of residence for the vendor. Used in Certification report.,ResidenceForeignCountryRegionId,AddressCountryRegionId, varchar(10)
+        #mapFields.insert(87,85);  //,Name control,Name control from 1099 mail label.,NameControl,NameControl, varchar(4)
+        #mapFields.insert(88,86);  //,Foreign entity indicator,Select whether the company is owned by an entity outside of the United States.,ForeignEntityIndicator,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(89,87);  //,Tax ID type,Select the type of IRS ID that was entered.,TaxIDType,TaxIDType, int , 0-Unknown;1-Employer Identification Number;2-Social Security Number;3-Individual Taxpayer Identification Number;4-Adopted Tax Payer Identification Number;
+        #mapFields.insert(90,88);  //,DBA,Doing business as,DBA,DBA, varchar(60)
+        #mapFields.insert(91,89);  //,Name to use on the 1099,This option gives you the choice of which name to use for 1099 purposes either the vendor's name or DBA (Doing Business As) name,Tax1099NameChoice,Tax1099NameChoice, int , 0-Vendor name;1-Doing business as;
+        #mapFields.insert(92,90);  //,Second TIN,Select Yes to indicate notification by the IRS twice within three calendar years that the vendor (payee) provided an incorrect name and/or TIN combination,SecondTIN,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(93,91);  //,Site,Site proposal for the vendor.,InventSiteId,InventSiteId, varchar(10)
+        #mapFields.insert(94,92);  //,Segment,Segment assigned to prospect,SegmentId,smmSegmentId, varchar(20)
+        #mapFields.insert(95,93);  //,Subsegment,Subsegment for assignment to prospect (for selected segment),SubsegmentId,smmSubsegmentId, varchar(20)
+        #mapFields.insert(96,94);  //,Chain,Chain which the company is a member of,CompanyChainId,smmChainId, varchar(20)
+        #mapFields.insert(97,95);  //,Main contact,The employee responsible for the vendor information,DEL_MainContactId,DEL_smmBusRelAccResponsible, varchar(20)
+        #mapFields.insert(98,96);  //,Vendor price tolerance group,Identification of vendor price tolerance group for accounts payable invoice matching,VendPriceToleranceGroupId,VendPriceToleranceGroupId, varchar(10)
+        #mapFields.insert(99,97);  //,Notes,Vendor memo,Memo,VendMemo,other
+        #mapFields.insert(100,98); //,Small business,Specify whether the vendor meets your guidelines for being a small business,SmallBusiness,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(101,99); //,Record type,Type of party,DEL_PartyType,DirPartyType, int , 0-Any;1-Person;2-Organization;3-Legal entities;4-Team;5-Operating unit;
+        #mapFields.insert(102,100); //,Locally owned,Specify whether the vendor meets your guidelines for a local owner.,LocallyOwned,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(103,101); //,Bid only,Specify whether the vendor submits quotations and proposals to you  but you have not purchased from the vendor,BidOnly,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(104,102); //,W-9 received,Has the vendor W-9 been received?,W9,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(105,103); //,National Registry number,The ID number used by the Icelandic government to identify individuals and organizations,OrgId,OrgId, varchar(10)
+        #mapFields.insert(106,104); //,Factoring account,Vendor account number.,FactoringAccount,BankVendFactoringAccount, varchar(20)
+        #mapFields.insert(109,105); //,Line matching policy,Default policy for PO lines. Three-way: PO  product receipt  and invoice. Two-way: PO and invoice.,MatchingPolicy,PurchMatchingPolicyWithNotSetOption, int , 0-Company policy;1-Three-way matching;2-Two-way matching;3-Not required;
+        #mapFields.insert(111,106); //,Vendor hold release date,The date  when the hold is released for the vendor,BlockedReleaseDate,VendBlockedReleaseDate,other
+        #mapFields.insert(112,107); //,Check for W-9,Select this check box to verify whether this vendor has provided a W-9 form,W9Included,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(113,108); //,Reference,Reference field in a different table,VendExceptionGroup,RefRecId,other
+        #mapFields.insert(120,109); //,Name,Reference field in a different table,Party,DirPartyRecId,other
+        #mapFields.insert(125,110); //,Dimension,Default dimensions,DefaultDimension,DimensionDefault,other
+        #mapFields.insert(126,111); //,Offset account,Default offset account suggested in daily journal.,OffsetLedgerDimension,DimensionDynamicDefaultAccount,other
+        #mapFields.insert(131,112); //,Invoice declaration,Classification of vendor invoices used for instance for reporting to authorities.,DEL_InvoiceDeclarationId_IS,InvoiceSlipDeclarationId_IS, varchar(10)
+        #mapFields.insert(136,113); //,Service type,Type of service provided by the vendor.,DEL_ServiceType_SA,VendServiceNumZakat_SA, varchar(25)
+        #mapFields.insert(138,114); //,Zakat file number,Company's file number with DZIT.,DEL_FileNum_SA,CompanyFileNumZakat_SA, varchar(15)
+        #                       //    139,DEL_SubContractor_SA,,DEL_SubContractor_SA,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(140,115); //,Organization number,The organization number of the organization.,DEL_OrganizationNum_SA,DirOrganizationNumber, varchar(25)
+        #mapFields.insert(142,116); //,Birth county,Enter birth province of the vendor,BirthCountyCode_IT,AddressCountyCode_IT, varchar(2)
+        #mapFields.insert(143,117); //,Heir,Select this check box if the vendor is an heir to the company.,Heir_IT,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(146,118); //,Activate change management,Should change management be activated?,ChangeRequestEnabled,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(147,119); //,Allow override of settings per purchase order,Should it be possible to override change management settings per purchase order?,ChangeRequestAllowOverride,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(148,120); //,Override settings,Should it be possible to override change management setting per vendor?,ChangeRequestOverride,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(149,121); //,NAF code,NAF code of the company.,CompanyNAFCode,CompanyNAFRecId,other
+        #mapFields.insert(161,122); //,Invoice declaration,Classification of vendor invoices used for instance for reporting to authorities.,VendInvoiceDeclaration_IS,InvoiceDeclarationId_IS,other
+        #mapFields.insert(164,123); //,1099 box,Box code on the 1099 form that the total amount is posted to.,Tax1099Fields,Tax1099FieldsRecId,other
+        #mapFields.insert(172,124); //,Type of vendor,Type of vendor code used for DIOT declaration.,VendorType_MX,VendorType_MX, int , 0-;1-04: domestic vendor;2-05: foreign vendor;3-15: domestic/global vendor;
+        #mapFields.insert(173,125); //,Tax registration ID,Tax ID registration for foreign vendors.,ForeignTaxRegistration_MX,ForeignTaxRegistration_MX, varchar(40)
+        #mapFields.insert(174,126); //,Nationality,Nationality of vendor.,Nationality_MX,VendorNationality_MX, varchar(50)
+        #mapFields.insert(175,127); //,Country/region code,Country/Region code used for DIOT declaration.,DiotCountryCode_MX,DiotCountryCode_MX, varchar(10)
+        #mapFields.insert(176,128); //,Type of operation,Operation code used for DIOT declaration.,OperationType_MX,VendorOperationType_MX, int , 0-;1-03: professional services;2-06: rent/lease;3-85: Others;
+        #mapFields.insert(241,129); //,Main contact,The employee responsible for the vendor information,MainContactWorker,smmBusRelAccResponsibleWorker,other
+        #mapFields.insert(250,130); //,Company type,Type of company,CompanyType_MX,CompanyType_MX, int , 0-;1-01: Legal Entity;2-02: legal person;3-03: foreign company;
+        #mapFields.insert(251,131); //,RFC number,RFC - Federal Tax Number.,Rfc_MX,Rfc_MX, varchar(13)
+        #mapFields.insert(252,132); //,CURP number,CURP - Federal Tax Number.,Curp_MX,Curp_MX, varchar(18)
+        #mapFields.insert(253,133); //,State inscription,State inscription number,StateInscription_MX,StateInscription_MX, varchar(30)
+        #mapFields.insert(8064,134);    //,Vendor type,Withholding tax vendor type,TaxWithholdVendorType_TH,TaxWithholdVendorType_TH, int , 0-Blank;1-Domestic;2-Foreign;3-Individual;
+        #mapFields.insert(60001,135);   //,Owner is disabled,Select if the primary owner of the vendor has a disability,DisabledOwned,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(60002,136);   //,Ethnic origin,Identification of the ethnic origin of the person,EthnicOriginId,HcmEthnicOriginId, varchar(15)
+        #mapFields.insert(60003,137);   //,HUBZone,Select if the vendor is located in a HUBZone,HUBZone,NoYes, int , 0-No;1-Yes;
+        #mapFields.insert(60004,138);   //,Owner is a service veteran,Select if the primary owner of the vendor is a service veteran,VeteranOwned,NoYes, int , 0-No;1-Yes;
+        #
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #processData
+        #public boolean processData(container inRecord)
+        #{
+        #    boolean ret;
+        #
+        #    // any validation rules?
+        #
+        #    this.mapData(inRecord);
+        #
+        #    // do any buisness rules here
+        #
+        #    //
+        #    vendTable.insert();
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    this.initMap();
+        #    super();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: JOB
+
+; Microsoft Dynamics AX Job: triImport_updateBomActive unloaded
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #triImport_updateBomActive
+    #static void triImport_updateBomActive(Args _args)
+    #{
+    #   BOMVersion  bomVer;
+    #    BomTable    bom;
+    #    BOM         line;
+    #
+    #    ;
+    #
+    #ttsbegin;
+    #    while select forupdate bom //where bom.triLegacyBomID != ''
+    #    {
+    #        select  line where line.BOMId == bom.BOMId;
+    #        if(!line || line.RecId == 0)
+    #            continue;//        info(strfmt("missing bom lines for Item with type BOM: %1",inventTable.ItemId ));
+    #
+    #
+    #        while select forupdate bomVer where Bomver.BOMId == bom.BOMId
+    #        {
+    #            bomver.Active = noyes::Yes;
+    #            bomVer.Approved = noyes::Yes;
+    #            bomver.ApprovedBy = 'rtren';
+    #            bomVer.update();
+    #
+    #        }
+    #        bom.Approved = noYes::Yes;
+    #        bom.ApprovedBy = 'rtren';
+    #        bom.update();
+    #    } //bom
+    #ttscommit;
+    #}
+  ENDSOURCE
+  PROPERTIES
+    Origin              #{1197773D-A6AB-469F-B15B-2A0C5660FB93}
+  ENDPROPERTIES
+  
+
+***Element: JOB
+
+; Microsoft Dynamics AX Job: triImport_clearBOMImport unloaded
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #triImport_clearBOMImport
+    #static void triImport_clearBOMImport(Args _args)
+    #{
+    #    BOM line;
+    #    BOMVersion bomVer;
+    #    BomTable bom
+    #    ;
+    #
+    #    if (Box::okCancel("are you sure you want to delete BOMs?",
+    #        DialogButton::Cancel) == DialogButton::Cancel )
+    #    {
+    #      return;
+    #    }
+    #
+    #    delete_from bomVer;// where Bomver.BOMId == bom.BOMId;
+    #    delete_from line; //where line.BOMId == bom.BOMId;
+    #    delete_from bom;
+    #
+    #
+    #}
+  ENDSOURCE
+  PROPERTIES
+    Origin              #{F6027FF8-C541-4AD7-9781-E7E8651E6EF1}
+  ENDPROPERTIES
+  
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triTextFileImport_BomLines unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triTextFileImport_BomLines
+    PROPERTIES
+      Name                #triTextFileImport_BomLines
+      Extends             #triTextFileImport
+      Origin              #{502934ED-9904-4981-812C-9E1E93727CDA}
+      LegacyId            #30093
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #BomLines
+        #void BomLines(BOMTable bom, container inRecord)
+        #{
+        #    BOM             line;
+        #    InventDim       dim;
+        #    ItemID          itemID;
+        #    ;
+        #
+        #
+        #    itemID = conpeek(inRecord, #parts);
+        #
+        #    if(!InventTable::exist(itemID) )
+        #        throw error ("Missing Item in InventTable, BOM exists ");
+        #
+        #    ttsbegin;
+        #    line.selectForUpdate();
+        #    line.BOMId          = bom.BOMId;
+        #    line.BOMQty         = str2num(conpeek(inrecord,  #qty));
+        #    line.ItemId         = strfmt(  conpeek(inRecord, #parts));
+        #    line.LineNum        = BOM::nextLineNum(bom.BOMId);
+        #    line.UnitId         = this.setUnitID(line.ItemId);
+        #    line.BOMType        = this.setLineType(line.ItemId);
+        #    line.BOMQtySerie    = 1;
+        #    line.Position       = conpeek(inRecord,#ref);
+        #    line.ProdFlushingPrincip = this.setFinishingPrinciple(line.ItemId);
+        #    dim.InventSiteId    = bom.SiteId;
+        #    dim.InventLocationId = this.setWhse(bom.SiteId);
+        #    line.InventDimId    = inventdim::findDim(dim).inventDimId;
+        #    line.Calculation    = NoYes::Yes;
+        #    line.insert();
+        #    ttscommit;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #public class triTextFileImport_BomLines extends  triTextFileImport
+        #{
+        #
+        #
+        #   //file cols Parent    Parts    Qty    Ref    Start Date    End Date    Archive
+        #    #define.parent(1)
+        #    #define.parts(2)
+        #    #define.qty(3)
+        #    #define.ref(4)
+        #    #define.startDate(5)
+        #    #define.endDate(6)
+        #    #define.archive(7)
+        #
+        #
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #close
+        #void close()
+        #{
+        #    super();
+        #    info("run job to approve boms");
+        #}
+      ENDSOURCE
+      SOURCE #description
+        #ClassDescription description()
+        #{
+        #    ;
+        #
+        #    return 'BOM Line import';
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    Object ret;
+        #
+        #    ret = super();
+        #    dlgInboundPath.visible(false);
+        #    dlgBatchFiles.visible(false);
+        #    dlgBackupPath.visible(false);
+        #
+        #
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    boolean ret;
+        #
+        #    ret = super();
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #processData
+        #boolean processData(container inRecord)
+        #{
+        #    boolean     ret;
+        #    BOMqty      qty;
+        #    itemID      itemId;
+        #    itemId      parentID;
+        #    BOMTable    bom;
+        #    ;
+        #
+        #    itemID = strfmt(  conpeek(inRecord, #parts));
+        #    parentID = strfmt( conPeek(inrecord,#parent));
+        #
+        #    while select Bom  where bom.triLegacyBomID == parentID
+        #    {
+        #        this.BomLines(Bom ,inRecord);
+        #    }
+        #
+        #
+        #    ret = true;
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #setFinishingPrinciple
+        #ProdFlushingPrincipBOM setFinishingPrinciple(ItemId itemId)
+        #{
+        #    ProdFlushingPrincipBOM flushing;
+        #    ;
+        #
+        #    flushing = ProdFlushingPrincipBOM::Finish;
+        #
+        #    return flushing;
+        #}
+      ENDSOURCE
+      SOURCE #setLineType
+        #BOMType setLineType(ItemID itemID)
+        #{
+        #    BOMType     lineType;
+        #    ItemGroupId itemGroupID;
+        #    ;
+        #
+        #    itemGroupID = inventtable::find(itemID).ItemGroupId;
+        #
+        #    if(strupr( substr(itemGroupID,1,3)) == 'SUB' )
+        #        lineType = BOMType::Item;
+        #
+        #    if(strupr( substr(itemGroupID,1,2)) == 'FG' )
+        #        lineType = BOMType::Production;
+        #
+        #    if(strupr( substr(itemGroupID,1,2)) == 'RM' )
+        #        lineType = BOMType::Item;
+        #
+        #    if(strupr( substr(itemGroupID,1,3)) == 'MRO' )
+        #        lineType = BOMType::Item;
+        #
+        #    if(inventtable::find(itemID).Phantom == NoYes::Yes )
+        #        lineType = BOMType::Phantom;
+        #
+        #
+        #    return lineType;
+        #}
+      ENDSOURCE
+      SOURCE #setUnitID
+        #UnitID setUnitID(ItemId itemID)
+        #{
+        #    UnitID UOM;
+        #    ;
+        #
+        #    UOM  = inventTable::find(itemID).BOMUnitId;
+        #
+        #    if(!UOM)
+        #        UOM = 'ea';
+        #
+        #    return UOM;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setWhse
+        #InventLocationId setWhse(InventSiteId siteID)
+        #{
+        #    InventLocationId whse;
+        #    ;
+        #    switch (siteID)
+        #    {
+        #        case 'SB':
+        #            whse = 'SB';
+        #            break;
+        #        case 'MX':
+        #            whse = 'MT';
+        #            break;
+        #        case 'TH':
+        #            whse = 'TH';
+        #    }
+        #
+        #    return whse;
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triTextFileImport_Bom unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triTextFileImport_Bom
+    PROPERTIES
+      Name                #triTextFileImport_Bom
+      Extends             #triTextFileImport
+      Origin              #{B7FA07B9-87FB-42F0-89DF-A60F9237DE27}
+      LegacyId            #30092
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #appendSite
+        #str appendSite(inventSiteid siteID , str rev)
+        #{
+        #    str returnStr;
+        #    str returnRev;
+        #    ;
+        #
+        #    returnRev = stralpha(rev);
+        #    returnRev = strRem(returnRev,'-');
+        #
+        #    returnStr =  '-' + siteID ;
+        #    if ( returnRev)
+        #        returnStr = returnStr  + '-' + strupr(rev);
+        #
+        #    return returnStr;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #public class triTextFileImport_Bom extends  triTextFileImport
+        #{
+        #   //file cols Parent    Parts    Qty    Ref    Start Date    End Date    Archive
+        #    #define.partNumber(1)
+        #    #define.revision(3)
+        #    #define.released(2)
+        #
+        #    int bomInsertedSB;
+        #    int bomInsertedMX;
+        #    int bomInsertedTH;
+        #}
+      ENDSOURCE
+      SOURCE #close
+        #void close()
+        #{
+        #    super();
+        #    info(strfmt('%1 SB boms created',bomInsertedSB));
+        #    info(strfmt('%1 MX boms created',bomInsertedMX));
+        #    info(strfmt('%1 TH boms created',bomInsertedTH));
+        #}
+      ENDSOURCE
+      SOURCE #description
+        #ClassDescription description()
+        #{
+        #    ;
+        #
+        #    return 'BOM import';
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    Object ret;
+        #
+        #    ret = super();
+        #    dlgInboundPath.visible(false);
+        #    dlgBatchFiles.visible(false);
+        #    dlgBackupPath.visible(false);
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #Header
+        #private void Header(container inRecord, InventSiteId siteID)
+        #{
+        #    BOMTable    bom;
+        #    BOMVersion  bomVer;
+        #    BOMVersion  bomVerLast;
+        #    ItemId      itemId;
+        #
+        #    ;
+        #    // determine if this bom exists.
+        #    itemId =  conPeek(inrecord,#partNumber);
+        #    if(!InventTable::checkExist(itemID))
+        #        throw error("Item is missing in InventTable");
+        #
+        #    bom = BOMTable::findLegacy( conPeek(inrecord,#partNumber),siteID,true);
+        #
+        #    if(! bom || bom.RecId == 0 )
+        #    {
+        #        // insert new bom header
+        #        ttsbegin;
+        #        bom.clear();
+        #        bom.BOMId = conPeek(inrecord,#partNumber) + this.appendSite(siteID ,(conPeek(inrecord,#revision)));
+        #        bom.Name  = inventTable::find(conPeek(inrecord,#partNumber)).ItemName;
+        #        bom.SiteId = siteID;
+        #        bom.triLegacyBomID = conPeek(inrecord,#partNumber);
+        #        bom.insert();
+        #        ttscommit;
+        #
+        #        ttsbegin;
+        #        bomVer.selectForUpdate();
+        #        bomVer.initFromBOMTable(Bom);
+        #        bomVer.BOMId    = bom.BOMId;
+        #        bomVer.ItemId   = conPeek(inrecord,#partNumber);
+        #        bomVer.Name     = bom.BOMId;//inventTable::find(conPeek(inrecord,#partNumber)).ItemName;
+        #        bomVer.FromDate = str2date(conPeek(inrecord,#released) , 213);
+        #        bomVer.insert();
+        #        if( siteID == 'SB')
+        #            bomInsertedSB++;
+        #
+        #         if(siteID == "MX")
+        #            bomInsertedMX++;
+        #
+        #         IF(siteID == "TH")
+        #            bomInsertedTH++;
+        #        ttscommit;
+        #    }
+        #    else
+        #    {
+        #        ttsbegin;
+        #        //  update version
+        #        select forupdate bomVer where bomVer.BOMId == bom.BOMId;
+        #
+        #        bom.BOMId = conPeek(inrecord,#partNumber) + this.appendSite(siteID ,(conPeek(inrecord,#revision)));
+        #        //bom.Name  = bom.BOMId;
+        #        bom.update();
+        #
+        #        bomVer.BOMId    = conPeek(inrecord,#partNumber) + this.appendSite(siteID ,(conPeek(inrecord,#revision)));
+        #        //bomVer.Name     = inventTable::find(conPeek(inrecord,#partNumber)).ItemName;
+        #        bomVer.FromDate = str2date(conPeek(inrecord,#released) , 213);
+        #        bomVer.update();
+        #        ttscommit;
+        #    }
+        #
+        #
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #processData
+        #boolean processData(container inRecord)
+        #{
+        #    boolean ret;
+        #     itemID  itemId;
+        #
+        #    ;
+        #
+        #
+        #
+        #    //the Item Group is NOT “SUB-LLIA” or “FG-LLIA
+        #    itemID = strfmt(  conpeek(inRecord, #partNumber));
+        #    if(inventTable::find(itemID).ItemGroupId == 'SUB-LLIA' || inventTable::find(itemId).ItemGroupId == 'FG-LLIA')
+        #    {
+        #        this.Header(inRecord,'TH');
+        #    }
+        #    else
+        #    {
+        #        // each record comming in will be created for each site
+        #        this.Header(inRecord,'SB');
+        #
+        #        this.Header(inRecord,'MX');
+        #    }
+        #    ret = true;
+        #    return ret;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: PRN
+
+; Microsoft Dynamics AX Project : _tri_DataFileImport_classes unloaded
+; --------------------------------------------------------------------------------
+  PROJECTVERSION 2
+  
+  PROJECT #_tri_DataFileImport_classes
+  SHARED
+  PROPERTIES
+    Name                #_tri_DataFileImport_classes
+    Origin              #{C52F1B29-9AB9-431A-ADF3-B836BD863353}
+  ENDPROPERTIES
+  
+    PROJECTCLASS 
+    GROUP #vendors
+      PROPERTIES
+        Name                #vendors
+        ProjectGroupType    #All
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024405
+        NODETYPE 329
+        NAME #triTextFileImport_Vendors
+      ENDNODE
+      ENDGROUP
+      
+    GROUP #Boms
+      PROPERTIES
+        Name                #Boms
+        ProjectGroupType    #All
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #triImport_updateBomActive
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #triImport_clearBOMImport
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 30093
+        NODETYPE 329
+        NAME #triTextFileImport_BomLines
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 30092
+        NODETYPE 329
+        NAME #triTextFileImport_Bom
+      ENDNODE
+      ENDGROUP
+      
+  ENDPROJECT
+  
+
+***Element: END
