@@ -161,6 +161,8 @@ Formatversion: 1
         #    int         skippedRecs;
         #    Filename    inboundFile;
         #
+        #
+        #
         #    triFieldSeparator   fieldSeparator;
         #    str                 delimiterValue;
         #    StartDateTime       processStart;
@@ -833,6 +835,33 @@ Formatversion: 1
         #
         #}
         #
+      ENDSOURCE
+      SOURCE #fieldType
+        #public Types fieldType(TableId _tableID, int _fieldId  )
+        #{
+        #
+        #    DictTable       dictTable = new DictTable(_tableID );
+        #    SysDictField    sysDictField;
+        #    DictType        dictType;
+        #
+        #
+        #    sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(_fieldID));
+        #
+        #    if( sysDictField.typeId() || sysDictField.enumId())
+        #    {
+        #        dictType = new DictType(sysDictField.typeId());
+        #    }
+        #
+        #    if(dictType)
+        #    {
+        #        return dictType.baseType();
+        #    }
+        #    else
+        #    {
+        #        return Types::String;
+        #    }
+        #
+        #}
       ENDSOURCE
     ENDMETHODS
   ENDCLASS
@@ -1823,7 +1852,7 @@ Formatversion: 1
     Origin              #{4316C154-64A9-412D-89EC-18952A17792B}
   ENDPROPERTIES
   
-    PROJECTCLASS 
+    PROJECTCLASS ProjectNode
     GROUP #testProcess
       PROPERTIES
         Name                #testProcess
