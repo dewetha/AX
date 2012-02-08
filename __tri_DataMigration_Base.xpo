@@ -3,6 +3,42 @@ Formatversion: 1
 
 ***Element: DBT
 
+; Microsoft Dynamics AX Table : triDMVendContact unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  TABLE #triDMVendContact
+    EnforceFKRelation 1
+    PROPERTIES
+      Name                #triDMVendContact
+      CreateRecIdIndex    #Yes
+      PrimaryIndex        #SurrogateKey
+      ClusterIndex        #SurrogateKey
+      Origin              #{0AC56138-2F23-471B-BCCB-4C7CEBF5B5E5}
+    ENDPROPERTIES
+    
+    FIELDS
+    ENDFIELDS
+    GROUPS
+    ENDGROUPS
+    
+    INDICES
+    ENDINDICES
+    FULLTEXTINDICES
+    ENDFULLTEXTINDICES
+    REFERENCES
+    ENDREFERENCES
+    
+    DELETEACTIONS
+    ENDDELETEACTIONS
+    
+    METHODS
+    ENDMETHODS
+  ENDTABLE
+  
+
+***Element: DBT
+
 ; Microsoft Dynamics AX Table : VendTable unloaded
 ; --------------------------------------------------------------------------------
   TABLEVERSION 1
@@ -1493,6 +1529,17 @@ Formatversion: 1
           Table               #VendTable
           Origin              #{F2EE531B-4F17-4C7D-A236-4A67B587722D}
           ExtendedDataType    #triDMlegacyID
+          StringSize          #40
+        ENDPROPERTIES
+        
+      FIELD #triDMlegacyID1
+        STRING
+        PROPERTIES
+          Name                #triDMlegacyID1
+          Table               #VendTable
+          Origin              #{2E831587-6C0F-4923-8551-8869D5568706}
+          ExtendedDataType    #triDMlegacyID
+          StringSize          #40
         ENDPROPERTIES
         
       FIELD #UseCashDisc
@@ -7358,6 +7405,1266 @@ Formatversion: 1
     ENDMETHODS
   ENDTABLE
   
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendors</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS9449</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The VendTable table contains vendors for accounts payable.</Table:Field>
+    <Table:Field name="Description">{locked}</Table:Field>
+    <Table:Field name="LabelId">@SYS126056</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Birth county</Table:Field>
+    <Table:Field name="Description">it-IT</Table:Field>
+    <Table:Field name="LabelId">@SYS343696</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter birth province of the vendor</Table:Field>
+    <Table:Field name="Description">it-IT</Table:Field>
+    <Table:Field name="LabelId">@SYS343632</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Birth date</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS78855</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter birth date of the vendor. Used in Certification report.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81760</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Birth place</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81761</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter birth place of the vendor. Used in Certification report.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81762</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Terms of cash discount on invoices from the vendor.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS15767</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Allow override of settings per purchase order</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184107</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Should it be possible to override change management settings per purchase order?</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184038</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Override settings</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184036</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Should it be possible to override change management setting per vendor?</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184037</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The currency used by the vendor for invoicing</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS20786</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor's address</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11555</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Number of the vendor's mobile phone</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS28167</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Account number in customer table if vendor is also a customer.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS1414</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Language used in forms to the vendor</Table:Field>
+    <Table:Field name="Description">'Form' used in the sense form letter, ie document.</Table:Field>
+    <Table:Field name="LabelId">@SYS9756</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor name or company name</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS28170</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Offset account</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11162</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Default offset account suggested in daily journal.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11446</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor phone number.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS297</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Print management</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS54502</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Pay when paid</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@PSA3342</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Is pay-when-paid type?</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@PSA10197</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor fax number</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS6816</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor telex number</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS137</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Specify normal mode of delivery for vendor.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS6488</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Total discount attaches the vendor to a total discount group.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS893</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter fiscal code for the vendor.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS79239</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Warehouse proposal for the vendor</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS16977</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Site proposal for the vendor.</Table:Field>
+    <Table:Field name="Description">Help text for site field in the vendor table</Table:Field>
+    <Table:Field name="LabelId">@SYS109382</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor account used when invoicing</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS28168</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Line discount group used for purchase</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS7138</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Multiline discount</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11440</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Multiline discount used to control discounts across several purchase lines</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS8892</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Offset account type</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS23950</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Method of payment code for vendor payment proposal</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS12830</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Code for terms in connection with payment</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS57525</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor's price group used for price proposal upon purchase</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS5185</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Residence foreign country/region</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81763</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter the country/region of residence for the vendor. Used in Certification report.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81764</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Second TIN</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS84761</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Select Yes to indicate notification by the IRS twice within three calendar years that the vendor (payee) provided an incorrect name and/or TIN combination</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS84762</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Calculate withholding tax</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81757</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Shall withholding tax be calculated for vendor payment transactions in journals?</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81758</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Withholding tax group, which will be used as default for vendor payment transactions in journals.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81759</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor's tax exempt number for extracting statistics</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS1339</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Group</Table:Field>
+    <Table:Field name="Description">[VendorOnboardingPhase1]</Table:Field>
+    <Table:Field name="LabelId">@SYS3815</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor group that the vendor is attached to.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS17189</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Address selection</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS88672</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Administration</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS9853</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Balance by currency</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS24829</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Budget</Table:Field>
+    <Table:Field name="Description">Pertains to finance</Table:Field>
+    <Table:Field name="LabelId">@SYS15436</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">More information</Table:Field>
+    <Table:Field name="Description">CRM\CaseListPage</Table:Field>
+    <Table:Field name="LabelId">@SYS314356</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Change management for purchase orders</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184109</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Company chain</Table:Field>
+    <Table:Field name="Description">Field Group label</Table:Field>
+    <Table:Field name="LabelId">@SYS105794</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Contact information</Table:Field>
+    <Table:Field name="Description">This is the name of a field group or other.</Table:Field>
+    <Table:Field name="LabelId">@SYS21663</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Credit</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS7084</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Currency</Table:Field>
+    <Table:Field name="Description">[VendorOnboardingPhase1]</Table:Field>
+    <Table:Field name="LabelId">@SYS7572</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Delivery</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS4508</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Financial dimensions</Table:Field>
+    <Table:Field name="Description">Financial dimension framework</Table:Field>
+    <Table:Field name="LabelId">@SYS342338</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Diot Information</Table:Field>
+    <Table:Field name="Description">MX: MasterData.</Table:Field>
+    <Table:Field name="LabelId">@SYS312478</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identification</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS5711</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Intercompany</Table:Field>
+    <Table:Field name="Description">Intercompany used in the sense 'intra-group'.</Table:Field>
+    <Table:Field name="LabelId">@SYS74106</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Invoice</Table:Field>
+    <Table:Field name="Description">An invoice, not to invoice</Table:Field>
+    <Table:Field name="LabelId">@SYS12128</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Invoice matching</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS113690</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Main contact</Table:Field>
+    <Table:Field name="Description">Field Group label</Table:Field>
+    <Table:Field name="LabelId">@SYS105795</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Memo</Table:Field>
+    <Table:Field name="Description">Field Group label</Table:Field>
+    <Table:Field name="LabelId">@SYS105796</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Notification to the central bank</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67156</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Payment</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS828</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Posting</Table:Field>
+    <Table:Field name="Description">da: Kontering</Table:Field>
+    <Table:Field name="LabelId">@SYS12919</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Purchase, discount</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS13267</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Purchase order</Table:Field>
+    <Table:Field name="Description">purchase order</Table:Field>
+    <Table:Field name="LabelId">@SYS15812</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Sales tax</Table:Field>
+    <Table:Field name="Description">Tax = Sales tax</Table:Field>
+    <Table:Field name="LabelId">@SYS5878</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Segment</Table:Field>
+    <Table:Field name="Description">Field Group label</Table:Field>
+    <Table:Field name="LabelId">@SYS105797</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Subsegment</Table:Field>
+    <Table:Field name="Description">Field Group label</Table:Field>
+    <Table:Field name="LabelId">@SYS105798</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Supplementary item</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS58240</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Tax 1099 options</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS84747</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Tax registration</Table:Field>
+    <Table:Field name="Description">MX: MasterData.</Table:Field>
+    <Table:Field name="LabelId">@SYS312490</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor invoice declaration</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS126906</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor profile</Table:Field>
+    <Table:Field name="Description">AP Vendor Attributes</Table:Field>
+    <Table:Field name="LabelId">@SYS114264</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Business details</Table:Field>
+    <Table:Field name="Description">VendProfile - Business details group</Table:Field>
+    <Table:Field name="LabelId">@SYS313733</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Sales tax</Table:Field>
+    <Table:Field name="Description">VendProfile - Sales tax group</Table:Field>
+    <Table:Field name="LabelId">@SYS313734</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Tax 1099 options</Table:Field>
+    <Table:Field name="Description">VendProfile - Tax 1099 options group</Table:Field>
+    <Table:Field name="LabelId">@SYS313735</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Category cannot be specified in an employee/project relation</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS74258</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Withholding tax</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS7372</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Party</Table:Field>
+    <Table:Field name="Description">The party is the general purpose business definition which represents either an organization or a person which is involved in the business relationship</Table:Field>
+    <Table:Field name="LabelId">@SYS126057</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Subsegment</Table:Field>
+    <Table:Field name="Description">{locked}</Table:Field>
+    <Table:Field name="LabelId">@SYS126058</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Tax exempt</Table:Field>
+    <Table:Field name="Description">{locked}</Table:Field>
+    <Table:Field name="LabelId">@SYS126060</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Bank account</Table:Field>
+    <Table:Field name="Description">{locked}</Table:Field>
+    <Table:Field name="LabelId">@SYS123560</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Payment mode specification</Table:Field>
+    <Table:Field name="Description">{locked}</Table:Field>
+    <Table:Field name="LabelId">@SYS126061</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor "%1" has a hold for "%2".</Table:Field>
+    <Table:Field name="Description">error message</Table:Field>
+    <Table:Field name="LabelId">@SYS128411</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor "%1" has a hold for "%2" until %3.</Table:Field>
+    <Table:Field name="Description">error message</Table:Field>
+    <Table:Field name="LabelId">@SYS128412</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor %1 is stopped for %2.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS22005</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Invoice %1 was already used on date %2.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS50887</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Product receipt %1 was already used as on date %2.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS50926</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Another vendor exists with the same value in the field %1.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS79301</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">A financial dimension value is based on the %1 record and has been used on a  transaction. You cannot delete the %1 record</Table:Field>
+    <Table:Field name="Description">Financial dimension framework</Table:Field>
+    <Table:Field name="LabelId">@SYS134392</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The vendor number field is not empty. Do you want to overwrite it with an organization number?</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS113287</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The organization number is not consistent with the beginning of the vendor number '%1'. Do you want to cancel the change?</Table:Field>
+    <Table:Field name="Description">error message for wrong formatted Organization number.</Table:Field>
+    <Table:Field name="LabelId">@SYS113288</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">You cannot change %1 from %2 to %3 because you do not have permission to update %4.  %1 has been changed back to %2.</Table:Field>
+    <Table:Field name="Description">Used in update method of vendtable table when a user attempts to change tax id type but does not have access to Tax1099RegNum field</Table:Field>
+    <Table:Field name="LabelId">@SYS327721</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor is specified as invoice account of other vendor</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67134</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">%1 %2 is not valid.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS120870</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The credit limit cannot be a negative amount</Table:Field>
+    <Table:Field name="Description">Vendor profile</Table:Field>
+    <Table:Field name="LabelId">@SYS69970</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enterprise Number only valid for Belgian Company.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS117686</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The organization number is rejected by the check number control.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS113286</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">You have entered a release date that is in the past.</Table:Field>
+    <Table:Field name="Description">Warning message for release date in the past.</Table:Field>
+    <Table:Field name="LabelId">@SYS114595</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The line matching policy cannot be changed to a lower line matching policy than %1.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS130454</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">%1 this operation code is not valid for foreign vendors.</Table:Field>
+    <Table:Field name="Description">MX: MasterData.</Table:Field>
+    <Table:Field name="LabelId">@SYS312599</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Validating %1 data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS84735</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor (payee)</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS84767</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Federal tax ID hasn't been specified for vendor %1</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS104370</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Tax exempt number must be specified.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS54494</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">If the field %1 is activated the field %2 must be specified.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81766</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Please choose a contact from the list</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS136784</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Tax group for vendor must be specified.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS113298</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Credit limit exceeded: Balance before %1, Invoice %2, Balance after %3, Credit limit %4</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS21487</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Credit limit exceeded: Balance %1, Order total %2, Account total %3, Credit limit %4, Exceeded %5</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS25668</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enumerated text %1 does not exist.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS12580</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor %1 does not exist.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11817</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">A W-9 form is missing for this vendor invoice account: %1. You may still post the invoice, or you may hold it while you wait for a W-9 form from the vendor.</Table:Field>
+    <Table:Field name="Description">Vendor invoice account on an invoice does not have the W-9 received checked.</Table:Field>
+    <Table:Field name="LabelId">@SYS131114</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">One-time vendor account specified in vendor parameters does not exist in the vendor table.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS57595</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Company %1 does not exist.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI9</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Account %1 does not exist.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS9779</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">%1 set to %2 for %3 %4.</Table:Field>
+    <Table:Field name="Description">Confirmation message when putting vendors on hold through drop dialog in vendor list page</Table:Field>
+    <Table:Field name="LabelId">@SYS326120</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: DBT
 
@@ -7374,6 +8681,7 @@ Formatversion: 1
       TitleField1         #ImportID
       TitleField2         #ImportDesc
       CreateRecIdIndex    #Yes
+      SaveDataPerCompany  #No
       PrimaryIndex        #SurrogateKey
       ClusterIndex        #SurrogateKey
       Origin              #{10D46851-06C7-42B7-83CE-69E6318A6587}
@@ -7481,6 +8789,26 @@ Formatversion: 1
     ENDMETHODS
   ENDTABLE
   
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">AX Primary Table</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI5</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">main table that staging maps too.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI6</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: DBT
 
@@ -7509,6 +8837,16 @@ Formatversion: 1
     ENDPROPERTIES
     
     FIELDS
+      FIELD #ABC
+        ENUM
+        PROPERTIES
+          Name                #ABC
+          HelpText            #@sys80134
+          Table               #triDMVendTable
+          Origin              #{F5A0936D-5382-48BC-8C55-64E86FCC03D7}
+          EnumType            #ABC
+        ENDPROPERTIES
+        
       FIELD #AccountNum
         STRING
         PROPERTIES
@@ -8133,6 +9471,15 @@ Formatversion: 1
           StringSize          #50
         ENDPROPERTIES
         
+      FIELD #NumberOfEmployees
+        INT
+        PROPERTIES
+          Name                #NumberOfEmployees
+          Table               #triDMVendTable
+          Origin              #{842A3AFF-B40F-4884-B1DF-6E61DBD0C8B2}
+          ExtendedDataType    #DirOrganizationNumberOfEmployees
+        ENDPROPERTIES
+        
       FIELD #numberSequenceGroup
         STRING
         PROPERTIES
@@ -8199,6 +9546,16 @@ Formatversion: 1
           Table               #triDMVendTable
           Origin              #{F202552B-571C-4635-AB67-0DF8BEAE2A10}
           ExtendedDataType    #OrgId
+        ENDPROPERTIES
+        
+      FIELD #OrgNumber
+        STRING
+        PROPERTIES
+          Name                #OrgNumber
+          Table               #triDMVendTable
+          Origin              #{072B38EC-1A75-4FDF-9474-6A991BC314FA}
+          ExtendedDataType    #DirOrganizationNumber
+          StringSize          #25
         ENDPROPERTIES
         
       FIELD #Party
@@ -8486,6 +9843,7 @@ Formatversion: 1
           Table               #triDMVendTable
           Origin              #{9ED30E2F-B38A-4BE6-BF99-63C0798481C5}
           ExtendedDataType    #triDMlegacyID
+          StringSize          #40
         ENDPROPERTIES
         
       FIELD #triDMstatus
@@ -8642,6 +10000,406 @@ Formatversion: 1
     ENDMETHODS
   ENDTABLE
   
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Filter for ABC code.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@sys80134</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Birth county</Table:Field>
+    <Table:Field name="Description">it-IT</Table:Field>
+    <Table:Field name="LabelId">@SYS343696</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter birth province of the vendor</Table:Field>
+    <Table:Field name="Description">it-IT</Table:Field>
+    <Table:Field name="LabelId">@SYS343632</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Birth date</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS78855</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter birth date of the vendor. Used in Certification report.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81760</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Birth place</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81761</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter birth place of the vendor. Used in Certification report.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81762</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Terms of cash discount on invoices from the vendor.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS15767</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Allow override of settings per purchase order</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184107</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Should it be possible to override change management settings per purchase order?</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184038</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Override settings</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184036</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Should it be possible to override change management setting per vendor?</Table:Field>
+    <Table:Field name="Description">Versioning, change management</Table:Field>
+    <Table:Field name="LabelId">@SYS184037</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The currency used by the vendor for invoicing</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS20786</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Specify normal mode of delivery for vendor.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS6488</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Total discount attaches the vendor to a total discount group.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS893</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter fiscal code for the vendor.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS79239</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Warehouse proposal for the vendor</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS16977</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Site proposal for the vendor.</Table:Field>
+    <Table:Field name="Description">Help text for site field in the vendor table</Table:Field>
+    <Table:Field name="LabelId">@SYS109382</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor account used when invoicing</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS28168</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Language used in forms to the vendor</Table:Field>
+    <Table:Field name="Description">'Form' used in the sense form letter, ie document.</Table:Field>
+    <Table:Field name="LabelId">@SYS9756</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Line discount group used for purchase</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS7138</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Multiline discount</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11440</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Multiline discount used to control discounts across several purchase lines</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS8892</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor name or company name</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS28170</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Offset account type</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS23950</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Offset account</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11162</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Default offset account suggested in daily journal.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11446</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Method of payment code for vendor payment proposal</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS12830</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Code for terms in connection with payment</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS57525</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor's price group used for price proposal upon purchase</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS5185</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Residence foreign country/region</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81763</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter the country/region of residence for the vendor. Used in Certification report.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81764</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Second TIN</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS84761</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Select Yes to indicate notification by the IRS twice within three calendar years that the vendor (payee) provided an incorrect name and/or TIN combination</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS84762</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Calculate withholding tax</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81757</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Shall withholding tax be calculated for vendor payment transactions in journals?</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81758</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Withholding tax group, which will be used as default for vendor payment transactions in journals.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81759</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor's tax exempt number for extracting statistics</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS1339</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Group</Table:Field>
+    <Table:Field name="Description">[VendorOnboardingPhase1]</Table:Field>
+    <Table:Field name="LabelId">@SYS3815</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Vendor group that the vendor is attached to.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS17189</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: DBT
 
@@ -8654,6 +10412,7 @@ Formatversion: 1
     PROPERTIES
       Name                #triDMFieldMapping
       CreateRecIdIndex    #Yes
+      SaveDataPerCompany  #No
       Origin              #{5F3940B4-EB1B-4BF3-9B2B-EC92144FD8C1}
     ENDPROPERTIES
     
@@ -8802,6 +10561,7 @@ Formatversion: 1
       Label               #@TRI7
       HelpText            #@TRI8
       Origin              #{1BFF4993-A264-4E13-9835-AA184135252B}
+      StringSize          #40
     ENDPROPERTIES
     
     TYPEELEMENTS
@@ -8815,6 +10575,26 @@ Formatversion: 1
     
   ENDUSERTYPE
   
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">legacy ID</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI7</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Primary ID from original system.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI8</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: UTS
 
@@ -8976,6 +10756,7 @@ Formatversion: 1
     PROPERTIES
       Name                #triDM_ProcessStageData
       Extends             #RunBaseBatch
+      Origin              #{E61760CE-3623-46CB-8B1F-DE4BB74CFD01}
     ENDPROPERTIES
     
     METHODS
@@ -9042,6 +10823,7 @@ Formatversion: 1
     PROPERTIES
       Name                #triDMTextFileImport
       Extends             #RunBaseBatch
+      Origin              #{B02166B1-1BF4-48B6-A3DB-A352E76704DA}
     ENDPROPERTIES
     
     METHODS
@@ -9614,6 +11396,26 @@ Formatversion: 1
       ENDSOURCE
     ENDMETHODS
   ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Path %1 does not exist</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS55831</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Records: %1</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS52615</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: FRM
 
@@ -9914,12 +11716,25 @@ FORM #triDMDataMigration
         ENDMETHODS
       ENDCONTROL 
       
+      CONTROL BUTTONGROUP
+        PROPERTIES
+          Name                #ButtonGroup1
+          Top                 #Top edge
+          ElementPosition     #1207959549
+          HierarchyParent     #Group
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
       CONTROL GRID
         PROPERTIES
           Name                #Grid
+          Top                 #Top edge
           Width               #Column width
           Height              #Column height
-          ElementPosition     #1073741822
+          ElementPosition     #805306366
           HierarchyParent     #Group
           DataSource          #triDMImport
         ENDPROPERTIES
@@ -9972,8 +11787,8 @@ FORM #triDMDataMigration
       CONTROL MENUITEMBUTTON
         PROPERTIES
           Name                #triDMmapFileds
-          ElementPosition     #858993458
-          HierarchyParent     #ButtonGroup
+          ElementPosition     #1431655764
+          HierarchyParent     #ButtonGroup1
           DataSource          #triDMImport
           MenuItemName        #triDMmapFileds
         ENDPROPERTIES
@@ -10105,6 +11920,16 @@ ENDPERMISSIONS
 
 ENDFORM
 
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Stage Data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI2</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: FTM
 
@@ -10141,6 +11966,26 @@ ENDFORM
     
   ENDMENUITEM
   
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Map Fields</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI3</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">map file columns to table fields</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI4</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: FTM
 
@@ -10201,6 +12046,92 @@ ENDFORM
   ENDSOURCE
   PROPERTIES
     Origin              #{4663500A-3282-4CF9-9A6B-CDC0A8D3BB78}
+  ENDPROPERTIES
+  
+
+***Element: JOB
+
+; Microsoft Dynamics AX Job: utilScriptTableSpec unloaded
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #utilScriptTableSpec
+    #    static void utilScriptTableSpec(Args _args)
+    #    {
+    #        #define.NewLine('\n')
+    #        DictTable dictTable = new DictTable(tableNum(LedgerJournalTrans)); // change table name here
+    #
+    #        SysDictField                sysDictField;
+    #        SysDictType                 sysDictType;
+    #        DictType                    dictType;
+    #        DictEnum                    dictEnum;
+    #        str                         label;
+    #        int                         i;
+    #        str                         comment;
+    #        int                         countValues;
+    #        Counter                     counter;
+    #
+    #        setPrefix(dictTable.name());
+    #        info( "field id,form Label,help text,table field name, EDT name,size ");
+    #
+    #        for (i=1; i<=dictTable.fieldCnt(); i++)
+    #        {
+    #            sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
+    #            comment = '';
+    #            label = int2str( sysDictField.id()) + ","  ; // field id
+    #            label = label + sysDictField.label() + "," ; // form label
+    #            label = label + strReplace( strReplace( sysDictField.help(), '\r\n', ' '), ',', ' ') + "," ; // help text
+    #            label = label + sysDictField.name() + "," ; // table field name
+    #
+    #            if( sysDictField.typeId() || sysDictField.enumId())
+    #            {
+    #                dictType = new DictType(sysDictField.typeId());
+    #
+    #                if (dictType && dictType.baseType() == Types::Enum || sysDictField.enumId())
+    #                {
+    #                    if (dictType)
+    #                    {
+    #                        dictEnum = new DictEnum(dictType.enumId());
+    #                    }
+    #                    else
+    #                    {
+    #                        dictEnum = new DictEnum(sysDictField.enumId());
+    #                    }
+    #                    countValues = dictEnum.values();
+    #
+    #                    for (counter=0; counter<countValues; counter++)
+    #                    {
+    #                        comment += int2str(counter) + "-" + dictEnum.index2Label(counter);
+    #                        comment += ";";
+    #                    }
+    #                    label = label + dictEnum.name() + ", int " + ", "; //+ int2str(sysDictField.fieldSize()); // enum and size
+    #                    label = label + comment;
+    #
+    #                }
+    #                else
+    #                {
+    #
+    #                        if(DictType.baseType() == Types::String )
+    #                        {
+    #                            label = label + dictType.name() + ", varchar(" + int2str(sysDictField.fieldSize()) + ")"  ; // edt and size
+    #
+    #                        }
+    #                        else
+    #                        {
+    #
+    #                            label = label + dictType.name() + ",other";
+    #                        }
+    #
+    #                }
+    #
+    #            }
+    #            info( label);
+    #        }
+    #
+    #    }
+  ENDSOURCE
+  PROPERTIES
+    Origin              #{FDACE955-20FF-40E5-8599-3D729C88056C}
   ENDPROPERTIES
   
 
@@ -10278,7 +12209,7 @@ ENDFORM
     Origin              #{D26FE3A7-5D56-4A9C-ABAD-6C8D65AA3054}
   ENDPROPERTIES
   
-    PROJECTCLASS ProjectNode
+    PROJECTCLASS 
     GROUP #DataDictionary
       PROPERTIES
         Name                #DataDictionary
@@ -10295,6 +12226,13 @@ ENDFORM
           PreventEditProperties #No
         ENDPROPERTIES
         
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 44
+          UTILOBJECTID 101033
+          NODETYPE 204
+          NAME #triDMVendContact
+        ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
@@ -10509,6 +12447,13 @@ ENDFORM
         UTILOBJECTID 0
         NODETYPE 215
         NAME #utilScriptFillDataMigrationTable
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #utilScriptTableSpec
       ENDNODE
       BEGINNODE
         FILETYPE 0
