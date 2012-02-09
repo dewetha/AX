@@ -10496,21 +10496,31 @@ Formatversion: 1
     ENDDELETEACTIONS
     
     METHODS
-      SOURCE #FomHelpText
-        #display str FomHelpText()
-        #{
-        #    str ret;
-        #    //todo add code
-        #
-        #    return ret;
-        #
-        #}
-      ENDSOURCE
       SOURCE #FormFieldName
         #display str FormFieldName()
         #{
         #    str ret;
-        #    //todo add code
+        #    DictTable dictTable = new DictTable(this.refTableNum);
+        #    SysDictField                sysDictField;
+        #
+        #
+        #    sysDictField = new SysDictField(dictTable.id(), this.refFieldID);
+        #    ret = sysDictField.label();
+        #info(ret);
+        #    return ret;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #FormHelpText
+        #display str FormHelpText()
+        #{
+        #    str ret;
+        #    DictTable dictTable = new DictTable(this.refTableNum);
+        #    SysDictField                sysDictField;
+        #
+        #
+        #    sysDictField = new SysDictField(dictTable.id(), this.refFieldID);
+        #    ret = strReplace( strReplace( sysDictField.help(), '\r\n', ' '), ',', ' '); // help text
         #
         #    return ret;
         #
@@ -11451,6 +11461,14 @@ FORM #triDMmapFields
         ENDFIELDLIST
       ENDOBJECTPOOL
       METHODS
+        SOURCE #init
+          #public void init()
+          #{
+          #    super();
+          #    this.cacheAddMethod(tablemethodstr(triDMFieldMapping,FormHelpText));
+          #    this.cacheAddMethod(tablemethodstr(triDMFieldMapping,FormFieldName));
+          #}
+        ENDSOURCE
       ENDMETHODS
     ENDDATASOURCE
   ENDOBJECTBANK
@@ -11513,7 +11531,7 @@ FORM #triDMmapFields
           ElementPosition     #1610612730
           HierarchyParent     #Grid
           DataSource          #triDMFieldMapping
-          DataMethod          #FomHelpText
+          DataMethod          #FormHelpText
         ENDPROPERTIES
         
         METHODS
@@ -12059,7 +12077,7 @@ ENDFORM
     #    static void utilScriptTableSpec(Args _args)
     #    {
     #        #define.NewLine('\n')
-    #        DictTable dictTable = new DictTable(tableNum(LedgerJournalTrans)); // change table name here
+    #        DictTable dictTable = new DictTable(tableNum(LogisticsPostalAddress)); // change table name here
     #
     #        SysDictField                sysDictField;
     #        SysDictType                 sysDictType;
@@ -12209,7 +12227,7 @@ ENDFORM
     Origin              #{D26FE3A7-5D56-4A9C-ABAD-6C8D65AA3054}
   ENDPROPERTIES
   
-    PROJECTCLASS 
+    PROJECTCLASS ProjectNode
     GROUP #DataDictionary
       PROPERTIES
         Name                #DataDictionary
