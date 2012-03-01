@@ -2752,50 +2752,6 @@ Formatversion: 1
     ENDDELETEACTIONS
     
     METHODS
-      SOURCE #initFromStageTable
-        #public void initFromStageTable(triDMContact _tbl)
-        #{
-        #    this.AssistantName          = _tbl.AssistantName;
-        #    this.AssistantPhone         = _tbl.AssistantPhone;
-        #    this.BillingInformation     = _tbl.BillingInformation;
-        #    this.Character              = _tbl.Character;
-        #    this.ComputerNetworkName    = _tbl.ComputerNetworkName;
-        #    this.ContactForParty        = _tbl.ContactForParty;
-        #    this.ContactPersonId        = _tbl.ContactPersonId;
-        #    this.ContactPersonParentId  = _tbl.ContactPersonParentId;
-        #    this.CustAccount            = _tbl.CustAccount;
-        #    this.Decision               = _tbl.Decision;
-        #    this.Department             = _tbl.Department;
-        #    this.DirectMail             = _tbl.DirectMail;
-        #    this.DocuGreeting1          = _tbl.DocuGreeting1;
-        #    this.DocuGreeting2          = _tbl.DocuGreeting2;
-        #    this.DocuIntro1             = _tbl.DocuIntro1;
-        #    this.DocuIntro2             = _tbl.DocuIntro2;
-        #    this.Function               = _tbl.Function;
-        #    this.GovernmentIDNumber     = _tbl.GovernmentIDNumber;
-        #    this.Imported               = _tbl.Imported;
-        #    this.Inactive               = _tbl.Inactive;
-        #    this.LastEditAxDateTime     = _tbl.LastEditAxDateTime;
-        #    this.Loyalty                = _tbl.Loyalty;
-        #    this.MainResponsibleWorker  = _tbl.MainResponsibleWorker;
-        #    this.Memo                   = _tbl.Memo;
-        #    this.Mileage                = _tbl.Memo;
-        #    this.OfficeLocation         = _tbl.OfficeLocation;
-        #    this.OrganizationalIDNumber = _tbl.OrganizationalIDNumber;
-        #    this.OutlookCategories      = _tbl.OutlookCategories;
-        #    this.Party                  = _tbl.Party;
-        #    this.Profession             = _tbl.Profession;
-        #    this.Sensitivity            = _tbl.Sensitivity;
-        #    this.Spouse                 = _tbl.Spouse;
-        #    this.TimeAvailableFrom      = _tbl.TimeAvailableFrom;
-        #    this.TimeAvailableTo        = _tbl.TimeAvailableTo;
-        #    this.Title                  = _tbl.Title;
-        #    this.VendRole               = _tbl.VendRole;
-        #    this.VIP                    = _tbl.VIP;
-        #    this.WebRequestAccess       = _tbl.WebRequestAccess;
-        #
-        #}
-      ENDSOURCE
       SOURCE #activate
         #private void activate()
         #{
@@ -3580,6 +3536,50 @@ Formatversion: 1
         #    {
         #        this.initFromVendTable(vendTable);
         #    }
+        #}
+      ENDSOURCE
+      SOURCE #initFromStageTable
+        #public void initFromStageTable(triDMContact _tbl)
+        #{
+        #    this.AssistantName          = _tbl.AssistantName;
+        #    this.AssistantPhone         = _tbl.AssistantPhone;
+        #    this.BillingInformation     = _tbl.BillingInformation;
+        #    this.Character              = _tbl.Character;
+        #    this.ComputerNetworkName    = _tbl.ComputerNetworkName;
+        #    this.ContactForParty        = _tbl.ContactForParty;
+        #    this.ContactPersonId        = _tbl.ContactPersonId;
+        #    this.ContactPersonParentId  = _tbl.ContactPersonParentId;
+        #    this.CustAccount            = _tbl.CustAccount;
+        #    this.Decision               = _tbl.Decision;
+        #    this.Department             = _tbl.Department;
+        #    this.DirectMail             = _tbl.DirectMail;
+        #    this.DocuGreeting1          = _tbl.DocuGreeting1;
+        #    this.DocuGreeting2          = _tbl.DocuGreeting2;
+        #    this.DocuIntro1             = _tbl.DocuIntro1;
+        #    this.DocuIntro2             = _tbl.DocuIntro2;
+        #    this.Function               = _tbl.Function;
+        #    this.GovernmentIDNumber     = _tbl.GovernmentIDNumber;
+        #    this.Imported               = _tbl.Imported;
+        #    this.Inactive               = _tbl.Inactive;
+        #    this.LastEditAxDateTime     = _tbl.LastEditAxDateTime;
+        #    this.Loyalty                = _tbl.Loyalty;
+        #    this.MainResponsibleWorker  = _tbl.MainResponsibleWorker;
+        #    this.Memo                   = _tbl.Memo;
+        #    this.Mileage                = _tbl.Memo;
+        #    this.OfficeLocation         = _tbl.OfficeLocation;
+        #    this.OrganizationalIDNumber = _tbl.OrganizationalIDNumber;
+        #    this.OutlookCategories      = _tbl.OutlookCategories;
+        #    this.Party                  = _tbl.Party;
+        #    this.Profession             = _tbl.Profession;
+        #    this.Sensitivity            = _tbl.Sensitivity;
+        #    this.Spouse                 = _tbl.Spouse;
+        #    this.TimeAvailableFrom      = _tbl.TimeAvailableFrom;
+        #    this.TimeAvailableTo        = _tbl.TimeAvailableTo;
+        #    this.Title                  = _tbl.Title;
+        #    this.VendRole               = _tbl.VendRole;
+        #    this.VIP                    = _tbl.VIP;
+        #    this.WebRequestAccess       = _tbl.WebRequestAccess;
+        #
         #}
       ENDSOURCE
       SOURCE #initFromVendTable
@@ -16580,6 +16580,7 @@ Formatversion: 1
         PROPERTIES
           Name                #BankAccountType
           Table               #triDMVendBankAcct
+          CountryRegionContextField     #UNKNOWN
           Origin              #{099590DC-8AA9-4707-805D-D0B200B321A3}
           EnumType            #BankAccountType
         ENDPROPERTIES
@@ -16589,6 +16590,7 @@ Formatversion: 1
         PROPERTIES
           Name                #BankCIN
           Table               #triDMVendBankAcct
+          CountryRegionContextField     #UNKNOWN
           Origin              #{13EBB340-4F31-4DF9-BA49-0BEEBD5D1BB8}
           ExtendedDataType    #BankCIN
           StringSize          #1
@@ -16955,6 +16957,7 @@ Formatversion: 1
         PROPERTIES
           Name                #TypeOfAccount
           Table               #triDMVendBankAcct
+          CountryRegionContextField     #UNKNOWN
           Origin              #{96BED9AA-7BC2-4C6D-9C70-6FDB978211ED}
           EnumType            #TypeOfAccount
         ENDPROPERTIES
@@ -17274,6 +17277,16 @@ Formatversion: 1
     ENDDELETEACTIONS
     
     METHODS
+      SOURCE #validateFieldValue
+        #public boolean validateFieldValue(FieldName _fieldName, int _arrayIndex = 1)
+        #{
+        #    boolean ret;
+        #
+        #    ret = super(_fieldName, _arrayIndex);
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
       SOURCE #insert
         #public void insert()
         #{
@@ -17442,16 +17455,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     FIELDS
-      FIELD #PartyType
-        ENUM
-        PROPERTIES
-          Name                #PartyType
-          Label               #Party Type
-          Table               #VendTable
-          Origin              #{2E4AB667-63C7-455F-A0E5-9FE0C2354174}
-          EnumType            #DirPartyType
-        ENDPROPERTIES
-        
       FIELD #ABC
         ENUM
         PROPERTIES
@@ -18246,6 +18249,16 @@ Formatversion: 1
           Table               #triDMVendTable
           Origin              #{D4643BF4-146B-4B43-AB0F-AE917197E766}
           ExtendedDataType    #DirPartyRecId
+        ENDPROPERTIES
+        
+      FIELD #PartyType
+        ENUM
+        PROPERTIES
+          Name                #PartyType
+          Label               #Party Type
+          Table               #triDMVendTable
+          Origin              #{2E4AB667-63C7-455F-A0E5-9FE0C2354174}
+          EnumType            #DirPartyType
         ENDPROPERTIES
         
       FIELD #PaymDayId
@@ -19153,75 +19166,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     FIELDS
-      FIELD #CountryRegionId
-        STRING
-        PROPERTIES
-          Name                #CountryRegionId
-          Table               #triDMVendBankAcct
-          Origin              #{EC56C4A0-A9FD-4E60-A623-9F6D8034200B}
-          ExtendedDataType    #LogisticsAddressCountryRegionId
-        ENDPROPERTIES
-        
-      FIELD #ZipCode
-        STRING
-        PROPERTIES
-          Name                #ZipCode
-          Table               #triDMVendBankAcct
-          Origin              #{3189882E-461C-4C75-9BB5-6F81DA236B0E}
-          ExtendedDataType    #LogisticsAddressZipCodeId
-        ENDPROPERTIES
-        
-      FIELD #Street
-        STRING
-        PROPERTIES
-          Name                #Street
-          Table               #triDMVendBankAcct
-          Origin              #{B17317B6-D430-4C4C-AC0C-0FE7924CB87B}
-          ExtendedDataType    #LogisticsAddressStreet
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #State
-        STRING
-        PROPERTIES
-          Name                #State
-          Table               #triDMVendBankAcct
-          Origin              #{1ECA39EC-4065-4C7E-8B92-CFECA62C0264}
-          ExtendedDataType    #LogisticsAddressStateId
-        ENDPROPERTIES
-        
-      FIELD #City
-        STRING
-        PROPERTIES
-          Name                #City
-          Table               #triDMVendBankAcct
-          Origin              #{A9EF4EDA-7BC6-4AA0-9E60-17598DE8ABE2}
-          ExtendedDataType    #LogisticsAddressCity
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #IsPrimary
-        ENUM
-        PROPERTIES
-          Name                #IsPrimary
-          Table               #triDMVendBankAcct
-          Origin              #{DA119DD6-3750-4A48-9CE7-89C51F1A0571}
-          ExtendedDataType    #LogisticsIsPrimaryAddress
-          EnumType            #NoYes
-        ENDPROPERTIES
-        
-      FIELD #Description
-        STRING
-        PROPERTIES
-          Name                #Description
-          Label               #@SYS335041
-          HelpText            #@SYS344258
-          Table               #triDMVendBankAcct
-          Origin              #{9E497420-817A-4A4A-847A-233E7E6D23B8}
-          ExtendedDataType    #Description
-          StringSize          #60
-        ENDPROPERTIES
-        
       FIELD #AssistantName
         STRING
         PROPERTIES
@@ -19262,6 +19206,16 @@ Formatversion: 1
           StringSize          #20
         ENDPROPERTIES
         
+      FIELD #City
+        STRING
+        PROPERTIES
+          Name                #City
+          Table               #triDMContact
+          Origin              #{A9EF4EDA-7BC6-4AA0-9E60-17598DE8ABE2}
+          ExtendedDataType    #LogisticsAddressCity
+          StringSize          #60
+        ENDPROPERTIES
+        
       FIELD #ComputerNetworkName
         STRING
         PROPERTIES
@@ -19269,6 +19223,17 @@ Formatversion: 1
           Table               #triDMContact
           Origin              #{622AE202-F84C-43CE-A997-0310D9708504}
           ExtendedDataType    #smmComputerNetworkName
+        ENDPROPERTIES
+        
+      FIELD #Contactdescription
+        STRING
+        PROPERTIES
+          Name                #Contactdescription
+          Label               #Contact description
+          Table               #triDMContact
+          Origin              #{37963739-A5B5-4C6A-A08A-566158CBC989}
+          ExtendedDataType    #LogisticsLocationId
+          StringSize          #30
         ENDPROPERTIES
         
       FIELD #ContactForParty
@@ -19304,6 +19269,15 @@ Formatversion: 1
           StringSize          #20
         ENDPROPERTIES
         
+      FIELD #CountryRegionId
+        STRING
+        PROPERTIES
+          Name                #CountryRegionId
+          Table               #triDMContact
+          Origin              #{EC56C4A0-A9FD-4E60-A623-9F6D8034200B}
+          ExtendedDataType    #LogisticsAddressCountryRegionId
+        ENDPROPERTIES
+        
       FIELD #CustAccount
         STRING
         PROPERTIES
@@ -19333,6 +19307,18 @@ Formatversion: 1
           Origin              #{3FD6CB76-2590-430E-9C5D-FFAEE70765A3}
           ExtendedDataType    #smmDepartment
           StringSize          #50
+        ENDPROPERTIES
+        
+      FIELD #Description
+        STRING
+        PROPERTIES
+          Name                #Description
+          Label               #@SYS335041
+          HelpText            #@SYS344258
+          Table               #triDMContact
+          Origin              #{9E497420-817A-4A4A-847A-233E7E6D23B8}
+          ExtendedDataType    #Description
+          StringSize          #60
         ENDPROPERTIES
         
       FIELD #DirectMail
@@ -19385,6 +19371,33 @@ Formatversion: 1
           StringSize          #25
         ENDPROPERTIES
         
+      FIELD #Email
+        STRING
+        PROPERTIES
+          Name                #Email
+          Table               #triDMContact
+          Origin              #{0E3B9A21-D8F3-4166-B9C6-D246456E1D55}
+          ExtendedDataType    #LogisticsLocationId
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #Extention
+        STRING
+        PROPERTIES
+          Name                #Extention
+          Table               #triDMContact
+          Origin              #{25CA2D49-2476-49B5-BFD5-412D6E2159CF}
+        ENDPROPERTIES
+        
+      FIELD #Fax
+        STRING
+        PROPERTIES
+          Name                #Fax
+          Table               #triDMContact
+          Origin              #{F3630472-0CE3-4FA5-9CB1-6983669A05C1}
+          StringSize          #30
+        ENDPROPERTIES
+        
       FIELD #Function
         STRING
         PROPERTIES
@@ -19422,6 +19435,44 @@ Formatversion: 1
           Table               #triDMContact
           Origin              #{E7594B11-D71F-406D-9E10-7743A6B3316B}
           ExtendedDataType    #SmmContactPersonInactive
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #Internationcallingcode
+        STRING
+        PROPERTIES
+          Name                #Internationcallingcode
+          Label               #International Calling Code
+          Table               #triDMContact
+          Origin              #{C06E556F-67FC-49C0-95B6-696D1097362E}
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #IsPrimary
+        ENUM
+        PROPERTIES
+          Name                #IsPrimary
+          Table               #triDMContact
+          Origin              #{DA119DD6-3750-4A48-9CE7-89C51F1A0571}
+          ExtendedDataType    #LogisticsIsPrimaryAddress
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #isPrimary1
+        ENUM
+        PROPERTIES
+          Name                #isPrimary1
+          Table               #triDMContact
+          Origin              #{AD76D237-B477-42A8-AF49-5911D2BA17AF}
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #isPrivate
+        ENUM
+        PROPERTIES
+          Name                #isPrivate
+          Table               #triDMContact
+          Origin              #{C1AD67EB-023C-4B12-A780-779E39939D34}
           EnumType            #NoYes
         ENDPROPERTIES
         
@@ -19513,6 +19564,15 @@ Formatversion: 1
           ExtendedDataType    #DirPersonRecId
         ENDPROPERTIES
         
+      FIELD #Phone
+        STRING
+        PROPERTIES
+          Name                #Phone
+          Table               #triDMContact
+          Origin              #{CEEEAC30-4890-4317-924B-A5D17A347CBB}
+          StringSize          #30
+        ENDPROPERTIES
+        
       FIELD #Profession
         STRING
         PROPERTIES
@@ -19520,6 +19580,15 @@ Formatversion: 1
           Table               #triDMContact
           Origin              #{0BC2CF09-7725-4EA7-A5B3-A0D0721EAD32}
           ExtendedDataType    #smmProfession
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #Purpose
+        STRING
+        PROPERTIES
+          Name                #Purpose
+          Table               #triDMContact
+          Origin              #{0235BE93-C27A-4745-9A5B-360373F73509}
           StringSize          #30
         ENDPROPERTIES
         
@@ -19541,6 +19610,54 @@ Formatversion: 1
           Origin              #{EA90C723-B3DF-48FF-AD8F-2713209038A5}
           ExtendedDataType    #smmSpouse
           StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #State
+        STRING
+        PROPERTIES
+          Name                #State
+          Table               #triDMContact
+          Origin              #{1ECA39EC-4065-4C7E-8B92-CFECA62C0264}
+          ExtendedDataType    #LogisticsAddressStateId
+        ENDPROPERTIES
+        
+      FIELD #Street
+        STRING
+        PROPERTIES
+          Name                #Street
+          Table               #triDMContact
+          Origin              #{B17317B6-D430-4C4C-AC0C-0FE7924CB87B}
+          ExtendedDataType    #LogisticsAddressStreet
+          StringSize          #250
+        ENDPROPERTIES
+        
+      FIELD #StreetNumber
+        STRING
+        PROPERTIES
+          Name                #StreetNumber
+          Table               #triDMContact
+          Origin              #{BD304FDA-F6EF-46E9-8914-D72E98E06F36}
+          ExtendedDataType    #LogisticsAddressStreetNumber
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #TaxGroup
+        STRING
+        PROPERTIES
+          Name                #TaxGroup
+          Label               #@SYS318303
+          Table               #triDMContact
+          Origin              #{8017007B-3BAE-4249-9FD3-63C7883017F8}
+          ExtendedDataType    #TaxGroup
+        ENDPROPERTIES
+        
+      FIELD #Telex
+        STRING
+        PROPERTIES
+          Name                #Telex
+          Table               #triDMContact
+          Origin              #{7AEEF22B-B2FF-4992-9C54-A468E59AFC0E}
+          StringSize          #30
         ENDPROPERTIES
         
       FIELD #TimeAvailableFrom
@@ -19604,6 +19721,17 @@ Formatversion: 1
           EnumType            #triDMstatus
         ENDPROPERTIES
         
+      FIELD #url
+        STRING
+        PROPERTIES
+          Name                #url
+          Label               #URL
+          Table               #triDMContact
+          Origin              #{8DCCFCC5-D1FB-4E3A-B4C0-90BB7BA1C5BC}
+          ExtendedDataType    #LogisticsLocationId
+          StringSize          #30
+        ENDPROPERTIES
+        
       FIELD #VendRole
         ENUM
         PROPERTIES
@@ -19633,6 +19761,15 @@ Formatversion: 1
           EnumType            #NoYes
         ENDPROPERTIES
         
+      FIELD #ZipCode
+        STRING
+        PROPERTIES
+          Name                #ZipCode
+          Table               #triDMContact
+          Origin              #{3189882E-461C-4C75-9BB5-6F81DA236B0E}
+          ExtendedDataType    #LogisticsAddressZipCodeId
+        ENDPROPERTIES
+        
     ENDFIELDS
     GROUPS
     ENDGROUPS
@@ -19651,26 +19788,6 @@ Formatversion: 1
     ENDMETHODS
   ENDTABLE
   
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Name or description</Table:Field>
-    <Table:Field name="Description">[VendorOnboardingPhase1] Gab location desciption field label</Table:Field>
-    <Table:Field name="LabelId">@SYS335041</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">View or enter a description of the selected record.</Table:Field>
-    <Table:Field name="Description">Location description</Table:Field>
-    <Table:Field name="LabelId">@SYS344258</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
 <Table:Record name="TmpSysLabel"
        xmlns:Table='urn:www.microsoft.com/Formats/Table'>
     <Table:Field name="Language">en-us</Table:Field>
@@ -19724,6 +19841,26 @@ Formatversion: 1
 <Table:Record name="TmpSysLabel"
        xmlns:Table='urn:www.microsoft.com/Formats/Table'>
     <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Name or description</Table:Field>
+    <Table:Field name="Description">[VendorOnboardingPhase1] Gab location desciption field label</Table:Field>
+    <Table:Field name="LabelId">@SYS335041</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">View or enter a description of the selected record.</Table:Field>
+    <Table:Field name="Description">Location description</Table:Field>
+    <Table:Field name="LabelId">@SYS344258</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">The distance in mileage of the contact</Table:Field>
     <Table:Field name="Description">[form]smmContactPerson:[field]Mileage:[help]</Table:Field>
     <Table:Field name="LabelId">@SYS319062</Table:Field>
@@ -19737,6 +19874,16 @@ Formatversion: 1
     <Table:Field name="Label">The sensitivity level of activities that involve the contact</Table:Field>
     <Table:Field name="Description">[form]smmContactPerson:[field]Sensitivity:[help]</Table:Field>
     <Table:Field name="LabelId">@SYS319043</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Sales tax</Table:Field>
+    <Table:Field name="Description">[VendorOnboardingPhase1] [form]smmBusRelTable:[field]TaxGroup</Table:Field>
+    <Table:Field name="LabelId">@SYS318303</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -20276,16 +20423,142 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #run
-        #public void run()
+      SOURCE #addAddress
+        #private void addAddress(triDMContact addrStage)
         #{
+        #    LogisticsPostalAddress      address;
+        #    DirPartyPostalAddressView   addressView;
+        #
+        #    DirPartyRecId               recID;
+        #    DirParty                    dirParty;
+        #    LogisticsLocationExt        locationExt;
+        #    LogisticsLocation           location;
+        #    LogisticsLocationRole       locationRole;
+        #    container                   conRoles;
+        #
+        #
+        #    recID = this.findPartyRecID(addrStage.triDMlegacyID);
+        #    if(recID == 0 )
+        #        return;
+        #
+        #     try
+        #        {
+        #            ttsBegin;
+        #            address.CountryRegionId     = addrStage.CountryRegionId;
+        #            address.State               = addrStage.State;
+        #            address.ZipCode             = addrStage.ZipCode;
+        #            address.Street              = addrStage.Street;
+        #            address.StreetNumber        = addrStage.StreetNumber;
+        #            address.City                = addrStage.City;
+        #            address.insert();
+        #
+        #            addressView.LocationName    = addrStage.Description;
+        #            addressView.IsPrimary       = addrStage.IsPrimary;
+        #            addressView.IsPrivate       = addrStage.IsPrivate;
+        #            addressView.Party           = recID;
+        #            addressview.initFromPostalAddress(address);
+        #
+        #            conRoles = conNull();
+        #
+        #            select locationRole where locationRole.Name == addrStage.Purpose;
+        #            if(locationRole.RecId != 0)
+        #            {
+        #                conRoles = conIns(conRoles,1,locationRole.RecId);
+        #            }
+        #
+        #            DirParty = DirParty::constructFromPartyRecId(addressView.Party);
+        #
+        #            DirParty.createOrUpdatePostalAddress(addressView,conRoles);
+        #
+        #            select forUpdate location where location.RecId == address.Location;
+        #            if(location.RecId != 0)
+        #            {
+        #                locationExt.Location = location.RecId;
+        #                locationExt.TaxGroup = addrStage.TaxGroup;
+        #                locationExt.insert();
+        #            }
+        #
+        #            ttsCommit;
+        #
+        #            ttsBegin;
+        #            addrStage.triDMstatus = triDMstatus::Imported;
+        #            addrStage.update();
+        #            ttsCommit;
+        #        }
+        #        catch
+        #        {
+        #            ttsBegin;
+        #            addrStage.triDMErrorMsg = infolog.text();
+        #            addrStage.triDMstatus = triDMstatus::error;
+        #            addrStage.update();
+        #            ttsCommit;
+        #            ttsAbort;
+        #            throw error( infolog.text());
+        #        }
+        #
+        #
         #
         #}
       ENDSOURCE
-      SOURCE #setDefaultValues
-        #public void setDefaultValues(Common anyStageTable)
+      SOURCE #addSimpleMainContactInfo
+        #private void addSimpleMainContactInfo(triDMContact _tbl, ContactPerson _ContactTable)
         #{
+        #    DirPartyContactInfoView     contactView;
+        #    DirParty                    dirParty;
         #
+        #    DirParty = DirParty::constructFromPartyRecId(_ContactTable.Party);
+        #    //Contact description    Phone    Fax    telex    extension    international calling code    Purpose    Primary    Private    Email    URL
+        #
+        #
+        #    if(_tbl.Phone)
+        #    {
+        #        contactView.LocationName = _tbl.Contactdescription;
+        #        contactView.Type         = LogisticsElectronicAddressMethodType::Phone;
+        #        contactView.Party        = _ContactTable.Party;
+        #        contactView.IsPrimary    = _tbl.isPrimary ;
+        #        contactView.IsPrivate    = _tbl.isPrivate;
+        #        contactView.LocatorExtension = _tbl.Extention;
+        #        dirParty.createOrUpdateContactInfo(contactView);
+        #    }
+        #
+        #    if(_tbl.Fax)
+        #    {
+        #        contactView.LocationName = _tbl.Contactdescription;
+        #        contactView.Type         = LogisticsElectronicAddressMethodType::Fax ;
+        #        contactView.Party        = _ContactTable.Party;
+        #        contactView.IsPrimary    = _tbl.isPrimary ;
+        #        contactView.IsPrivate    = _tbl.isPrivate;
+        #        dirParty.createOrUpdateContactInfo(contactView);
+        #    }
+        #
+        #
+        #    if(_tbl.Email)
+        #    {
+        #        contactView.LocationName = _tbl.Contactdescription;
+        #        contactView.Type         = LogisticsElectronicAddressMethodType::Email ;
+        #        contactView.Party        = _ContactTable.Party;
+        #        contactView.IsPrimary    = _tbl.isPrimary ;
+        #        contactView.IsPrivate    = _tbl.isPrivate;
+        #        dirParty.createOrUpdateContactInfo(contactView);
+        #    }
+        #
+        #
+        #    if(_tbl.url)
+        #    {
+        #        contactView.LocationName = _tbl.Contactdescription;
+        #        contactView.Type         = LogisticsElectronicAddressMethodType::URL ;
+        #        contactView.Party        = _ContactTable.Party;
+        #        contactView.IsPrimary    = _tbl.isPrimary ;
+        #        contactView.IsPrivate    = _tbl.isPrivate;
+        #        dirParty.createOrUpdateContactInfo(contactView);
+        #    }
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_VendContacts extends triDM_ProcessStageData
+        #{
         #}
       ENDSOURCE
       SOURCE #CleanUp
@@ -20294,9 +20567,64 @@ Formatversion: 1
         #
         #}
       ENDSOURCE
-      SOURCE #classDeclaration
-        #class triDM_ProcessStageData_VendContacts extends triDM_ProcessStageData
+      SOURCE #CreateContact
+        #private void CreateContact()
         #{
+        #    triDMContact    tbl;
+        #    ContactPerson   Contact;
+        #
+        #
+        #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
+        #    {
+        #
+        #        try
+        #        {
+        #            ttsBegin;
+        #            Contact.selectForUpdate();
+        #            this.setDefaultValues(tbl);
+        #            Contact.initFromStageTable( tbl);
+        #            Contact.insert();
+        #            this.addAddress(tbl);
+        #            this.addSimpleMainContactInfo(tbl,Contact);
+        #            ttsCommit;
+        #
+        #            ttsBegin;
+        #            tbl.triDMstatus = triDMstatus::Imported;
+        #            tbl.update();
+        #            ttsCommit;
+        #
+        #        }
+        #        catch
+        #        {
+        #
+        #
+        #            ttsBegin;
+        #            tbl.triDMErrorMsg = infolog.text();
+        #            tbl.triDMstatus = triDMstatus::error;
+        #            tbl.update();
+        #            ttsCommit;
+        #            ttsAbort;
+        #            throw error( infolog.text());
+        #
+        #        }
+        #
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    // create contact
+        #    // create contact address
+        #    // creaet contact conatct info
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common anyStageTable)
+        #{
+        #
         #}
       ENDSOURCE
     ENDMETHODS
@@ -20364,7 +20692,7 @@ Formatversion: 1
         #            address.CountryRegionId     = addrStage.CountryRegionId;
         #            address.State               = addrStage.State;
         #            address.ZipCode             = addrStage.ZipCode;
-        #            address.Street              = addrStage.Street;
+        #            address.Street              = this.strAddCRLF( addrStage.Street);
         #            address.StreetNumber        = addrStage.StreetNumber;
         #            address.City                = addrStage.City;
         #            address.insert();
@@ -20961,28 +21289,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #findPartyRecID
-        #public DirPartyRecId findPartyRecID(triDMlegacyID _legacyID)
-        #{
-        #    DirPartyRecId   recId;
-        #
-        #
-        #    switch (importType)
-        #    {
-        #        case triDMImportType::CustAddr :
-        #            break;
-        #
-        #        case triDMImportType::VendAddr  :
-        #        case triDMImportType::VendBank  :
-        #            RecId = VendTable::FindByLegacyID(_legacyID).Party ;
-        #            break;
-        #
-        #    }
-        #
-        #
-        #    return recId;
-        #}
-      ENDSOURCE
       SOURCE #classDeclaration
         # abstract class   triDM_ProcessStageData extends RunBaseBatch
         #{
@@ -20996,6 +21302,29 @@ Formatversion: 1
       SOURCE #CleanUp
         #abstract void CleanUp()
         #{
+        #}
+      ENDSOURCE
+      SOURCE #findPartyRecID
+        #public DirPartyRecId findPartyRecID(triDMlegacyID _legacyID)
+        #{
+        #    DirPartyRecId   recId;
+        #
+        #
+        #    switch (importType)
+        #    {
+        #        case triDMImportType::CustAddr :
+        #            break;
+        #
+        #        case triDMImportType::VendAddr  :
+        #        case triDMImportType::VendBank  :
+        #        case triDMImportType::VendContact :
+        #            RecId = VendTable::FindByLegacyID(_legacyID).Party ;
+        #            break;
+        #
+        #    }
+        #
+        #
+        #    return recId;
         #}
       ENDSOURCE
       SOURCE #new
@@ -21024,6 +21353,58 @@ Formatversion: 1
         #{
         #     // customer specifi defualt vlaues to be placed into the satge table beofre processing
         #}
+      ENDSOURCE
+      SOURCE #strAddCRLF
+        #public str strAddCRLF(str sText)
+        #{
+        #    // this function will remove (|) and add crlf
+        #/*
+        #    int        iTextLen;   // lenght of string
+        #    int        iPos = 1;   // cuurent position to start searching text
+        #    str        sNewText;   // new formated text
+        #    int        x;
+        #
+        #    iTextLen = strLen (sText);
+        #    sNewText = sText;
+        #
+        #    for (x = 1; x <= iTextLen; x+=1 )
+        #    {
+        #        iPos = strfind(sNewText,"|", iPos,iTextlen);
+        #        sNewText = StrPoke(sNewText,"\l\n",iPos );
+        #
+        #    } //end loop
+        #    sNewText = strRem(sNewText, "|");
+        #
+        #    return sNewText;
+        # */
+        #
+        #    container   Con;        // force string into a container
+        #    str         sNewText;   // new formated text
+        #    int         i;
+        #
+        #
+        #    con = conNull();
+        #
+        #    con = str2con(sText, "|");
+        #
+        #    if (conLen(con) > 0)
+        #    {
+        #        for (i=1;i<=conLen(con);i++)
+        #        {
+        #            if (i == 1)
+        #                sNewText = strLRTrim(conPeek(con, i));
+        #            else
+        #                sNewText += strFmt("%1%2", "\n", strLRTrim(conPeek(con, i)));
+        #        }
+        #    }
+        #
+        #
+        #
+        #    return sNewText;
+        #
+        #
+        #}
+        #
       ENDSOURCE
       SOURCE #construct
         #public static triDM_ProcessStageData construct(triDMImportType _importType)
@@ -21938,7 +22319,6 @@ FORM #triDMDataMigration
         PROPERTIES
           Name                #triDMImport
           Table               #triDMImport
-          AllowEdit           #No
         ENDPROPERTIES
         
         FIELDLIST
@@ -21960,6 +22340,8 @@ FORM #triDMDataMigration
   
   DESIGN
     PROPERTIES
+      Caption             #Data MIgration Import
+      TitleDatasource     #triDMImport
       Columns             #2
       ArrangeGuide        
         ARRAY INDEX Columns 
@@ -22047,6 +22429,12 @@ FORM #triDMDataMigration
         ENDPROPERTIES
         
         METHODS
+          SOURCE #clicked
+            #void clicked()
+            #{
+            #    super();
+            #}
+          ENDSOURCE
         ENDMETHODS
       ENDCONTROL 
       
@@ -24755,7 +25143,7 @@ ENDFORM
     Origin              #{D26FE3A7-5D56-4A9C-ABAD-6C8D65AA3054}
   ENDPROPERTIES
   
-    PROJECTCLASS ProjectNode
+    PROJECTCLASS 
     GROUP #DataDictionary
       PROPERTIES
         Name                #DataDictionary
