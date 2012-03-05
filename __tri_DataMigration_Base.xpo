@@ -17277,6 +17277,13 @@ Formatversion: 1
     ENDDELETEACTIONS
     
     METHODS
+      SOURCE #insert
+        #public void insert()
+        #{
+        #    this.triDMstatus = triDMstatus::ready;
+        #    super();
+        #}
+      ENDSOURCE
       SOURCE #validateFieldValue
         #public boolean validateFieldValue(FieldName _fieldName, int _arrayIndex = 1)
         #{
@@ -17285,13 +17292,6 @@ Formatversion: 1
         #    ret = super(_fieldName, _arrayIndex);
         #
         #    return ret;
-        #}
-      ENDSOURCE
-      SOURCE #insert
-        #public void insert()
-        #{
-        #    this.triDMstatus = triDMstatus::ready;
-        #    super();
         #}
       ENDSOURCE
     ENDMETHODS
@@ -21357,27 +21357,6 @@ Formatversion: 1
       SOURCE #strAddCRLF
         #public str strAddCRLF(str sText)
         #{
-        #    // this function will remove (|) and add crlf
-        #/*
-        #    int        iTextLen;   // lenght of string
-        #    int        iPos = 1;   // cuurent position to start searching text
-        #    str        sNewText;   // new formated text
-        #    int        x;
-        #
-        #    iTextLen = strLen (sText);
-        #    sNewText = sText;
-        #
-        #    for (x = 1; x <= iTextLen; x+=1 )
-        #    {
-        #        iPos = strfind(sNewText,"|", iPos,iTextlen);
-        #        sNewText = StrPoke(sNewText,"\l\n",iPos );
-        #
-        #    } //end loop
-        #    sNewText = strRem(sNewText, "|");
-        #
-        #    return sNewText;
-        # */
-        #
         #    container   Con;        // force string into a container
         #    str         sNewText;   // new formated text
         #    int         i;
@@ -22706,7 +22685,7 @@ ENDFORM
     #    static void utilScriptTableSpec(Args _args)
     #    {
     #        #define.NewLine('\n')
-    #        DictTable dictTable = new DictTable(tableNum(LogisticsPostalAddress)); // change table name here
+    #        DictTable dictTable = new DictTable(tableNum(LedgerJournalTable)); // change table name here
     #
     #        SysDictField                sysDictField;
     #        SysDictType                 sysDictType;
