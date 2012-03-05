@@ -153,982 +153,6 @@ Formatversion: 1
           StringSize          #20
         ENDPROPERTIES
         
-      FIELD #DEL_Address
-        STRING
-        PROPERTIES
-          Name                #DEL_Address
-          HelpText            #@SYS28178
-          AllowEditOnCreate   #No
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{7F3F727D-0BAC-4BF9-AA31-E9F6643FD2C9}
-          LegacyId            #12
-          ExtendedDataType    #Addressing
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_Anniversary
-        DATE
-        PROPERTIES
-          Name                #DEL_Anniversary
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{52C3D74A-A09B-461E-84E0-45142547EC33}
-          LegacyId            #27
-          ExtendedDataType    #smmAnniversary
-        ENDPROPERTIES
-        
-      FIELD #DEL_birthDate
-        DATE
-        PROPERTIES
-          Name                #DEL_birthDate
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{6FB968F4-E2A2-45BF-9DEE-20DCB616F95D}
-          LegacyId            #8001
-          ExtendedDataType    #BirthDate
-        ENDPROPERTIES
-        
-      FIELD #DEL_BusinessAddress
-        STRING
-        PROPERTIES
-          Name                #DEL_BusinessAddress
-          AllowEditOnCreate   #No
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{7A8B230D-C279-4E34-9A28-EF3A0DF8A1FE}
-          LegacyId            #90
-          ExtendedDataType    #Addressing
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_BusinessCity
-        STRING
-        PROPERTIES
-          Name                #DEL_BusinessCity
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{C420A97E-F992-4271-8BC2-23A37A7E6591}
-          LegacyId            #86
-          ExtendedDataType    #AddressCity
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #DEL_BusinessCountryRegionId
-        STRING
-        PROPERTIES
-          Name                #DEL_BusinessCountryRegionId
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{3B9A75BE-18A9-4A26-80D4-A676B01AF089}
-          LegacyId            #89
-          ExtendedDataType    #AddressCountryRegionId
-        ENDPROPERTIES
-        
-      FIELD #DEL_BusinessCounty
-        STRING
-        PROPERTIES
-          Name                #DEL_BusinessCounty
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{15F205A9-7D4D-4964-93A1-8E25BE1CE0AA}
-          LegacyId            #87
-          ExtendedDataType    #AddressCountyId
-        ENDPROPERTIES
-        
-      FIELD #DEL_BusinessState
-        STRING
-        PROPERTIES
-          Name                #DEL_BusinessState
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{48641880-986A-4820-963F-697C12C33085}
-          LegacyId            #88
-          ExtendedDataType    #AddressStateId
-        ENDPROPERTIES
-        
-      FIELD #DEL_BusinessStreet
-        STRING
-        PROPERTIES
-          Name                #DEL_BusinessStreet
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{2A676C9E-7024-449D-8F00-895606955035}
-          LegacyId            #84
-          ExtendedDataType    #AddressStreet
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_BusinessZipCode
-        STRING
-        PROPERTIES
-          Name                #DEL_BusinessZipCode
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{BF0208BA-A28F-4AE4-A39B-5064509C5A09}
-          LegacyId            #85
-          ExtendedDataType    #AddressZipCodeId
-        ENDPROPERTIES
-        
-      FIELD #DEL_BusRelAccount
-        STRING
-        PROPERTIES
-          Name                #DEL_BusRelAccount
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{07BF4449-206F-4C37-B97F-2A7E93AE8DC5}
-          LegacyId            #50
-          ExtendedDataType    #smmBusRelAccount
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_CallbackPhoneNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_CallbackPhoneNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{062317A5-14AB-4C89-94C0-B0C8C8705ED7}
-          LegacyId            #58
-          ExtendedDataType    #smmCallbackPhoneNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_CarPhoneNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_CarPhoneNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{039AF1E3-DD66-4434-B4AF-1296F3BEE3A5}
-          LegacyId            #59
-          ExtendedDataType    #smmCarPhoneNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_CellularPhone
-        STRING
-        PROPERTIES
-          Name                #DEL_CellularPhone
-          Label               #@SYS90908
-          HelpText            #@SYS21226
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{DF10D53C-2048-4BBE-9081-DFA90BCCBCCD}
-          LegacyId            #3
-          ExtendedDataType    #PhoneMobile
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_ChildrenNames
-        STRING
-        PROPERTIES
-          Name                #DEL_ChildrenNames
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{FE33E96B-1E8F-4D56-8B84-8A68967DD035}
-          LegacyId            #55
-          ExtendedDataType    #smmChildrenNames
-          StringSize          #150
-        ENDPROPERTIES
-        
-      FIELD #DEL_Citizenship
-        STRING
-        PROPERTIES
-          Name                #DEL_Citizenship
-          Label               #@SYS31473
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{AB5C07C4-29A6-4FEE-868B-277F7582B60C}
-          LegacyId            #111
-          ExtendedDataType    #AddressCountryRegionId
-        ENDPROPERTIES
-        
-      FIELD #DEL_City
-        STRING
-        PROPERTIES
-          Name                #DEL_City
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{33389629-2934-424C-A0E3-CBE3CE849B50}
-          LegacyId            #23
-          ExtendedDataType    #AddressCity
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #DEL_CountryRegionId
-        STRING
-        PROPERTIES
-          Name                #DEL_CountryRegionId
-          HelpText            #@SYS26099
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{2B3703E2-2D03-4BD1-93E4-11751CD7E328}
-          LegacyId            #10
-          ExtendedDataType    #AddressCountryRegionId
-        ENDPROPERTIES
-        
-      FIELD #DEL_County
-        STRING
-        PROPERTIES
-          Name                #DEL_County
-          HelpText            #@SYS17939
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{0DC444DD-DE2E-40B6-B518-E07454FE5607}
-          LegacyId            #9
-          ExtendedDataType    #AddressCountyId
-        ENDPROPERTIES
-        
-      FIELD #DEL_Email
-        STRING
-        PROPERTIES
-          Name                #DEL_Email
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{85B47A32-89F8-4269-957B-DA40B42F6C4C}
-          LegacyId            #1
-          ExtendedDataType    #Email
-          StringSize          #80
-        ENDPROPERTIES
-        
-      FIELD #DEL_Email2
-        STRING
-        PROPERTIES
-          Name                #DEL_Email2
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{3E75D829-1F2F-45ED-A548-50C9A99861EB}
-          LegacyId            #83
-          ExtendedDataType    #Email
-          StringSize          #80
-        ENDPROPERTIES
-        
-      FIELD #DEL_Email3
-        STRING
-        PROPERTIES
-          Name                #DEL_Email3
-          Label               #@SYS90329
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{C9B6F2C6-6B60-4093-AE08-AD3F3F3EB278}
-          LegacyId            #82
-          ExtendedDataType    #Email
-          StringSize          #80
-        ENDPROPERTIES
-        
-      FIELD #DEL_FirstName
-        STRING
-        PROPERTIES
-          Name                #DEL_FirstName
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{6258E615-EECC-4252-A4A5-D59A48CD413B}
-          LegacyId            #8005
-          ExtendedDataType    #FirstName
-          StringSize          #25
-        ENDPROPERTIES
-        
-      FIELD #DEL_FTPSite
-        STRING
-        PROPERTIES
-          Name                #DEL_FTPSite
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{95F3D543-2D0D-4882-9297-49B1A0BEB194}
-          LegacyId            #52
-          ExtendedDataType    #smmFTPSite
-          StringSize          #150
-        ENDPROPERTIES
-        
-      FIELD #DEL_Gender
-        ENUM
-        PROPERTIES
-          Name                #DEL_Gender
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{14C6BD83-0620-44A1-8460-0BB0B7D6A2B5}
-          LegacyId            #109
-          EnumType            #Gender
-        ENDPROPERTIES
-        
-      FIELD #DEL_Hobbies
-        STRING
-        PROPERTIES
-          Name                #DEL_Hobbies
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{EC42DCA8-12F1-45FC-B8DF-E1CDF0741C80}
-          LegacyId            #57
-          ExtendedDataType    #smmHobbies
-          StringSize          #150
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomeAddress
-        STRING
-        PROPERTIES
-          Name                #DEL_HomeAddress
-          AllowEditOnCreate   #No
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{7F346FD9-A0A8-4BD2-80AA-794C91E18371}
-          LegacyId            #97
-          ExtendedDataType    #Addressing
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomeCity
-        STRING
-        PROPERTIES
-          Name                #DEL_HomeCity
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{CEA2C131-28FC-4032-A869-BE63C857EEB3}
-          LegacyId            #93
-          ExtendedDataType    #AddressCity
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomeCountryRegionId
-        STRING
-        PROPERTIES
-          Name                #DEL_HomeCountryRegionId
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{40B52473-61EC-4F14-A01F-DF312D794C1E}
-          LegacyId            #96
-          ExtendedDataType    #AddressCountryRegionId
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomeCounty
-        STRING
-        PROPERTIES
-          Name                #DEL_HomeCounty
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{7FE43F5D-07B7-4929-BB5A-851706444F1D}
-          LegacyId            #94
-          ExtendedDataType    #AddressCountyId
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomeFaxNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_HomeFaxNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{06022E52-21F3-42DB-9336-1743CBA027B4}
-          LegacyId            #77
-          ExtendedDataType    #smmHomeFaxNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomePhoneNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_HomePhoneNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{A9B47403-448A-4586-8E2E-37582E4A456D}
-          LegacyId            #78
-          ExtendedDataType    #smmHomePhoneNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomeState
-        STRING
-        PROPERTIES
-          Name                #DEL_HomeState
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{54051A6B-41C7-4049-AB33-3AE416CAB781}
-          LegacyId            #95
-          ExtendedDataType    #AddressStateId
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomeStreet
-        STRING
-        PROPERTIES
-          Name                #DEL_HomeStreet
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{DC5B0662-DB58-4BB9-88CE-1F8569BB623F}
-          LegacyId            #91
-          ExtendedDataType    #AddressStreet
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_HomeZipCode
-        STRING
-        PROPERTIES
-          Name                #DEL_HomeZipCode
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{37ADA3C0-A344-4A54-B7A2-B10A56397696}
-          LegacyId            #92
-          ExtendedDataType    #AddressZipCodeId
-        ENDPROPERTIES
-        
-      FIELD #DEL_IMAddress
-        STRING
-        PROPERTIES
-          Name                #DEL_IMAddress
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{6FBDAB5C-6E65-4C16-8BAC-99E1DD64E2FF}
-          LegacyId            #60
-          ExtendedDataType    #smmIMAddress
-          StringSize          #80
-        ENDPROPERTIES
-        
-      FIELD #DEL_Initials
-        STRING
-        PROPERTIES
-          Name                #DEL_Initials
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{6B37E41E-2BD8-4AD5-BE5F-B0115C041CFA}
-          LegacyId            #61
-          ExtendedDataType    #smmInitials
-        ENDPROPERTIES
-        
-      FIELD #DEL_InternetFreeBusyAddress
-        STRING
-        PROPERTIES
-          Name                #DEL_InternetFreeBusyAddress
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{00143871-385D-4B77-B9E7-D769F5B32DB3}
-          LegacyId            #63
-          ExtendedDataType    #smmInternetFreeBusyAddress
-          StringSize          #255
-        ENDPROPERTIES
-        
-      FIELD #DEL_ISDNNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_ISDNNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{D88F85ED-83B7-4571-BA52-63CA9EC772A1}
-          LegacyId            #64
-          ExtendedDataType    #smmISDNNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_LastEditAxaptaDate
-        DATE
-        PROPERTIES
-          Name                #DEL_LastEditAxaptaDate
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{7AF1A578-1B7E-4E4A-B1D9-DA6B7AAEAAF6}
-          LegacyId            #51
-        ENDPROPERTIES
-        
-      FIELD #DEL_LastEditAxaptaTime
-        INT
-        PROPERTIES
-          Name                #DEL_LastEditAxaptaTime
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{61463BD0-AB8A-46F4-8BDF-156BE72AF878}
-          LegacyId            #48
-        ENDPROPERTIES
-        
-      FIELD #DEL_LastName
-        STRING
-        PROPERTIES
-          Name                #DEL_LastName
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{C0FC8D84-3AD4-489F-A78C-158AD92D141D}
-          LegacyId            #8007
-          ExtendedDataType    #LastName
-          StringSize          #25
-        ENDPROPERTIES
-        
-      FIELD #DEL_LeftCompany
-        ENUM
-        PROPERTIES
-          Name                #DEL_LeftCompany
-          Label               #@SYS80311
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{08E23B75-7B20-4F63-B980-AE0F70E7F2E9}
-          LegacyId            #39
-          ExtendedDataType    #smmLeftCompany
-          EnumType            #NoYes
-        ENDPROPERTIES
-        
-      FIELD #DEL_Mainresponsible
-        STRING
-        PROPERTIES
-          Name                #DEL_Mainresponsible
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{FA73D0E3-F3B8-493F-9AB3-49A4A6F211CC}
-          LegacyId            #8011
-          ExtendedDataType    #DEL_smmConactPersonMainResponsible
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_MaritalStatus
-        ENUM
-        PROPERTIES
-          Name                #DEL_MaritalStatus
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{1C95862B-EB42-4A39-8ABF-A0C6555FC6C8}
-          LegacyId            #74
-          EnumType            #EmplMaritalStatus
-        ENDPROPERTIES
-        
-      FIELD #DEL_MiddleName
-        STRING
-        PROPERTIES
-          Name                #DEL_MiddleName
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{54D54A6D-1867-4271-B154-955BE96210C4}
-          LegacyId            #8006
-          ExtendedDataType    #MiddleName
-          StringSize          #25
-        ENDPROPERTIES
-        
-      FIELD #DEL_Name
-        STRING
-        PROPERTIES
-          Name                #DEL_Name
-          HelpText            #@SYS13368
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{1756ACB6-DD5B-4310-AF1A-6319432F52EC}
-          LegacyId            #13
-          ExtendedDataType    #ContactPersonName
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #DEL_NativeLanguage
-        STRING
-        PROPERTIES
-          Name                #DEL_NativeLanguage
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{C9A34508-412B-44CE-94FC-3672011649D7}
-          LegacyId            #53
-          ExtendedDataType    #smmContactNativeLanguage
-          StringSize          #7
-        ENDPROPERTIES
-        
-      FIELD #DEL_NickName
-        STRING
-        PROPERTIES
-          Name                #DEL_NickName
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{D9E95F15-9916-4CBB-8904-44EF1DC21952}
-          LegacyId            #45
-          ExtendedDataType    #smmContactNickName
-          StringSize          #25
-        ENDPROPERTIES
-        
-      FIELD #DEL_OrgParty
-        INT64
-        PROPERTIES
-          Name                #DEL_OrgParty
-          Label               #@SYS15581
-          Visible             #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{A6560898-A5E7-43C3-9575-B52E544BC079}
-          LegacyId            #114
-          ExtendedDataType    #DirPartyRecId
-        ENDPROPERTIES
-        
-      FIELD #DEL_OrgPartyId
-        STRING
-        PROPERTIES
-          Name                #DEL_OrgPartyId
-          HelpText            #@SYS89034
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{35C03F6C-FC38-4669-BB90-ABAD7132BFBA}
-          LegacyId            #112
-          ExtendedDataType    #DirOrgPartyId
-          StringSize          #40
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherAddress
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherAddress
-          AllowEditOnCreate   #No
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{10C5061B-DD8A-4026-AC33-3AF6812EA827}
-          LegacyId            #104
-          ExtendedDataType    #Addressing
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherCity
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherCity
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{2A8C4DB4-914C-4223-A415-7DAB39BDC92E}
-          LegacyId            #100
-          ExtendedDataType    #AddressCity
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherCountryRegionId
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherCountryRegionId
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{D8B2BCCD-400E-4358-9913-E60F7C5E8C83}
-          LegacyId            #103
-          ExtendedDataType    #AddressCountryRegionId
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherCounty
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherCounty
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{AEACA721-B3E3-4029-9B21-A5FE377E81CA}
-          LegacyId            #101
-          ExtendedDataType    #AddressCountyId
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherFaxNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherFaxNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{7CF409AD-ADE4-4CBC-A439-08E97A803815}
-          LegacyId            #80
-          ExtendedDataType    #smmOtherFaxNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherPhoneNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherPhoneNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{35F7C2B0-A5D5-420B-8EDB-9A0758956802}
-          LegacyId            #79
-          ExtendedDataType    #smmOtherPhoneNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherState
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherState
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{910584AB-D4BE-4553-AC94-921DEF44269C}
-          LegacyId            #102
-          ExtendedDataType    #AddressStateId
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherStreet
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherStreet
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{C53723AB-FCDE-431B-8025-11FB9C0D4E02}
-          LegacyId            #98
-          ExtendedDataType    #AddressStreet
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_OtherZipCode
-        STRING
-        PROPERTIES
-          Name                #DEL_OtherZipCode
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{EF46EF88-72DE-4906-A3FA-DB63D14A6528}
-          LegacyId            #99
-          ExtendedDataType    #AddressZipCodeId
-        ENDPROPERTIES
-        
-      FIELD #DEL_Pager
-        STRING
-        PROPERTIES
-          Name                #DEL_Pager
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{67684E28-F738-44BB-AD45-5466E2D32B5F}
-          LegacyId            #25
-          ExtendedDataType    #Pager
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_PartyId
-        STRING
-        PROPERTIES
-          Name                #DEL_PartyId
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{9749D43B-CA32-4523-8D18-25B8D1050E91}
-          LegacyId            #105
-          ExtendedDataType    #DEL_DirPersPartyId
-          StringSize          #40
-        ENDPROPERTIES
-        
-      FIELD #DEL_PersonalHomePage
-        STRING
-        PROPERTIES
-          Name                #DEL_PersonalHomePage
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{73C10D05-4AAC-47EA-ADD2-25512FC1CFA1}
-          LegacyId            #67
-          ExtendedDataType    #smmPersonalHomePage
-          StringSize          #255
-        ENDPROPERTIES
-        
-      FIELD #DEL_Phone
-        STRING
-        PROPERTIES
-          Name                #DEL_Phone
-          Label               #@SYS80287
-          HelpText            #@SYS337
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{8F2A0C56-92EF-4354-A4FF-04B9DEE9A983}
-          LegacyId            #7
-          ExtendedDataType    #Phone
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_PhoneLocal
-        STRING
-        PROPERTIES
-          Name                #DEL_PhoneLocal
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{E23D92C0-481D-459D-BF60-7674CAB926A5}
-          LegacyId            #4
-          ExtendedDataType    #PhoneLocal
-        ENDPROPERTIES
-        
-      FIELD #DEL_PrimaryPhoneNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_PrimaryPhoneNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{B8559C7E-2E77-4DE4-A3CC-BA936CB87507}
-          LegacyId            #68
-          ExtendedDataType    #smmPrimaryPhoneNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_RadioPhoneNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_RadioPhoneNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{E8BD5535-111D-4C1D-8ABA-EEB11D0D3CFB}
-          LegacyId            #69
-          ExtendedDataType    #smmRadioPhoneNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_selectedAddress
-        ENUM
-        PROPERTIES
-          Name                #DEL_selectedAddress
-          Label               #@SYS2245
-          HelpText            #@SYS90956
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{13B50134-7E22-4379-A688-158B15F8A662}
-          LegacyId            #72
-          EnumType            #smmSelectedMailingAddress
-        ENDPROPERTIES
-        
-      FIELD #DEL_SelectedMailingAddress
-        ENUM
-        PROPERTIES
-          Name                #DEL_SelectedMailingAddress
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #ContactPerson
-          Origin              #{A741DEF7-E29B-41E5-B319-7D94A8181687}
-          LegacyId            #81
-          EnumType            #smmSelectedMailingAddress
-        ENDPROPERTIES
-        
-      FIELD #DEL_SMS60
-        STRING
-        PROPERTIES
-          Name                #DEL_SMS60
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{D1B28B31-D3EB-4D99-B988-83FD56343A2C}
-          LegacyId            #26
-          ExtendedDataType    #SMS
-          StringSize          #80
-        ENDPROPERTIES
-        
-      FIELD #DEL_SocialTitle
-        STRING
-        PROPERTIES
-          Name                #DEL_SocialTitle
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{7D5086C7-4086-454B-B519-392166094B84}
-          LegacyId            #42
-          ExtendedDataType    #smmContactPersonPrivateTitle
-          StringSize          #25
-        ENDPROPERTIES
-        
-      FIELD #DEL_State
-        STRING
-        PROPERTIES
-          Name                #DEL_State
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{2B053474-CE73-4417-B38A-DACAC639175F}
-          LegacyId            #8
-          ExtendedDataType    #AddressStateId
-        ENDPROPERTIES
-        
-      FIELD #DEL_Street
-        STRING
-        PROPERTIES
-          Name                #DEL_Street
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{B06A2647-1B5B-452D-9B59-49CAB2AA2799}
-          LegacyId            #24
-          ExtendedDataType    #AddressStreet
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_Suffix
-        STRING
-        PROPERTIES
-          Name                #DEL_Suffix
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{A81093F8-D174-4FDB-B62C-743C2A20D868}
-          LegacyId            #110
-          ExtendedDataType    #smmNameSuffix
-        ENDPROPERTIES
-        
-      FIELD #DEL_Telefax
-        STRING
-        PROPERTIES
-          Name                #DEL_Telefax
-          HelpText            #@SYS26098
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{609DD50A-5BC1-40C6-94B9-2230D078A4DF}
-          LegacyId            #5
-          ExtendedDataType    #TeleFax
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_Telex
-        STRING
-        PROPERTIES
-          Name                #DEL_Telex
-          Label               #@SYS28732
-          HelpText            #@SYS26097
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{B312EE76-949C-459F-9796-1991022C5F34}
-          LegacyId            #2
-          ExtendedDataType    #Telex
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_TTYTDDPhoneNumber
-        STRING
-        PROPERTIES
-          Name                #DEL_TTYTDDPhoneNumber
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{F3FBA726-C709-4647-B0AE-898A06EC7C2E}
-          LegacyId            #71
-          ExtendedDataType    #smmTTYTDDPhoneNumber
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_URL
-        STRING
-        PROPERTIES
-          Name                #DEL_URL
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          Origin              #{74664FE4-D3D7-4A16-8864-5730162CC385}
-          LegacyId            #6
-          ExtendedDataType    #URL
-          StringSize          #255
-        ENDPROPERTIES
-        
-      FIELD #DEL_VendAccount
-        STRING
-        PROPERTIES
-          Name                #DEL_VendAccount
-          HelpText            #@SYS26104
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{8DBEC1EA-8269-48E2-BC01-7B1CD09A7F99}
-          LegacyId            #18
-          ExtendedDataType    #VendAccount
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_Zipcode
-        STRING
-        PROPERTIES
-          Name                #DEL_Zipcode
-          HelpText            #@SYS17938
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #ContactPerson
-          IgnoreEDTRelation   #Yes
-          Origin              #{11D94747-3E88-4137-B1FB-1490AF5932E0}
-          LegacyId            #11
-          ExtendedDataType    #AddressZipCodeId
-        ENDPROPERTIES
-        
       FIELD #Department
         STRING
         PROPERTIES
@@ -2069,30 +1093,6 @@ Formatversion: 1
         #ContactPersonId
       ENDINDEXFIELDS
       
-      #DEL_BusRelAccount
-      PROPERTIES
-        Name                #DEL_BusRelAccount
-        ConfigurationKey    #SysDeletedObjects41
-        Origin              #{2B110006-0208-1000-27CF-C7CEDC58CEDC}
-        LegacyId            #6
-      ENDPROPERTIES
-      
-      INDEXFIELDS
-        #DEL_BusRelAccount
-      ENDINDEXFIELDS
-      
-      #DEL_PartyIdx
-      PROPERTIES
-        Name                #DEL_PartyIdx
-        ConfigurationKey    #SysDeletedObjects60
-        Origin              #{2B0C0008-0208-1000-0774-1159B4737274}
-        LegacyId            #8
-      ENDPROPERTIES
-      
-      INDEXFIELDS
-        #DEL_PartyId
-      ENDINDEXFIELDS
-      
       #Party
       PROPERTIES
         Name                #Party
@@ -2115,33 +1115,6 @@ Formatversion: 1
       
       INDEXFIELDS
         #MainResponsibleWorker
-      ENDINDEXFIELDS
-      
-      #DEL_PhoneIdx
-      PROPERTIES
-        Name                #DEL_PhoneIdx
-        ConfigurationKey    #SysDeletedObjects60
-        Origin              #{2B0C1F44-0208-1000-EB65-0E59B47A6F6E}
-        LegacyId            #8004
-      ENDPROPERTIES
-      
-      INDEXFIELDS
-        #DEL_Phone
-        #DEL_CellularPhone
-      ENDINDEXFIELDS
-      
-      #DEL_CustVendRelIdx
-      PROPERTIES
-        Name                #DEL_CustVendRelIdx
-        ConfigurationKey    #SysDeletedObjects60
-        Origin              #{2B0E1F45-0208-1000-E9A2-51B6195FD276}
-        LegacyId            #8005
-      ENDPROPERTIES
-      
-      INDEXFIELDS
-        #CustAccount
-        #DEL_VendAccount
-        #DEL_BusRelAccount
       ENDINDEXFIELDS
       
     ENDINDICES
@@ -5268,206 +4241,6 @@ Formatversion: 1
 <Table:Record name="TmpSysLabel"
        xmlns:Table='urn:www.microsoft.com/Formats/Table'>
     <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Address of contact</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS28178</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Mobile</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS90908</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Mobile phone number</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS21226</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Country/region of citizenship</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS31473</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Country/region the address is attached to</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS26099</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">County pertaining to the address</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS17939</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Other e-mail</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS90329</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Inactive</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS80311</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Name of contact.</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS13368</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Company name</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS15581</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">PlaceHolder</Table:Field>
-    <Table:Field name="Description">{Locked}</Table:Field>
-    <Table:Field name="LabelId">@SYS89034</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Phone</Table:Field>
-    <Table:Field name="Description">[VendorOnboardingPhase1]</Table:Field>
-    <Table:Field name="LabelId">@SYS80287</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Contact's telephone number</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS337</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Select</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS2245</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Select Microsoft Outlook address to display.</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS90956</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Fax number for contact</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS26098</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Telex</Table:Field>
-    <Table:Field name="Description">[VendorOnboardingPhase1]</Table:Field>
-    <Table:Field name="LabelId">@SYS28732</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Telex number for contact</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS26097</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Contact's attachment to a supplier</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS26104</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">ZIP/postal code pertaining to the address</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS17938</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">The distance in mileage of the contact</Table:Field>
     <Table:Field name="Description">[form]smmContactPerson:[field]Mileage:[help]</Table:Field>
     <Table:Field name="LabelId">@SYS319062</Table:Field>
@@ -6331,101 +5104,6 @@ Formatversion: 1
           StringSize          #3
         ENDPROPERTIES
         
-      FIELD #DEL_Address
-        STRING
-        PROPERTIES
-          Name                #DEL_Address
-          AllowEditOnCreate   #No
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendBankAccount
-          Origin              #{9B895D15-4360-4C20-8025-CD23E010EBC2}
-          LegacyId            #4
-          ExtendedDataType    #Addressing
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_BankAccountValidationMethod
-        ENUM
-        PROPERTIES
-          Name                #DEL_BankAccountValidationMethod
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendBankAccount
-          Origin              #{5452069C-D0F0-4093-BA03-2DA54101071C}
-          LegacyId            #26
-          EnumType            #DEL_BankAccountValidationMethod
-        ENDPROPERTIES
-        
-      FIELD #DEL_City
-        STRING
-        PROPERTIES
-          Name                #DEL_City
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendBankAccount
-          Origin              #{BBDB1616-A28A-4237-A9B6-5C14FC2CADA1}
-          LegacyId            #41
-          ExtendedDataType    #AddressCity
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #DEL_CountryRegionId
-        STRING
-        PROPERTIES
-          Name                #DEL_CountryRegionId
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendBankAccount
-          IgnoreEDTRelation   #Yes
-          Origin              #{A7EB2CD0-FA67-4DC4-8573-D1418DEF61A8}
-          LegacyId            #7
-          ExtendedDataType    #AddressCountryRegionId
-        ENDPROPERTIES
-        
-      FIELD #DEL_County
-        STRING
-        PROPERTIES
-          Name                #DEL_County
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendBankAccount
-          Origin              #{39152BFB-653B-4DB2-BFFD-00B318419CBD}
-          LegacyId            #6
-          ExtendedDataType    #AddressCountyId
-        ENDPROPERTIES
-        
-      FIELD #DEL_State
-        STRING
-        PROPERTIES
-          Name                #DEL_State
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendBankAccount
-          Origin              #{24FA6BCC-B2F2-4E06-93C8-ED05A395851A}
-          LegacyId            #20
-          ExtendedDataType    #AddressStateId
-        ENDPROPERTIES
-        
-      FIELD #DEL_Street
-        STRING
-        PROPERTIES
-          Name                #DEL_Street
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendBankAccount
-          Origin              #{71E32FDA-B23B-4AE4-8899-9E8BA7FF8C67}
-          LegacyId            #40
-          ExtendedDataType    #AddressStreet
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_ZipCode
-        STRING
-        PROPERTIES
-          Name                #DEL_ZipCode
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendBankAccount
-          IgnoreEDTRelation   #Yes
-          Origin              #{340BEA5B-4623-43B6-B7A4-472566B15DD6}
-          LegacyId            #5
-          ExtendedDataType    #AddressZipCodeId
-        ENDPROPERTIES
-        
       FIELD #Email
         STRING
         PROPERTIES
@@ -6500,6 +5178,16 @@ Formatversion: 1
           LegacyId            #3
           ExtendedDataType    #Name
           StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #NGLOfficeNo
+        STRING
+        PROPERTIES
+          Name                #NGLOfficeNo
+          Mandatory           #Yes
+          Table               #VendBankAccount
+          Origin              #{1665A89B-04A9-4B77-87D8-BEA0B1977FDF}
+          ExtendedDataType    #NGLOfficeNo
         ENDPROPERTIES
         
       FIELD #Pager
@@ -6588,6 +5276,14 @@ Formatversion: 1
           LegacyId            #22
           ExtendedDataType    #Telex
           StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #triDMlegacyID
+        STRING
+        PROPERTIES
+          Name                #triDMlegacyID
+          Table               #VendBankAccount
+          Origin              #{57BB3187-168B-4174-BA7D-4032D05E3D20}
         ENDPROPERTIES
         
       FIELD #TypeOfAccount
@@ -6698,6 +5394,7 @@ Formatversion: 1
         GROUPFIELDS
           #AccountID
           #Name
+          #NGLOfficeNo
           #BankGroupID
           #VendAccount
           #BankCodeType
@@ -6720,6 +5417,7 @@ Formatversion: 1
           #currentBankAccountStatus
           #AccountID
           #Name
+          #NGLOfficeNo
           #BankGroupID
           #RegistrationNum
           #AccountNum
@@ -7186,6 +5884,14 @@ Formatversion: 1
         #    this.BankAccountMap::modifiedField(_fieldId);
         #}
       ENDSOURCE
+      SOURCE #nglOfficeNo
+        #//NGLBankAccountByAddress
+        #//BP Deviation Documented
+        #display NGLOfficeNo nglOfficeNo()
+        #{
+        #    return this.NGLOfficeNo;
+        #}
+      ENDSOURCE
       SOURCE #validateDelete
         #public boolean validateDelete()
         #{
@@ -7517,6 +6223,87 @@ Formatversion: 1
         #                    }
         #            }
         #        }
+        #        sysTableLookup.parmQuery(query);
+        #        sysTableLookup.performFormLookup();
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #nglFindOfficeNo
+        #public static VendBankAccount nglFindOfficeNo(
+        #    VendAccount         _vendAccount,
+        #    NGLOfficeNo         _officeNo,
+        #    boolean                 _forupdate = false,
+        #    ConcurrencyModel        _concurrencyModel = ConcurrencyModel::Auto)
+        #{
+        #    VendBankAccount vendBankAccount;
+        #    ;
+        #
+        #    vendBankAccount.selectForUpdate(_forupdate);
+        #    if (_forupdate  && _concurrencyModel != ConcurrencyModel::Auto)
+        #    {
+        #        vendBankAccount.concurrencyModel(_concurrencyModel);
+        #    }
+        #
+        #    select firstonly
+        #        vendBankAccount
+        #        where
+        #        vendBankAccount.VendAccount == _vendAccount &&
+        #                vendBankAccount.NGLOfficeNo == _officeNo;
+        #
+        #    return vendBankAccount;
+        #}
+      ENDSOURCE
+      SOURCE #nglLookupOfficeNumber
+        #//NGLBankAccountByAddress
+        #client static void nglLookupOfficeNumber(FormStringControl   _ctrl,
+        #                                     Vendaccount         _vendAccount,
+        #                                     str                 _filter = '',
+        #                                     CompanyId           _company = curext())
+        #{
+        #    SysTableLookup          sysTableLookup = SysTableLookup::newParameters(tableNum(LogisticsPostalAddress), _ctrl);
+        #    Query                   query = new Query();
+        #    QueryBuildDataSource    qbds, qbdsDir,qbdsBank;
+        #    CompanyId               companyId;
+        #
+        #    DirPartyPostalAddressView   view;
+        #    ;
+        #
+        #    if (!_company)
+        #    {
+        #        companyId = curext();
+        #    }
+        #    else
+        #    {
+        #        companyId = _company;
+        #
+        #        if (! xDataArea::exist(companyId))
+        #        {
+        #            throw error(strFmt("@SYS10666", companyId));
+        #        }
+        #    }
+        #
+        #    changecompany(companyId)
+        #    {
+        #        sysTableLookup.addLookupfield(fieldNum(LogisticsPostalAddress, NGLOfficeNo),true);
+        #
+        #        qbds = query.addDataSource(tablenum(LogisticsPostalAddress));
+        #
+        #        qbdsDir = qbds.addDataSource(tablenum(DirPartyLocation));
+        #        qbdsDir.relations(false);
+        #        qbdsDir.addLink(fieldNum(LogisticsPostalAddress,Location),fieldNum(DirPartyLocation,Location));
+        #        qbdsDir.joinMode(JoinMode::ExistsJoin);
+        #
+        #        qbdsBank = qbds.addDataSource(tablenum(VendBankAccount));
+        #        qbdsBank.relations(false);
+        #        qbdsBank.addLink(fieldNum(LogisticsPostalAddress,NGLOfficeNo),fieldNum(VendBankAccount,NGLOfficeNo));
+        #        qbdsBank.joinMode(JoinMode::NoExistsJoin);
+        #        SysQuery::findOrCreateRange(qbdsBank,fieldNum(VendBankAccount,VendAccount)).value(queryValue(_vendAccount));
+        #        if (_filter)
+        #        {
+        #             SysQuery::findOrCreateRange(qbdsBank,fieldNum(VendBankAccount,NGLOfficeNo)).value(queryNotValue(_filter));
+        #        }
+        #
+        #        SysQuery::findOrCreateRange(qbdsDir,fieldNum(DirPartyLocation,Party)).value(queryValue(VendTable::find(_vendAccount).Party));
         #        sysTableLookup.parmQuery(query);
         #        sysTableLookup.performFormLookup();
         #    }
@@ -8107,439 +6894,6 @@ Formatversion: 1
           Origin              #{FB59AD50-AF7A-4BA3-80B7-655006FF81BA}
           LegacyId            #125
           ExtendedDataType    #DimensionDefault
-        ENDPROPERTIES
-        
-      FIELD #DEL_Address
-        STRING
-        PROPERTIES
-          Name                #DEL_Address
-          HelpText            #@SYS11555
-          AllowEditOnCreate   #No
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{6DBB0F53-60DB-43A0-B3B3-ABFFA56764DD}
-          LegacyId            #3
-          ExtendedDataType    #Addressing
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_CellularPhone
-        STRING
-        PROPERTIES
-          Name                #DEL_CellularPhone
-          HelpText            #@SYS28167
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{A48E699B-9047-4DC7-BF59-F6EF81FE4EF2}
-          LegacyId            #39
-          ExtendedDataType    #PhoneMobile
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_City
-        STRING
-        PROPERTIES
-          Name                #DEL_City
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{5AA8AD69-E05E-4E69-8416-2DB6C5E55C55}
-          LegacyId            #71
-          ExtendedDataType    #AddressCity
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #DEL_CompanyIdNAF
-        STRING
-        PROPERTIES
-          Name                #DEL_CompanyIdNAF
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{A15F438D-9806-43B2-8EF4-408FDEAAE7AE}
-          LegacyId            #11
-          ExtendedDataType    #CompanyIdNAF
-          StringSize          #5
-        ENDPROPERTIES
-        
-      FIELD #DEL_CountryRegionId
-        STRING
-        PROPERTIES
-          Name                #DEL_CountryRegionId
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          IgnoreEDTRelation   #Yes
-          Origin              #{B9FC03DD-5B06-418D-89B1-E63F477A9C61}
-          LegacyId            #24
-          ExtendedDataType    #AddressCountryRegionId
-        ENDPROPERTIES
-        
-      FIELD #DEL_County
-        STRING
-        PROPERTIES
-          Name                #DEL_County
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{A68F361F-ED10-4489-9E5E-6DA377F4D323}
-          LegacyId            #36
-          ExtendedDataType    #AddressCountyId
-        ENDPROPERTIES
-        
-      FIELD #DEL_CustAccount
-        STRING
-        PROPERTIES
-          Name                #DEL_CustAccount
-          HelpText            #@SYS1414
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          IgnoreEDTRelation   #Yes
-          Origin              #{E07C7E8C-6466-4627-AC4A-09CED6885E99}
-          LegacyId            #22
-          ExtendedDataType    #CustAccount
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_Dimension
-        STRING
-        PROPERTIES
-          Name                #DEL_Dimension
-          Visible             #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{52C8E29B-DD13-48B0-8F4A-EF8B66082F9C}
-          LegacyId            #16
-          ExtendedDataType    #Dimension
-        ENDPROPERTIES
-        
-      FIELD #DEL_Email
-        STRING
-        PROPERTIES
-          Name                #DEL_Email
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{F63FCE76-5553-4CBA-AD68-CB4EEE0A92D5}
-          LegacyId            #38
-          ExtendedDataType    #Email
-          StringSize          #80
-        ENDPROPERTIES
-        
-      FIELD #DEL_FileNum_SA
-        STRING
-        PROPERTIES
-          Name                #DEL_FileNum_SA
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{A7B30F28-28EE-42B7-8A80-12785E8CAA73}
-          LegacyId            #138
-          ExtendedDataType    #CompanyFileNumZakat_SA
-          StringSize          #15
-        ENDPROPERTIES
-        
-      FIELD #DEL_InvoiceDeclarationId_IS
-        STRING
-        PROPERTIES
-          Name                #DEL_InvoiceDeclarationId_IS
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{C2CC034C-2B43-4D6D-B147-5B0976925473}
-          LegacyId            #131
-          ExtendedDataType    #InvoiceSlipDeclarationId_IS
-        ENDPROPERTIES
-        
-      FIELD #DEL_LanguageId
-        STRING
-        PROPERTIES
-          Name                #DEL_LanguageId
-          HelpText            #@SYS9756
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          IgnoreEDTRelation   #Yes
-          Origin              #{43B91339-6113-45C9-B457-9DD4A8A5C518}
-          LegacyId            #63
-          ExtendedDataType    #VendLanguageId
-          StringSize          #7
-        ENDPROPERTIES
-        
-      FIELD #DEL_MainContactId
-        STRING
-        PROPERTIES
-          Name                #DEL_MainContactId
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          IgnoreEDTRelation   #Yes
-          Origin              #{06276E02-38B0-413C-9329-031974F8871F}
-          LegacyId            #97
-          ExtendedDataType    #DEL_smmBusRelAccResponsible
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_Name
-        STRING
-        PROPERTIES
-          Name                #DEL_Name
-          HelpText            #@SYS28170
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{17EAD95F-2FD6-4C34-9065-1511C0D1BAC7}
-          LegacyId            #2
-          ExtendedDataType    #VendName
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #DEL_NameAlias
-        STRING
-        PROPERTIES
-          Name                #DEL_NameAlias
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          AliasFor            #AccountNum
-          Origin              #{5E62E7F4-61D5-441E-9E70-63B9521F6122}
-          LegacyId            #52
-          ExtendedDataType    #VendTableAlias
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_OffsetAccount
-        STRING
-        PROPERTIES
-          Name                #DEL_OffsetAccount
-          Label               #@SYS11162
-          HelpText            #@SYS11446
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{EA4F1476-6746-4C69-8496-7AC22F28B3AE}
-          LegacyId            #73
-          ExtendedDataType    #LedgerJournalAC
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_OrganizationNum_SA
-        STRING
-        PROPERTIES
-          Name                #DEL_OrganizationNum_SA
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{B52555D4-EE2B-4667-A202-AFE877E1FC7A}
-          LegacyId            #140
-          ExtendedDataType    #DirOrganizationNumber
-          StringSize          #25
-        ENDPROPERTIES
-        
-      FIELD #DEL_Pager
-        STRING
-        PROPERTIES
-          Name                #DEL_Pager
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{0CDE5B3B-DF74-4082-9E90-AE32F2336FD6}
-          LegacyId            #76
-          ExtendedDataType    #Pager
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_PartyId
-        STRING
-        PROPERTIES
-          Name                #DEL_PartyId
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          IgnoreEDTRelation   #Yes
-          Origin              #{97ABB7F7-FF09-4FA9-8C0D-53832DE8FA0E}
-          LegacyId            #81
-          ExtendedDataType    #DEL_DirPartyId
-          StringSize          #40
-        ENDPROPERTIES
-        
-      FIELD #DEL_PartyType
-        ENUM
-        PROPERTIES
-          Name                #DEL_PartyType
-          AllowEdit           #No
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{08666CEC-1975-466A-B190-5707110ED558}
-          LegacyId            #101
-          EnumType            #DirPartyType
-        ENDPROPERTIES
-        
-      FIELD #DEL_Phone
-        STRING
-        PROPERTIES
-          Name                #DEL_Phone
-          HelpText            #@SYS297
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{B2E7463D-C779-41A0-9FA5-9A514CA2E153}
-          LegacyId            #4
-          ExtendedDataType    #Phone
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_PhoneLocal
-        STRING
-        PROPERTIES
-          Name                #DEL_PhoneLocal
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{E10A05FC-36E9-4890-8E2A-DEC10DB4B3AA}
-          LegacyId            #40
-          ExtendedDataType    #PhoneLocal
-        ENDPROPERTIES
-        
-      FIELD #DEL_PrintModuleType
-        ENUM
-        PROPERTIES
-          Name                #DEL_PrintModuleType
-          Label               #@SYS54502
-          Visible             #No
-          ConfigurationKey    #SysDeletedObjects41
-          Table               #VendTable
-          Origin              #{E79806B3-A124-43E3-BA79-7D3DB2C1FFEC}
-          LegacyId            #70
-          EnumType            #DEL_ModuleVendPurchParameters
-        ENDPROPERTIES
-        
-      FIELD #DEL_PSACompany
-        STRING
-        PROPERTIES
-          Name                #DEL_PSACompany
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{06181357-DC16-409B-81B2-8349FBE2F864}
-          LegacyId            #16049
-        ENDPROPERTIES
-        
-      FIELD #DEL_PSAPwp
-        ENUM
-        PROPERTIES
-          Name                #DEL_PSAPwp
-          Label               #@PSA3342
-          HelpText            #@PSA10197
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{DB213FC9-79FF-4937-861B-1F226FA31E89}
-          LegacyId            #16050
-          EnumType            #NoYes
-        ENDPROPERTIES
-        
-      FIELD #DEL_ServiceType_SA
-        STRING
-        PROPERTIES
-          Name                #DEL_ServiceType_SA
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{01F8B125-43F9-402E-8B1B-BDBAC5C5A8ED}
-          LegacyId            #136
-          ExtendedDataType    #VendServiceNumZakat_SA
-          StringSize          #25
-        ENDPROPERTIES
-        
-      FIELD #DEL_SMS
-        STRING
-        PROPERTIES
-          Name                #DEL_SMS
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{AD1DAC5C-885B-4C33-8CDC-50E886C1883A}
-          LegacyId            #77
-          ExtendedDataType    #SMS
-          StringSize          #80
-        ENDPROPERTIES
-        
-      FIELD #DEL_State
-        STRING
-        PROPERTIES
-          Name                #DEL_State
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{78F6715A-A28C-40B9-B951-1F89FB2279A9}
-          LegacyId            #35
-          ExtendedDataType    #AddressStateId
-        ENDPROPERTIES
-        
-      FIELD #DEL_Street
-        STRING
-        PROPERTIES
-          Name                #DEL_Street
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{B28C283D-BF97-458D-A926-782A72C03F52}
-          LegacyId            #72
-          ExtendedDataType    #AddressStreet
-          StringSize          #250
-        ENDPROPERTIES
-        
-      FIELD #DEL_SubContractor_SA
-        ENUM
-        PROPERTIES
-          Name                #DEL_SubContractor_SA
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{23FBB406-0825-45C0-8D08-2A38A662DA97}
-          LegacyId            #139
-          ExtendedDataType    #NoYesId
-          EnumType            #NoYes
-        ENDPROPERTIES
-        
-      FIELD #DEL_Tax1099Box
-        STRING
-        PROPERTIES
-          Name                #DEL_Tax1099Box
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{F4239773-4BAB-42CD-857C-5C4D306638F5}
-          LegacyId            #51
-          ExtendedDataType    #Tax1099Box
-        ENDPROPERTIES
-        
-      FIELD #DEL_TeleFax
-        STRING
-        PROPERTIES
-          Name                #DEL_TeleFax
-          HelpText            #@SYS6816
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{E7385461-8E8B-483A-8381-05DDBF2DB619}
-          LegacyId            #5
-          ExtendedDataType    #TeleFax
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_Telex
-        STRING
-        PROPERTIES
-          Name                #DEL_Telex
-          HelpText            #@SYS137
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{C9AB8872-65A5-4AA4-B314-BC0587F4FA4D}
-          LegacyId            #17
-          ExtendedDataType    #Telex
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #DEL_URL
-        STRING
-        PROPERTIES
-          Name                #DEL_URL
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          Origin              #{C870006A-3C1F-4CC2-BED4-50F3809C0B15}
-          LegacyId            #37
-          ExtendedDataType    #URL
-          StringSize          #255
-        ENDPROPERTIES
-        
-      FIELD #DEL_ZipCode
-        STRING
-        PROPERTIES
-          Name                #DEL_ZipCode
-          ConfigurationKey    #SysDeletedObjects60
-          Table               #VendTable
-          IgnoreEDTRelation   #Yes
-          Origin              #{890AC77D-DF42-4422-9F10-7D15986346B0}
-          LegacyId            #34
-          ExtendedDataType    #AddressZipCodeId
         ENDPROPERTIES
         
       FIELD #DestinationCodeId
@@ -9273,18 +7627,9 @@ Formatversion: 1
         PROPERTIES
           Name                #triDMlegacyID
           Table               #VendTable
-          Origin              #{F2EE531B-4F17-4C7D-A236-4A67B587722D}
+          Origin              #{FC5F736C-F85E-431C-A98B-7375BE4640EA}
           ExtendedDataType    #triDMlegacyID
           StringSize          #40
-        ENDPROPERTIES
-        
-      FIELD #UseCashDisc
-        ENUM
-        PROPERTIES
-          Name                #UseCashDisc
-          Table               #VendTable
-          Origin              #{D4610F40-C261-4C8B-92BA-49CB46FA052E}
-          EnumType            #UseCashDisc
         ENDPROPERTIES
         
       FIELD #VATNum
@@ -9648,7 +7993,6 @@ Formatversion: 1
           #AccountNum
           #Party
           #OrgId
-          #triDMlegacyID
         ENDGROUPFIELDS
       ENDGROUP
       GROUP #InterCompany
@@ -10002,18 +8346,6 @@ Formatversion: 1
         #AccountNum
       ENDINDEXFIELDS
       
-      #DEL_PartyIdx
-      PROPERTIES
-        Name                #DEL_PartyIdx
-        ConfigurationKey    #SysDeletedObjects60
-        Origin              #{2B0C0002-01F9-1000-0774-1159B4737274}
-        LegacyId            #2
-      ENDPROPERTIES
-      
-      INDEXFIELDS
-        #DEL_PartyId
-      ENDINDEXFIELDS
-      
       #Party
       PROPERTIES
         Name                #Party
@@ -10025,18 +8357,6 @@ Formatversion: 1
       
       INDEXFIELDS
         #Party
-      ENDINDEXFIELDS
-      
-      #DEL_NameAliasIDx
-      PROPERTIES
-        Name                #DEL_NameAliasIDx
-        ConfigurationKey    #SysDeletedObjects60
-        Origin              #{2B0C0004-01F9-1000-6FA5-D17BA07E6961}
-        LegacyId            #4
-      ENDPROPERTIES
-      
-      INDEXFIELDS
-        #DEL_NameAlias
       ENDINDEXFIELDS
       
       #YourAccountNumIdx
@@ -10081,19 +8401,6 @@ Formatversion: 1
       
       INDEXFIELDS
         #MainContactWorker
-      ENDINDEXFIELDS
-      
-      #DEL_PhoneIdx
-      PROPERTIES
-        Name                #DEL_PhoneIdx
-        ConfigurationKey    #SysDeletedObjects60
-        Origin              #{2B0C1F42-01F9-1000-EB65-0E59B47A6F6E}
-        LegacyId            #8002
-      ENDPROPERTIES
-      
-      INDEXFIELDS
-        #DEL_Phone
-        #DEL_CellularPhone
       ENDINDEXFIELDS
       
     ENDINDICES
@@ -12451,7 +10758,7 @@ Formatversion: 1
         #    this.TaxIDType                  = tbl.TaxIDType;
         #    this.TaxWithholdCalculate       = tbl.TaxWithholdCalculate;
         #    this.TaxWithholdVendorType_TH   = tbl.TaxWithholdVendorType_TH;
-        #    this.UseCashDisc                = tbl.UseCashDisc;
+        #    //this.UseCashDisc                = tbl.UseCashDisc;
         #    this.VATNum                     = tbl.VATNum;
         #    this.VendExceptionGroup         = tbl.VendExceptionGroup;
         #    this.VendGroup                  = tbl.VendGroup;
@@ -14975,7 +13282,7 @@ Formatversion: 1
         #    companyId = _companyId;
         #    if (! xDataArea::exist(companyId))
         #    {
-        #        throw error(strFmt("@TRI9", companyId));
+        #        throw error(strFmt("@SYS10666", companyId));
         #    }
         #
         #    changecompany(companyId)
@@ -15017,7 +13324,7 @@ Formatversion: 1
         #    {
         #        companyId = _company;
         #        if (! xDataArea::exist(companyId))
-        #            throw error(strFmt("@TRI9",companyId));
+        #            throw error(strFmt("@SYS10666",companyId));
         #    }
         #
         #    changecompany(companyId)
@@ -15096,7 +13403,7 @@ Formatversion: 1
         #    {
         #        companyId = _company;
         #        if (! xDataArea::exist(companyId))
-        #            throw error(strFmt("@TRI9",companyId));
+        #            throw error(strFmt("@SYS10666",companyId));
         #    }
         #
         #    changecompany(companyId)
@@ -15164,6 +13471,52 @@ Formatversion: 1
         #}
         #
         #
+      ENDSOURCE
+      SOURCE #nglLookupOfficeNumberAll
+        #//NGLBankAccountByAddress
+        #client static void nglLookupOfficeNumberAll(FormStringControl   _ctrl,
+        #                                     CustVendAC          _account,
+        #                                     str                 _filter ='',
+        #                                     CompanyId           _company = curext())
+        #{
+        #    SysTableLookup          sysTableLookup = SysTableLookup::newParameters(tableNum(LogisticsPostalAddress), _ctrl);
+        #    Query                   query = new Query();
+        #    QueryBuildDataSource    qbds, qbdsDir,qbdsBank;
+        #    CompanyId               companyId;
+        #
+        #    DirPartyPostalAddressView   view;
+        #    ;
+        #
+        #    if (!_company)
+        #    {
+        #        companyId = curext();
+        #    }
+        #    else
+        #    {
+        #        companyId = _company;
+        #
+        #        if (! xDataArea::exist(companyId))
+        #        {
+        #            throw error(strFmt("@SYS10666", companyId));
+        #        }
+        #    }
+        #
+        #    changecompany(companyId)
+        #    {
+        #        sysTableLookup.addLookupfield(fieldNum(LogisticsPostalAddress, NGLOfficeNo),true);
+        #
+        #        qbds = query.addDataSource(tablenum(LogisticsPostalAddress));
+        #
+        #        qbdsDir = qbds.addDataSource(tablenum(DirPartyLocation));
+        #        qbdsDir.relations(false);
+        #        qbdsDir.addLink(fieldNum(LogisticsPostalAddress,Location),fieldNum(DirPartyLocation,Location));
+        #        qbdsDir.joinMode(JoinMode::ExistsJoin);
+        #
+        #        SysQuery::findOrCreateRange(qbdsDir,fieldNum(DirPartyLocation,Party)).value(queryValue(VendTable::find(_account).Party));
+        #        sysTableLookup.parmQuery(query);
+        #        sysTableLookup.performFormLookup();
+        #    }
+        #}
       ENDSOURCE
       SOURCE #promptAddress
         #static str promptAddress(VendAccount _vendAccount)
@@ -15420,136 +13773,6 @@ Formatversion: 1
 <Table:Record name="TmpSysLabel"
        xmlns:Table='urn:www.microsoft.com/Formats/Table'>
     <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Vendor's address</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS11555</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Number of the vendor's mobile phone</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS28167</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Account number in customer table if vendor is also a customer.</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS1414</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Language used in forms to the vendor</Table:Field>
-    <Table:Field name="Description">'Form' used in the sense form letter, ie document.</Table:Field>
-    <Table:Field name="LabelId">@SYS9756</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Vendor name or company name</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS28170</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Offset account</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS11162</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Default offset account suggested in daily journal.</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS11446</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Vendor phone number.</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS297</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Print management</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS54502</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Pay when paid</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@PSA3342</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Is pay-when-paid type?</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@PSA10197</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Vendor fax number</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS6816</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Vendor telex number</Table:Field>
-    <Table:Field name="Description"></Table:Field>
-    <Table:Field name="LabelId">@SYS137</Table:Field>
-    <Table:Field name="SysLabelApplModule">0</Table:Field>
-    <Table:Field name="recVersion">0</Table:Field>
-</Table:Record>
-
-<Table:Record name="TmpSysLabel"
-       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
-    <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Specify normal mode of delivery for vendor.</Table:Field>
     <Table:Field name="Description"></Table:Field>
     <Table:Field name="LabelId">@SYS6488</Table:Field>
@@ -15643,6 +13866,26 @@ Formatversion: 1
     <Table:Field name="Label">Offset account type</Table:Field>
     <Table:Field name="Description"></Table:Field>
     <Table:Field name="LabelId">@SYS23950</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Offset account</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11162</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Default offset account suggested in daily journal.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11446</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
     <Table:Field name="recVersion">0</Table:Field>
 </Table:Record>
@@ -16510,6 +14753,16 @@ Formatversion: 1
 <Table:Record name="TmpSysLabel"
        xmlns:Table='urn:www.microsoft.com/Formats/Table'>
     <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Company %1 does not exist.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS10666</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Account %1 does not exist.</Table:Field>
     <Table:Field name="Description"></Table:Field>
     <Table:Field name="LabelId">@SYS9779</Table:Field>
@@ -16580,7 +14833,6 @@ Formatversion: 1
         PROPERTIES
           Name                #BankAccountType
           Table               #triDMVendBankAcct
-          CountryRegionContextField     #UNKNOWN
           Origin              #{099590DC-8AA9-4707-805D-D0B200B321A3}
           EnumType            #BankAccountType
         ENDPROPERTIES
@@ -16590,7 +14842,6 @@ Formatversion: 1
         PROPERTIES
           Name                #BankCIN
           Table               #triDMVendBankAcct
-          CountryRegionContextField     #UNKNOWN
           Origin              #{13EBB340-4F31-4DF9-BA49-0BEEBD5D1BB8}
           ExtendedDataType    #BankCIN
           StringSize          #1
@@ -16957,7 +15208,6 @@ Formatversion: 1
         PROPERTIES
           Name                #TypeOfAccount
           Table               #triDMVendBankAcct
-          CountryRegionContextField     #UNKNOWN
           Origin              #{96BED9AA-7BC2-4C6D-9C70-6FDB978211ED}
           EnumType            #TypeOfAccount
         ENDPROPERTIES
@@ -20331,6 +18581,13 @@ Formatversion: 1
         EnumValue           #8
       ENDPROPERTIES
       
+      #CustBank
+      PROPERTIES
+        Name                #CustBank
+        Label               #Customer Bank
+        EnumValue           #9
+      ENDPROPERTIES
+      
     ENDTYPEELEMENTS
   ENDENUMTYPE
   
@@ -21176,41 +19433,40 @@ Formatversion: 1
         #
         #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
         #    {
-        #
-        #        try
+        #        if(this.ValidateVendor(tbl) == true)
         #        {
-        #            ttsBegin;
-        #            vendor.selectForUpdate();
-        #            this.setDefaultValues(tbl);
-        #            vendor.initFromStagingTable(tbl);
-        #            this.addPartyInfo(vendor,tbl);
-        #            vendor.insert();
-        #            ttsCommit;
+        #            try
+        #            {
         #
-        #            ttsBegin;
-        #            tbl.triDMstatus = triDMstatus::Imported;
-        #            tbl.update();
-        #            ttsCommit;
-        #
-        #            this.addSimpleMainContactInfo(tbl,vendor);
-        #
-        #
+        #                ttsBegin;
+        #                vendor.selectForUpdate();
+        #                this.setDefaultValues(tbl);
+        #                vendor.initFromStagingTable(tbl);
+        #                this.addPartyInfo(vendor,tbl);
+        #                vendor.insert();
+        #                ttsCommit;
+        #                /*
+        #                ttsBegin;
+        #                tbl.triDMstatus = triDMstatus::Imported;
+        #                tbl.update();
+        #                ttsCommit;
+        #                */
+        #                this.addSimpleMainContactInfo(tbl,vendor);
+        #            }
+        #            catch
+        #            {
+        #                ttsBegin;
+        #                tbl.triDMErrorMsg = infolog.text();
+        #                tbl.triDMstatus = triDMstatus::error;
+        #                tbl.update();
+        #                ttsCommit;
+        #                ttsAbort;
+        #            }
         #        }
-        #        catch
-        #        {
-        #
-        #
-        #            ttsBegin;
-        #            tbl.triDMErrorMsg = infolog.text();
-        #            tbl.triDMstatus = triDMstatus::error;
-        #            tbl.update();
-        #            ttsCommit;
-        #            ttsAbort;
-        #            throw error( infolog.text());
-        #
-        #        }
-        #
-        #
+        #        ttsBegin;
+        #        tbl.triDMstatus = triDMstatus::Imported;
+        #        tbl.update();
+        #        ttsCommit;
         #
         #    }
         #
@@ -21265,8 +19521,9 @@ Formatversion: 1
         #
         #    vendTable = VendTable::FindByLegacyID(_tbl.triDMlegacyID);
         #
-        #    if (vendTable.RecId !=0)
-        #        ret =true;
+        #    if (vendTable.RecId ==0)
+        #        ret = true ; // vendor exists
+        #
         #
         #    return ret;
         #
@@ -21313,6 +19570,9 @@ Formatversion: 1
         #    switch (importType)
         #    {
         #        case triDMImportType::CustAddr :
+        #        case triDMImportType::CustBank :
+        #        case triDMImportType::CustCont :
+        #            recId = CustTable::FindByLegacyID(_legacyID).Party;
         #            break;
         #
         #        case triDMImportType::VendAddr  :
@@ -21357,6 +19617,27 @@ Formatversion: 1
       SOURCE #strAddCRLF
         #public str strAddCRLF(str sText)
         #{
+        #    // this function will remove (|) and add crlf
+        #/*
+        #    int        iTextLen;   // lenght of string
+        #    int        iPos = 1;   // cuurent position to start searching text
+        #    str        sNewText;   // new formated text
+        #    int        x;
+        #
+        #    iTextLen = strLen (sText);
+        #    sNewText = sText;
+        #
+        #    for (x = 1; x <= iTextLen; x+=1 )
+        #    {
+        #        iPos = strfind(sNewText,"|", iPos,iTextlen);
+        #        sNewText = StrPoke(sNewText,"\l\n",iPos );
+        #
+        #    } //end loop
+        #    sNewText = strRem(sNewText, "|");
+        #
+        #    return sNewText;
+        # */
+        #
         #    container   Con;        // force string into a container
         #    str         sNewText;   // new formated text
         #    int         i;
@@ -21399,9 +19680,20 @@ Formatversion: 1
         #            break;
         #        case triDMImportType::CADZipCode    : triDM_ProcessStageData = new triDM_ProcessStageData_CANZip();
         #            break;
-        #        case triDMImportType::VendAddr      : triDM_ProcessStageData = new triDM_ProcessStageData_Address();
+        #        case triDMImportType::VendAddr      :
+        #        case triDMImportType::CustAddr      :
+        #            triDM_ProcessStageData = new triDM_ProcessStageData_Address();
         #            break;
         #        case triDMImportType::VendBank      : triDM_ProcessStageData = new triDM_ProcessStageData_VendBank();
+        #            break;
+        #        case triDMImportType::Customer      : triDM_ProcessStageData = new triDM_ProcessStageData_Customers();
+        #            break;
+        #        case triDMImportType::CustBank      : triDM_ProcessStageData = new triDM_ProcessStageData_CustBank();
+        #            break;
+        #        case triDMImportType::VendContact   :
+        #        case triDMImportType::CustCont      :
+        #            triDM_ProcessStageData = new triDM_ProcessStageData_VendContacts();
+        #            break;
         #    }
         #
         #    triDM_ProcessStageData.parmImportType( _importType);
@@ -22644,7 +20936,7 @@ ENDFORM
     #static void utilScriptFillDataMigrationTable(Args _args)
     #{
     #
-    #    DictTable dictTable = new DictTable(tableNum(triDMAddress)); // change table name here
+    #    DictTable dictTable = new DictTable(tableNum(triDMVendBankAcct)); // change table name here
     #
     #    SysDictField                sysDictField;
     #    SysDictType                 sysDictType;
@@ -22685,7 +20977,7 @@ ENDFORM
     #    static void utilScriptTableSpec(Args _args)
     #    {
     #        #define.NewLine('\n')
-    #        DictTable dictTable = new DictTable(tableNum(LedgerJournalTable)); // change table name here
+    #        DictTable dictTable = new DictTable(tableNum(LogisticsPostalAddress)); // change table name here
     #
     #        SysDictField                sysDictField;
     #        SysDictType                 sysDictType;
@@ -25122,7 +23414,7 @@ ENDFORM
     Origin              #{D26FE3A7-5D56-4A9C-ABAD-6C8D65AA3054}
   ENDPROPERTIES
   
-    PROJECTCLASS 
+    PROJECTCLASS ProjectNode
     GROUP #DataDictionary
       PROPERTIES
         Name                #DataDictionary
@@ -25173,42 +23465,42 @@ ENDFORM
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
-          UTILOBJECTID 101045
+          UTILOBJECTID 100395
           NODETYPE 204
           NAME #triDMVendBankAcct
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
-          UTILOBJECTID 101044
+          UTILOBJECTID 100391
           NODETYPE 204
           NAME #triDMAddress
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
-          UTILOBJECTID 101036
+          UTILOBJECTID 100394
           NODETYPE 204
           NAME #triDMImport
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
-          UTILOBJECTID 101037
+          UTILOBJECTID 100396
           NODETYPE 204
           NAME #triDMVendTable
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
-          UTILOBJECTID 101033
+          UTILOBJECTID 100392
           NODETYPE 204
           NAME #triDMContact
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
-          UTILOBJECTID 101030
+          UTILOBJECTID 100393
           NODETYPE 204
           NAME #triDMFieldMapping
         ENDNODE
@@ -25225,42 +23517,42 @@ ENDFORM
         BEGINNODE
           FILETYPE 0
           UTILTYPE 41
-          UTILOBJECTID 100806
+          UTILOBJECTID 100489
           NODETYPE 234
           NAME #triDMErrorMsg
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 41
-          UTILOBJECTID 100800
+          UTILOBJECTID 100488
           NODETYPE 234
           NAME #triDMbaseTableName
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 41
-          UTILOBJECTID 100803
+          UTILOBJECTID 100492
           NODETYPE 234
           NAME #triDMlegacyID
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 41
-          UTILOBJECTID 100804
+          UTILOBJECTID 100493
           NODETYPE 234
           NAME #triDMStageTableName
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 41
-          UTILOBJECTID 100802
+          UTILOBJECTID 100491
           NODETYPE 234
           NAME #triDMImportID
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 41
-          UTILOBJECTID 100801
+          UTILOBJECTID 100490
           NODETYPE 234
           NAME #triDMImportDesc
         ENDNODE
@@ -25277,14 +23569,14 @@ ENDFORM
         BEGINNODE
           FILETYPE 0
           UTILTYPE 40
-          UTILOBJECTID 100383
+          UTILOBJECTID 100211
           NODETYPE 209
           NAME #triDMImportType
         ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 40
-          UTILOBJECTID 100382
+          UTILOBJECTID 100212
           NODETYPE 209
           NAME #triDMstatus
         ENDNODE
@@ -25310,56 +23602,56 @@ ENDFORM
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1024689
+        UTILOBJECTID 1023877
         NODETYPE 329
         NAME #triDM_ProcessStageData_VendContacts
       ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1024687
+        UTILOBJECTID 1023873
         NODETYPE 329
         NAME #triDM_ProcessStageData_Address
       ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1024688
+        UTILOBJECTID 1023876
         NODETYPE 329
         NAME #triDM_ProcessStageData_VendBank
       ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1024671
+        UTILOBJECTID 1023875
         NODETYPE 329
         NAME #triDM_ProcessStageData_USZip
       ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1024673
+        UTILOBJECTID 1023874
         NODETYPE 329
         NAME #triDM_ProcessStageData_CANZip
       ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1024670
+        UTILOBJECTID 1023878
         NODETYPE 329
         NAME #triDM_ProcessStageData_vendors
       ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1024668
+        UTILOBJECTID 1023872
         NODETYPE 329
         NAME #triDM_ProcessStageData
       ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1024669
+        UTILOBJECTID 1023879
         NODETYPE 329
         NAME #triDMTextFileImport
       ENDNODE
@@ -25497,7 +23789,7 @@ ENDFORM
         BEGINNODE
           FILETYPE 0
           UTILTYPE 45
-          UTILOBJECTID 1024672
+          UTILOBJECTID 1023880
           NODETYPE 329
           NAME #triTextFileImport_ZipCode_CAN
         ENDNODE
@@ -25521,7 +23813,7 @@ ENDFORM
         BEGINNODE
           FILETYPE 0
           UTILTYPE 45
-          UTILOBJECTID 1024667
+          UTILOBJECTID 1023866
           NODETYPE 329
           NAME #triTextFileImport_ZipCode_US
         ENDNODE
