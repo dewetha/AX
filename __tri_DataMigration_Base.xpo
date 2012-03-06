@@ -5874,6 +5874,10 @@ Formatversion: 1
         #    this.PhoneLocal             = _tbl.PhoneLocal;
         #    this.RegistrationNum        = _tbl.RegistrationNum;
         #
+        #    // custom fields
+        #    this.NGLOfficeNo            = _tbl.NGLOfficeNo;
+        #
+        #
         #}
       ENDSOURCE
       SOURCE #modifiedField
@@ -14802,8 +14806,6 @@ Formatversion: 1
         STRING
         PROPERTIES
           Name                #AccountID
-          Mandatory           #Yes
-          AllowEdit           #No
           Table               #triDMVendBankAcct
           Origin              #{58AA4BE6-137F-4D50-911E-9ABEC5E8818B}
           ExtendedDataType    #VendBankAccountId
@@ -15036,6 +15038,15 @@ Formatversion: 1
           StringSize          #60
         ENDPROPERTIES
         
+      FIELD #NGLOfficeNo
+        STRING
+        PROPERTIES
+          Name                #NGLOfficeNo
+          Table               #triDMVendBankAcct
+          Origin              #{3E4F9DED-25A6-4E44-9E44-8DD26DDE5CF0}
+          ExtendedDataType    #NGLOfficeNo
+        ENDPROPERTIES
+        
       FIELD #Pager
         STRING
         PROPERTIES
@@ -15226,8 +15237,6 @@ Formatversion: 1
         STRING
         PROPERTIES
           Name                #VendAccount
-          Mandatory           #Yes
-          AllowEdit           #No
           Table               #triDMVendBankAcct
           Origin              #{C98AF503-D3DD-4866-A574-ECCFAF15ABE2}
           ExtendedDataType    #VendAccount
@@ -15414,6 +15423,15 @@ Formatversion: 1
           Origin              #{55F34251-C555-489D-95FB-4DB08114671E}
           ExtendedDataType    #LogisticsIsPrivate
           EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #NGLOfficeNo
+        STRING
+        PROPERTIES
+          Name                #NGLOfficeNo
+          Table               #triDMAddress
+          Origin              #{BF8398BD-6DC3-4026-BF91-E073320A41C7}
+          ExtendedDataType    #NGLOfficeNo
         ENDPROPERTIES
         
       FIELD #Party
@@ -18401,8 +18419,8 @@ Formatversion: 1
   STRING
     PROPERTIES
       Name                #triDMlegacyID
-      Label               #@TRI7
-      HelpText            #@TRI8
+      Label               #DM Leagacy ID
+      HelpText            #existing legacy ID
       Origin              #{1BFF4993-A264-4E13-9835-AA184135252B}
       StringSize          #40
     ENDPROPERTIES
@@ -18943,16 +18961,21 @@ Formatversion: 1
         #        recID = this.findPartyRecID(addrStage.triDMlegacyID);
         #        if(recID == 0 )
         #            continue;
+        #
+        #        ttsBegin;
         #        try
         #        {
-        #            ttsBegin;
+        #
         #            address.CountryRegionId     = addrStage.CountryRegionId;
         #            address.State               = addrStage.State;
         #            address.ZipCode             = addrStage.ZipCode;
         #            address.Street              = this.strAddCRLF( addrStage.Street);
         #            address.StreetNumber        = addrStage.StreetNumber;
         #            address.City                = addrStage.City;
-        #            address.insert();
+        #            //NGL specific addtional field.
+        #            address.NGLOfficeNo         = addrStage.NGLOfficeNo;
+        #            //
+        #
         #
         #            addressView.LocationName    = addrStage.Description;
         #            addressView.IsPrimary       = addrStage.IsPrimary;
@@ -18980,14 +19003,14 @@ Formatversion: 1
         #                locationExt.insert();
         #            }
         #
-        #            ttsCommit;
         #
-        #            ttsBegin;
+        #
+        #
         #            addrStage.triDMstatus = triDMstatus::Imported;
         #            addrStage.update();
-        #            ttsCommit;
+        #
         #        }
-        #        catch
+        #        catch (Exception::Error)
         #        {
         #            ttsBegin;
         #            addrStage.triDMErrorMsg = infolog.text();
@@ -18997,6 +19020,7 @@ Formatversion: 1
         #            ttsAbort;
         #            throw error( infolog.text());
         #        }
+        #        ttsCommit;
         #    }
         #
         #}
@@ -19059,7 +19083,8 @@ Formatversion: 1
         #            address.Street              = addrStage.Street;
         #            address.StreetNumber        = addrStage.StreetNumber;
         #            address.City                = addrStage.City;
-        #            address.insert();
+        #            address.NGLOfficeNo         = addrStage.NGLOfficeNo;
+        #            //address.insert();
         #
         #            addressView.LocationName    = addrStage.Description;
         #            addressView.IsPrimary       = addrStage.IsPrimary;
@@ -19114,7 +19139,7 @@ Formatversion: 1
         #{
         #    ClassDescription ret;
         #
-        #    ret = 'Vendor Address';
+        #    ret = 'Vendor Bank';
         #
         #    return ret;
         #}
@@ -19147,8 +19172,10 @@ Formatversion: 1
         #            recid = this.findPartyRecID(bank.triDMlegacyID);
         #
         #            bankAccount.initFromStageTable(bank);
+        #            bankAccount.VendAccount = VendTable::FindByLegacyID(bank.triDMlegacyID).AccountNum;
+        #            bankAccount.insert();
         #
-        #            this.addAddress(bank);
+        #            //this.addAddress(bank);
         #
         #
         #        }
@@ -19160,8 +19187,15 @@ Formatversion: 1
         #            bank.update();
         #            ttsCommit;
         #            ttsAbort;
-        #            throw error( infolog.text());
+        #
         #        }
+        #        ttsBegin;
+        #
+        #        bank.triDMstatus = triDMstatus::Imported;
+        #        bank.update();
+        #        ttsCommit;
+        #
+        #
         #    }
         #
         #}
@@ -21118,6 +21152,11 @@ ENDFORM
     #    import.insert();
     #    import.clear();
     #
+    #    import.ImportType       = triDMImportType::VendBank;
+    #    import.ImportDesc       = 'Import vendor bank accounts';
+    #    import.StageTableName   = 'triDMVendBankAcct';
+    #    import.insert();
+    #    import.clear();
     #
     #
     #}
