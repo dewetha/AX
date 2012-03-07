@@ -27454,6 +27454,16 @@ Formatversion: 1
           EnumType            #NoYes
         ENDPROPERTIES
         
+      FIELD #Internationcallingcode
+        STRING
+        PROPERTIES
+          Name                #Internationcallingcode
+          Label               #International Calling Code
+          Table               #triDMCustTable
+          Origin              #{B53508F5-BF00-4993-AB84-187C3D727E55}
+          StringSize          #30
+        ENDPROPERTIES
+        
       FIELD #InventLocation
         STRING
         PROPERTIES
@@ -27810,6 +27820,15 @@ Formatversion: 1
           Table               #triDMCustTable
           Origin              #{1E9460C8-6732-403A-BD76-EA5FE5FD0BFB}
           ExtendedDataType    #CustPriceGroup
+        ENDPROPERTIES
+        
+      FIELD #Purpose
+        STRING
+        PROPERTIES
+          Name                #Purpose
+          Table               #triDMCustTable
+          Origin              #{1940395B-49DF-4E78-8B31-87BC6A3E67A8}
+          StringSize          #30
         ENDPROPERTIES
         
       FIELD #ResidenceForeignCountryRegionId_IT
@@ -33178,6 +33197,727 @@ Formatversion: 1
   ENDTABLE
   
 
+***Element: MAP
+
+; Microsoft Dynamics AX Map : triStageAddress unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  MAP #triStageAddress
+    PROPERTIES
+      Name                #triStageAddress
+      Origin              #{E5C3DEE8-359B-4CD3-B193-C685157D70C6}
+    ENDPROPERTIES
+    
+    FIELDS
+      FIELD #City
+        STRING
+        PROPERTIES
+          Name                #City
+          Table               #triStageAddress
+          Origin              #{D1F5DDBC-CEBE-476C-B0C9-0B0432888AAB}
+          ExtendedDataType    #LogisticsAddressCity
+          StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #CountryRegionId
+        STRING
+        PROPERTIES
+          Name                #CountryRegionId
+          Table               #triStageAddress
+          Origin              #{CCE9F86F-A340-4199-ACDE-5FFD2ED53432}
+          ExtendedDataType    #LogisticsAddressCountryRegionId
+        ENDPROPERTIES
+        
+      FIELD #Description
+        STRING
+        PROPERTIES
+          Name                #Description
+          Label               #@SYS335041
+          HelpText            #@SYS344258
+          Table               #triStageAddress
+          Origin              #{0E46590C-7472-4193-A725-4F3D8F95667B}
+          ExtendedDataType    #Description
+          StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #IsPrimary
+        ENUM
+        PROPERTIES
+          Name                #IsPrimary
+          Table               #triStageAddress
+          Origin              #{1642DBE9-5570-4955-84FE-8B0898CCDC98}
+          ExtendedDataType    #LogisticsIsPrimaryAddress
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #IsPrivate
+        ENUM
+        PROPERTIES
+          Name                #IsPrivate
+          Table               #triStageAddress
+          Origin              #{D3B34B7C-0B8C-4FB7-973C-B5089451BD13}
+          ExtendedDataType    #LogisticsIsPrivate
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #Party
+        INT64
+        PROPERTIES
+          Name                #Party
+          Table               #triStageAddress
+          Origin              #{AE1FC99B-26E4-4C87-BEF7-5760FC673027}
+          ExtendedDataType    #DirPartyRecId
+        ENDPROPERTIES
+        
+      FIELD #Purpose
+        STRING
+        PROPERTIES
+          Name                #Purpose
+          Table               #triStageAddress
+          Origin              #{E777F1B3-0BD2-4995-8792-5027909C043A}
+          ExtendedDataType    #LogisticsLocationRoleName
+          StringSize          #40
+        ENDPROPERTIES
+        
+      FIELD #State
+        STRING
+        PROPERTIES
+          Name                #State
+          Table               #triStageAddress
+          Origin              #{75C38BA7-6BDC-4FC9-93BD-90DC2789DA5B}
+          ExtendedDataType    #LogisticsAddressStateId
+        ENDPROPERTIES
+        
+      FIELD #Street
+        STRING
+        PROPERTIES
+          Name                #Street
+          Table               #triStageAddress
+          Origin              #{06D008BE-E9BC-47F0-B74E-802F17E35D92}
+          ExtendedDataType    #LogisticsAddressStreet
+          StringSize          #250
+        ENDPROPERTIES
+        
+      FIELD #StreetNumber
+        STRING
+        PROPERTIES
+          Name                #StreetNumber
+          Table               #triStageAddress
+          Origin              #{4772F41B-6BF4-42CC-ACA2-75C8CF83A170}
+          ExtendedDataType    #LogisticsAddressStreetNumber
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #TaxGroup
+        STRING
+        PROPERTIES
+          Name                #TaxGroup
+          Label               #@SYS318303
+          Table               #triStageAddress
+          Origin              #{0B746BB4-1E39-4425-B344-E69889A9688D}
+          ExtendedDataType    #TaxGroup
+        ENDPROPERTIES
+        
+      FIELD #triDMlegacyID
+        STRING
+        PROPERTIES
+          Name                #triDMlegacyID
+          Table               #triStageAddress
+          Origin              #{EEB900C6-5B8D-4524-8B7B-9DC853EE304E}
+          ExtendedDataType    #triDMlegacyID
+          StringSize          #40
+        ENDPROPERTIES
+        
+      FIELD #ZipCode
+        STRING
+        PROPERTIES
+          Name                #ZipCode
+          Table               #triStageAddress
+          Origin              #{DA24734F-9FD3-465D-8A7C-E743FE622CD3}
+          ExtendedDataType    #LogisticsAddressZipCodeId
+        ENDPROPERTIES
+        
+    ENDFIELDS
+    GROUPS
+    ENDGROUPS
+    
+    MAPPINGS
+      MAPPING #triDMContact
+      PROPERTIES
+        MappingTable        #triDMContact
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #City
+          MapFieldTo          #City
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #CountryRegionId
+          MapFieldTo          #CountryRegionId
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Description
+          MapFieldTo          #Description
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrimary
+          MapFieldTo          #IsPrimary
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrivate
+          MapFieldTo          #isPrivate
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Party
+          MapFieldTo          #Party
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Purpose
+          MapFieldTo          #Purpose
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #State
+          MapFieldTo          #State
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Street
+          MapFieldTo          #Street
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #StreetNumber
+          MapFieldTo          #StreetNumber
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #TaxGroup
+          MapFieldTo          #TaxGroup
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #ZipCode
+          MapFieldTo          #ZipCode
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMlegacyID
+          MapFieldTo          #triDMlegacyID
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMCustBankAccount
+      PROPERTIES
+        MappingTable        #triDMCustBankAccount
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #City
+          MapFieldTo          #City
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #CountryRegionId
+          MapFieldTo          #CountryRegionId
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Description
+          MapFieldTo          #Description
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrimary
+          MapFieldTo          #IsPrimary
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrivate
+          MapFieldTo          #IsPrivate
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Party
+          MapFieldTo          #Party
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Purpose
+          MapFieldTo          #Purpose
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #State
+          MapFieldTo          #State
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Street
+          MapFieldTo          #Street
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #StreetNumber
+          MapFieldTo          #StreetNumber
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #TaxGroup
+          MapFieldTo          #TaxGroup
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #ZipCode
+          MapFieldTo          #ZipCode
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMlegacyID
+          MapFieldTo          #triDMlegacyID
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMVendBankAcct
+      PROPERTIES
+        MappingTable        #triDMVendBankAcct
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #City
+          MapFieldTo          #City
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #CountryRegionId
+          MapFieldTo          #CountryRegionId
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Description
+          MapFieldTo          #Description
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrimary
+          MapFieldTo          #IsPrimary
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrivate
+          MapFieldTo          #IsPrivate
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Party
+          MapFieldTo          #Party
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Purpose
+          MapFieldTo          #Purpose
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #State
+          MapFieldTo          #State
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Street
+          MapFieldTo          #Street
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #StreetNumber
+          MapFieldTo          #StreetNumber
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #TaxGroup
+          MapFieldTo          #TaxGroup
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #ZipCode
+          MapFieldTo          #ZipCode
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMlegacyID
+          MapFieldTo          #triDMlegacyID
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+    ENDMAPPINGS
+    
+    METHODS
+    ENDMETHODS
+  ENDMAP
+  
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Name or description</Table:Field>
+    <Table:Field name="Description">[VendorOnboardingPhase1] Gab location desciption field label</Table:Field>
+    <Table:Field name="LabelId">@SYS335041</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">View or enter a description of the selected record.</Table:Field>
+    <Table:Field name="Description">Location description</Table:Field>
+    <Table:Field name="LabelId">@SYS344258</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Sales tax</Table:Field>
+    <Table:Field name="Description">[VendorOnboardingPhase1] [form]smmBusRelTable:[field]TaxGroup</Table:Field>
+    <Table:Field name="LabelId">@SYS318303</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+
+***Element: MAP
+
+; Microsoft Dynamics AX Map : triStageSimpleContact unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  MAP #triStageSimpleContact
+    PROPERTIES
+      Name                #triStageSimpleContact
+      Origin              #{65E19368-BC49-4C7A-BC7A-5366C057D90A}
+    ENDPROPERTIES
+    
+    FIELDS
+      FIELD #Contactdescription
+        STRING
+        PROPERTIES
+          Name                #Contactdescription
+          Label               #Contact description
+          Table               #triStageSimpleContact
+          Origin              #{E202DB61-DC0E-426D-8993-B305C6A768FF}
+          ExtendedDataType    #LogisticsLocationId
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #Email
+        STRING
+        PROPERTIES
+          Name                #Email
+          Table               #triStageSimpleContact
+          Origin              #{62537E91-4BB7-4EBA-9592-83F1DAA2C571}
+          ExtendedDataType    #LogisticsLocationId
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #Extention
+        STRING
+        PROPERTIES
+          Name                #Extention
+          Table               #triStageSimpleContact
+          Origin              #{3983DC96-62BE-46F8-9624-D20290C56218}
+        ENDPROPERTIES
+        
+      FIELD #Fax
+        STRING
+        PROPERTIES
+          Name                #Fax
+          Table               #triStageSimpleContact
+          Origin              #{E62E7F52-613C-4525-9483-A0FA8149786C}
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #Internationcallingcode
+        STRING
+        PROPERTIES
+          Name                #Internationcallingcode
+          Label               #International Calling Code
+          Table               #triStageSimpleContact
+          Origin              #{A2281D30-7B6D-4450-8258-A64A0B1CAFC1}
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #IsPrimary
+        ENUM
+        PROPERTIES
+          Name                #IsPrimary
+          Table               #triStageSimpleContact
+          Origin              #{68A5A862-3B43-4333-990F-A3F2E7699C46}
+          ExtendedDataType    #LogisticsIsPrimaryAddress
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #isPrivate
+        ENUM
+        PROPERTIES
+          Name                #isPrivate
+          Table               #triStageSimpleContact
+          Origin              #{5AFBE15B-B3D5-4F6F-AB9D-DAB80227EAF8}
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #Party
+        INT64
+        PROPERTIES
+          Name                #Party
+          Table               #triStageSimpleContact
+          Origin              #{996E8C38-6FF0-4E06-B02B-9FDAFDA3AA47}
+          ExtendedDataType    #DirPersonRecId
+        ENDPROPERTIES
+        
+      FIELD #Phone
+        STRING
+        PROPERTIES
+          Name                #Phone
+          Table               #triStageSimpleContact
+          Origin              #{DD3BB6A6-E671-4F54-9E35-8C07A34CA0D6}
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #Purpose
+        STRING
+        PROPERTIES
+          Name                #Purpose
+          Table               #triStageSimpleContact
+          Origin              #{D6D60B28-9090-48B6-A844-2543B21693AC}
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #url
+        STRING
+        PROPERTIES
+          Name                #url
+          Label               #URL
+          Table               #triStageSimpleContact
+          Origin              #{9983ADED-9FDF-4996-A72A-42146FE8CBE7}
+          ExtendedDataType    #LogisticsLocationId
+          StringSize          #30
+        ENDPROPERTIES
+        
+    ENDFIELDS
+    GROUPS
+    ENDGROUPS
+    
+    MAPPINGS
+      MAPPING #triDMContact
+      PROPERTIES
+        MappingTable        #triDMContact
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #Phone
+          MapFieldTo          #Phone
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Contactdescription
+          MapFieldTo          #Contactdescription
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Party
+          MapFieldTo          #Party
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Fax
+          MapFieldTo          #Fax
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Extention
+          MapFieldTo          #Extention
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Email
+          MapFieldTo          #Email
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #url
+          MapFieldTo          #url
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Internationcallingcode
+          MapFieldTo          #Internationcallingcode
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Purpose
+          MapFieldTo          #Purpose
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrimary
+          MapFieldTo          #IsPrimary
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #isPrivate
+          MapFieldTo          #isPrivate
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMCustTable
+      PROPERTIES
+        MappingTable        #triDMCustTable
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #Phone
+          MapFieldTo          #Phone
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Contactdescription
+          MapFieldTo          #Contactdescription
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Party
+          MapFieldTo          #Party
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Fax
+          MapFieldTo          #Fax
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Extention
+          MapFieldTo          #Extension
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Email
+          MapFieldTo          #Email
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #url
+          MapFieldTo          #url
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Internationcallingcode
+          MapFieldTo          #Internationcallingcode
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Purpose
+          MapFieldTo          #Purpose
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrimary
+          MapFieldTo          #isPrimary
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #isPrivate
+          MapFieldTo          #isPrivate
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMVendTable
+      PROPERTIES
+        MappingTable        #triDMVendTable
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #Phone
+          MapFieldTo          #Phone
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Contactdescription
+          MapFieldTo          #Contactdescription
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Party
+          MapFieldTo          #Party
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Fax
+          MapFieldTo          #Fax
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Extention
+          MapFieldTo          #Extention
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Email
+          MapFieldTo          #Email
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #url
+          MapFieldTo          #url
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Internationcallingcode
+          MapFieldTo          #Internationcallingcode
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Purpose
+          MapFieldTo          #Purpose
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrimary
+          MapFieldTo          #isPrimary
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #isPrivate
+          MapFieldTo          #isPrivate
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+    ENDMAPPINGS
+    
+    METHODS
+    ENDMETHODS
+  ENDMAP
+  
+
 ***Element: UTS
 
 ; Microsoft Dynamics AX String: triDMErrorMsg unloaded
@@ -33544,6 +34284,11 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_VendContacts extends triDM_ProcessStageData
+        #{
+        #}
+      ENDSOURCE
       SOURCE #addAddress
         #private void addAddress(triDMContact addrStage)
         #{
@@ -33562,124 +34307,62 @@ Formatversion: 1
         #    if(recID == 0 )
         #        return;
         #
-        #     try
+        #    try
+        #    {
+        #        ttsBegin;
+        #        address.CountryRegionId     = addrStage.CountryRegionId;
+        #        address.State               = addrStage.State;
+        #        address.ZipCode             = addrStage.ZipCode;
+        #        address.Street              = addrStage.Street;
+        #        address.StreetNumber        = addrStage.StreetNumber;
+        #        address.City                = addrStage.City;
+        #
+        #        addressView.LocationName    = addrStage.Description;
+        #        addressView.IsPrimary       = addrStage.IsPrimary;
+        #        addressView.IsPrivate       = addrStage.IsPrivate;
+        #        addressView.Party           = recID;
+        #        addressview.initFromPostalAddress(address);
+        #
+        #        conRoles = conNull();
+        #
+        #        select locationRole where locationRole.Name == addrStage.Purpose;
+        #        if(locationRole.RecId != 0)
         #        {
-        #            ttsBegin;
-        #            address.CountryRegionId     = addrStage.CountryRegionId;
-        #            address.State               = addrStage.State;
-        #            address.ZipCode             = addrStage.ZipCode;
-        #            address.Street              = addrStage.Street;
-        #            address.StreetNumber        = addrStage.StreetNumber;
-        #            address.City                = addrStage.City;
-        #            address.insert();
-        #
-        #            addressView.LocationName    = addrStage.Description;
-        #            addressView.IsPrimary       = addrStage.IsPrimary;
-        #            addressView.IsPrivate       = addrStage.IsPrivate;
-        #            addressView.Party           = recID;
-        #            addressview.initFromPostalAddress(address);
-        #
-        #            conRoles = conNull();
-        #
-        #            select locationRole where locationRole.Name == addrStage.Purpose;
-        #            if(locationRole.RecId != 0)
-        #            {
-        #                conRoles = conIns(conRoles,1,locationRole.RecId);
-        #            }
-        #
-        #            DirParty = DirParty::constructFromPartyRecId(addressView.Party);
-        #
-        #            DirParty.createOrUpdatePostalAddress(addressView,conRoles);
-        #
-        #            select forUpdate location where location.RecId == address.Location;
-        #            if(location.RecId != 0)
-        #            {
-        #                locationExt.Location = location.RecId;
-        #                locationExt.TaxGroup = addrStage.TaxGroup;
-        #                locationExt.insert();
-        #            }
-        #
-        #            ttsCommit;
-        #
-        #            ttsBegin;
-        #            addrStage.triDMstatus = triDMstatus::Imported;
-        #            addrStage.update();
-        #            ttsCommit;
-        #        }
-        #        catch
-        #        {
-        #            ttsBegin;
-        #            addrStage.triDMErrorMsg = infolog.text();
-        #            addrStage.triDMstatus = triDMstatus::error;
-        #            addrStage.update();
-        #            ttsCommit;
-        #            ttsAbort;
-        #            throw error( infolog.text());
+        #            conRoles = conIns(conRoles,1,locationRole.RecId);
         #        }
         #
+        #        DirParty = DirParty::constructFromPartyRecId(addressView.Party);
+        #
+        #        DirParty.createOrUpdatePostalAddress(addressView,conRoles);
+        #
+        #        select forUpdate location where location.RecId == address.Location;
+        #        if(location.RecId != 0)
+        #        {
+        #            locationExt.Location = location.RecId;
+        #            locationExt.TaxGroup = addrStage.TaxGroup;
+        #            locationExt.insert();
+        #        }
+        #
+        #        ttsCommit;
         #
         #
-        #}
-      ENDSOURCE
-      SOURCE #addSimpleMainContactInfo
-        #private void addSimpleMainContactInfo(triDMContact _tbl, ContactPerson _ContactTable)
-        #{
-        #    DirPartyContactInfoView     contactView;
-        #    DirParty                    dirParty;
-        #
-        #    DirParty = DirParty::constructFromPartyRecId(_ContactTable.Party);
-        #    //Contact description    Phone    Fax    telex    extension    international calling code    Purpose    Primary    Private    Email    URL
-        #
-        #
-        #    if(_tbl.Phone)
+        #    }
+        #    catch
         #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Phone;
-        #        contactView.Party        = _ContactTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        contactView.LocatorExtension = _tbl.Extention;
-        #        dirParty.createOrUpdateContactInfo(contactView);
+        #        ttsBegin;
+        #        addrStage.triDMErrorMsg = infolog.text();
+        #        addrStage.triDMstatus = triDMstatus::error;
+        #        addrStage.update();
+        #        ttsCommit;
+        #        ttsAbort;
+        #        throw error( infolog.text());
         #    }
         #
-        #    if(_tbl.Fax)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Fax ;
-        #        contactView.Party        = _ContactTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
+        #    ttsBegin;
+        #    addrStage.triDMstatus = triDMstatus::Imported;
+        #    addrStage.update();
+        #    ttsCommit;
         #
-        #
-        #    if(_tbl.Email)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Email ;
-        #        contactView.Party        = _ContactTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #
-        #    if(_tbl.url)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::URL ;
-        #        contactView.Party        = _ContactTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #
-        #}
-      ENDSOURCE
-      SOURCE #classDeclaration
-        #class triDM_ProcessStageData_VendContacts extends triDM_ProcessStageData
-        #{
         #}
       ENDSOURCE
       SOURCE #CleanUp
@@ -33706,13 +34389,10 @@ Formatversion: 1
         #            Contact.initFromStageTable( tbl);
         #            Contact.insert();
         #            this.addAddress(tbl);
-        #            this.addSimpleMainContactInfo(tbl,Contact);
+        #            this.addSimpleMainContactInfo(tbl,Contact.Party);
         #            ttsCommit;
         #
-        #            ttsBegin;
-        #            tbl.triDMstatus = triDMstatus::Imported;
-        #            tbl.update();
-        #            ttsCommit;
+        #
         #
         #        }
         #        catch
@@ -33728,6 +34408,10 @@ Formatversion: 1
         #            throw error( infolog.text());
         #
         #        }
+        #        ttsBegin;
+        #        tbl.triDMstatus = triDMstatus::Imported;
+        #        tbl.update();
+        #        ttsCommit;
         #
         #    }
         #}
@@ -33764,83 +34448,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #addAddress
-        #private void addAddress(triDMCustBankAccount addrStage)
-        #{
-        #    LogisticsPostalAddress      address;
-        #    DirPartyPostalAddressView   addressView;
-        #
-        #    DirPartyRecId               recID;
-        #    DirParty                    dirParty;
-        #    LogisticsLocationExt        locationExt;
-        #    LogisticsLocation           location;
-        #    LogisticsLocationRole       locationRole;
-        #    container                   conRoles;
-        #
-        #
-        #    recID = this.findPartyRecID(addrStage.triDMlegacyID);
-        #    if(recID == 0 )
-        #        return;
-        #
-        #     try
-        #        {
-        #            ttsBegin;
-        #            address.CountryRegionId     = addrStage.CountryRegionId;
-        #            address.State               = addrStage.State;
-        #            address.ZipCode             = addrStage.ZipCode;
-        #            address.Street              = addrStage.Street;
-        #            address.StreetNumber        = addrStage.StreetNumber;
-        #            address.City                = addrStage.City;
-        #            address.insert();
-        #
-        #            addressView.LocationName    = addrStage.Description;
-        #            addressView.IsPrimary       = addrStage.IsPrimary;
-        #            addressView.IsPrivate       = addrStage.IsPrivate;
-        #            addressView.Party           = recID;
-        #            addressview.initFromPostalAddress(address);
-        #
-        #            conRoles = conNull();
-        #
-        #            select locationRole where locationRole.Name == addrStage.Purpose;
-        #            if(locationRole.RecId != 0)
-        #            {
-        #                conRoles = conIns(conRoles,1,locationRole.RecId);
-        #            }
-        #
-        #            DirParty = DirParty::constructFromPartyRecId(addressView.Party);
-        #
-        #            DirParty.createOrUpdatePostalAddress(addressView,conRoles);
-        #
-        #            select forUpdate location where location.RecId == address.Location;
-        #            if(location.RecId != 0)
-        #            {
-        #                locationExt.Location = location.RecId;
-        #                locationExt.TaxGroup = addrStage.TaxGroup;
-        #                locationExt.insert();
-        #            }
-        #
-        #            ttsCommit;
-        #
-        #            ttsBegin;
-        #            addrStage.triDMstatus = triDMstatus::Imported;
-        #            addrStage.update();
-        #            ttsCommit;
-        #        }
-        #        catch
-        #        {
-        #            ttsBegin;
-        #            addrStage.triDMErrorMsg = infolog.text();
-        #            addrStage.triDMstatus = triDMstatus::error;
-        #            addrStage.update();
-        #            ttsCommit;
-        #            ttsAbort;
-        #            throw error( infolog.text());
-        #        }
-        #
-        #
-        #
-        #}
-      ENDSOURCE
       SOURCE #caption
         #public ClassDescription caption()
         #{
@@ -33925,77 +34532,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #addPartyInfo
-        #private void addPartyInfo(CustTable _custTable, triDMCustTable _tbl)
-        #{
-        #    DirPartyTable   dirPartyTable;
-        #
-        #    dirPartyTable               = DirPartyTable::createNew(_tbl.PartyType, _tbl.Name);
-        #    dirPartyTable.NameAlias     = _tbl.NameAlias;
-        #    dirPartyTable.LanguageId    = _tbl.LanguageId;
-        #    dirPartyTable.update();
-        #
-        #    _custTable.Party = dirPartyTable.RecId;
-        #
-        #
-        #}
-      ENDSOURCE
-      SOURCE #addSimpleMainContactInfo
-        #private void addSimpleMainContactInfo(triDMCustTable _tbl, CustTable _custTable)
-        #{
-        #    DirPartyContactInfoView     contactView;
-        #    DirParty                    dirParty;
-        #
-        #    DirParty = DirParty::constructFromPartyRecId(_custTable.Party);
-        #    //Contact description    Phone    Fax    telex    extension    international calling code    Purpose    Primary    Private    Email    URL
-        #
-        #
-        #    if(_tbl.Phone)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Phone;
-        #        contactView.Party        = _custTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        contactView.LocatorExtension = _tbl.Extension;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #    if(_tbl.Fax)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Fax ;
-        #        contactView.Party        = _custTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #
-        #    if(_tbl.Email)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Email ;
-        #        contactView.Party        = _custTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #
-        #    if(_tbl.url)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::URL ;
-        #        contactView.Party        = _custTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #
-        #}
-      ENDSOURCE
       SOURCE #caption
         #public ClassDescription caption()
         #{
@@ -34034,7 +34570,7 @@ Formatversion: 1
         #            customer.selectForUpdate();
         #            this.setDefaultValues(tbl);
         #            customer.initFromStagingTable(tbl);
-        #            this.addPartyInfo(customer, tbl);
+        #            customer.Party = this.addPartyInfo(tbl.PartyType,tbl.Name,tbl.NameAlias,tbl.LanguageId );
         #            customer.insert();
         #            ttsCommit;
         #
@@ -34043,7 +34579,7 @@ Formatversion: 1
         #            tbl.update();
         #            ttsCommit;
         #
-        #            this.addSimpleMainContactInfo(tbl, customer);
+        #            this.addSimpleMainContactInfo(tbl, customer.Party);
         #        }
         #        catch
         #        {
@@ -34270,82 +34806,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #addAddress
-        #private void addAddress(triDMVendBankAcct addrStage)
-        #{
-        #    LogisticsPostalAddress      address;
-        #    DirPartyPostalAddressView   addressView;
-        #
-        #    DirPartyRecId               recID;
-        #    DirParty                    dirParty;
-        #    LogisticsLocationExt        locationExt;
-        #    LogisticsLocation           location;
-        #    LogisticsLocationRole       locationRole;
-        #    container                   conRoles;
-        #
-        #
-        #    recID = this.findPartyRecID(addrStage.triDMlegacyID);
-        #    if(recID == 0 )
-        #        return;
-        #
-        #     try
-        #        {
-        #            ttsBegin;
-        #            address.CountryRegionId     = addrStage.CountryRegionId;
-        #            address.State               = addrStage.State;
-        #            address.ZipCode             = addrStage.ZipCode;
-        #            address.Street              = addrStage.Street;
-        #            address.StreetNumber        = addrStage.StreetNumber;
-        #            address.City                = addrStage.City;
-        #
-        #            addressView.LocationName    = addrStage.Description;
-        #            addressView.IsPrimary       = addrStage.IsPrimary;
-        #            addressView.IsPrivate       = addrStage.IsPrivate;
-        #            addressView.Party           = recID;
-        #            addressview.initFromPostalAddress(address);
-        #
-        #            conRoles = conNull();
-        #
-        #            select locationRole where locationRole.Name == addrStage.Purpose;
-        #            if(locationRole.RecId != 0)
-        #            {
-        #                conRoles = conIns(conRoles,1,locationRole.RecId);
-        #            }
-        #
-        #            DirParty = DirParty::constructFromPartyRecId(addressView.Party);
-        #
-        #            DirParty.createOrUpdatePostalAddress(addressView,conRoles);
-        #
-        #            select forUpdate location where location.RecId == address.Location;
-        #            if(location.RecId != 0)
-        #            {
-        #                locationExt.Location = location.RecId;
-        #                locationExt.TaxGroup = addrStage.TaxGroup;
-        #                locationExt.insert();
-        #            }
-        #
-        #            ttsCommit;
-        #
-        #            ttsBegin;
-        #            addrStage.triDMstatus = triDMstatus::Imported;
-        #            addrStage.update();
-        #            ttsCommit;
-        #        }
-        #        catch
-        #        {
-        #            ttsBegin;
-        #            addrStage.triDMErrorMsg = infolog.text();
-        #            addrStage.triDMstatus = triDMstatus::error;
-        #            addrStage.update();
-        #            ttsCommit;
-        #            ttsAbort;
-        #            throw error( infolog.text());
-        #        }
-        #
-        #
-        #
-        #}
-      ENDSOURCE
       SOURCE #caption
         #public ClassDescription caption()
         #{
@@ -34773,21 +35233,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #addPartyInfo
-        #private void addPartyInfo(VendTable _vendTable, tridmvendtable _tbl)
-        #{
-        #    DirPartyTable   dirPartyTable;
-        #
-        #    dirPartyTable               = DirPartyTable::createNew(_tbl.PartyType, _tbl.Name);
-        #    dirPartyTable.NameAlias     = _tbl.NameAlias;
-        #    dirPartyTable.LanguageId    = _tbl.LanguageId;
-        #    dirPartyTable.update();
-        #
-        #    _vendTable.Party = dirPartyTable.RecId;
-        #
-        #
-        #}
-      ENDSOURCE
       SOURCE #addSimpleMainContactInfo
         #private void addSimpleMainContactInfo(triDMVendTable _tbl, VendTable _vendTable)
         #{
@@ -34859,6 +35304,21 @@ Formatversion: 1
         #{
         #}
       ENDSOURCE
+      SOURCE #addPartyInfo
+        #private void addPartyInfo(VendTable _vendTable, tridmvendtable _tbl)
+        #{
+        #    DirPartyTable   dirPartyTable;
+        #
+        #    dirPartyTable               = DirPartyTable::createNew(_tbl.PartyType, _tbl.Name);
+        #    dirPartyTable.NameAlias     = _tbl.NameAlias;
+        #    dirPartyTable.LanguageId    = _tbl.LanguageId;
+        #    dirPartyTable.update();
+        #
+        #    _vendTable.Party = dirPartyTable.RecId;
+        #
+        #
+        #}
+      ENDSOURCE
       SOURCE #CleanUp
         #public void CleanUp()
         #{
@@ -34886,7 +35346,7 @@ Formatversion: 1
         #                vendor.selectForUpdate();
         #                this.setDefaultValues(tbl);
         #                vendor.initFromStagingTable(tbl);
-        #                this.addPartyInfo(vendor,tbl);
+        #                vendor.Party = this.addPartyInfo(tbl.PartyType,tbl.Name,tbl.NameAlias,tbl.LanguageId );
         #                vendor.insert();
         #                ttsCommit;
         #                /*
@@ -34895,7 +35355,7 @@ Formatversion: 1
         #                tbl.update();
         #                ttsCommit;
         #                */
-        #                this.addSimpleMainContactInfo(tbl,vendor);
+        #                this.addSimpleMainContactInfo(tbl,vendor.Party);
         #            }
         #            catch
         #            {
@@ -34990,6 +35450,65 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
+      SOURCE #addSimpleMainContactInfo
+        #public void addSimpleMainContactInfo(Common _tbl, dirPartyRecID _Party)
+        #{
+        #    DirPartyContactInfoView     contactView;
+        #    DirParty                    dirParty;
+        #    triStageSimpleContact       tbl;
+        #
+        #    tbl.data(_tbl);
+        #
+        #    DirParty = DirParty::constructFromPartyRecId(_Party);
+        #    //Contact description    Phone    Fax    telex    extension    international calling code    Purpose    Primary    Private    Email    URL
+        #
+        #
+        #    if(tbl.Phone)
+        #    {
+        #        contactView.LocationName = tbl.Contactdescription;
+        #        contactView.Type         = LogisticsElectronicAddressMethodType::Phone;
+        #        contactView.Party        = _Party;
+        #        contactView.IsPrimary    = tbl.isPrimary ;
+        #        contactView.IsPrivate    = tbl.isPrivate;
+        #        contactView.LocatorExtension = tbl.Extention;
+        #        dirParty.createOrUpdateContactInfo(contactView);
+        #    }
+        #
+        #    if(tbl.Fax)
+        #    {
+        #        contactView.LocationName = tbl.Contactdescription;
+        #        contactView.Type         = LogisticsElectronicAddressMethodType::Fax ;
+        #        contactView.Party        = _Party;
+        #        contactView.IsPrimary    = tbl.isPrimary ;
+        #        contactView.IsPrivate    = tbl.isPrivate;
+        #        dirParty.createOrUpdateContactInfo(contactView);
+        #    }
+        #
+        #
+        #    if(tbl.Email)
+        #    {
+        #        contactView.LocationName = tbl.Contactdescription;
+        #        contactView.Type         = LogisticsElectronicAddressMethodType::Email ;
+        #        contactView.Party        = _Party;
+        #        contactView.IsPrimary    = tbl.isPrimary ;
+        #        contactView.IsPrivate    = tbl.isPrivate;
+        #        dirParty.createOrUpdateContactInfo(contactView);
+        #    }
+        #
+        #
+        #    if(tbl.url)
+        #    {
+        #        contactView.LocationName = tbl.Contactdescription;
+        #        contactView.Type         = LogisticsElectronicAddressMethodType::URL ;
+        #        contactView.Party        = _Party;
+        #        contactView.IsPrimary    = tbl.isPrimary ;
+        #        contactView.IsPrivate    = tbl.isPrivate;
+        #        dirParty.createOrUpdateContactInfo(contactView);
+        #    }
+        #
+        #
+        #}
+      ENDSOURCE
       SOURCE #classDeclaration
         # abstract class   triDM_ProcessStageData extends RunBaseBatch
         #{
@@ -35144,6 +35663,91 @@ Formatversion: 1
         #        triDM_ProcessStageData.run();
         #
         #
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #addAddress
+        #public void addAddress(common _tbl)
+        #{
+        #    LogisticsPostalAddress      address;
+        #    DirPartyPostalAddressView   addressView;
+        #    triStageAddress             addrStage;
+        #
+        #    DirPartyRecId               recID;
+        #    DirParty                    dirParty;
+        #    LogisticsLocationExt        locationExt;
+        #    LogisticsLocation           location;
+        #    LogisticsLocationRole       locationRole;
+        #    container                   conRoles;
+        #
+        #    addrStage.data(_tbl);
+        #
+        #    recID = this.findPartyRecID(addrStage.triDMlegacyID);
+        #    if(recID == 0 )
+        #        return;
+        #
+        #    try
+        #    {
+        #        ttsBegin;
+        #        address.CountryRegionId     = addrStage.CountryRegionId;
+        #        address.State               = addrStage.State;
+        #        address.ZipCode             = addrStage.ZipCode;
+        #        address.Street              = addrStage.Street;
+        #        address.StreetNumber        = addrStage.StreetNumber;
+        #        address.City                = addrStage.City;
+        #
+        #        addressView.LocationName    = addrStage.Description;
+        #        addressView.IsPrimary       = addrStage.IsPrimary;
+        #        addressView.IsPrivate       = addrStage.IsPrivate;
+        #        addressView.Party           = recID;
+        #        addressview.initFromPostalAddress(address);
+        #
+        #        conRoles = conNull();
+        #
+        #        select locationRole where locationRole.Name == addrStage.Purpose;
+        #        if(locationRole.RecId != 0)
+        #        {
+        #            conRoles = conIns(conRoles,1,locationRole.RecId);
+        #        }
+        #
+        #        DirParty = DirParty::constructFromPartyRecId(addressView.Party);
+        #
+        #        DirParty.createOrUpdatePostalAddress(addressView,conRoles);
+        #
+        #        select forUpdate location where location.RecId == address.Location;
+        #        if(location.RecId != 0)
+        #        {
+        #            locationExt.Location = location.RecId;
+        #            locationExt.TaxGroup = addrStage.TaxGroup;
+        #            locationExt.insert();
+        #        }
+        #
+        #        ttsCommit;
+        #
+        #
+        #    }
+        #    catch
+        #    {
+        #
+        #        ttsAbort;
+        #
+        #    }
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #addPartyInfo
+        #public DirPartyRecId addPartyInfo(DirPartyType _partyType, Name _name, namealias _nameAlias, LanguageId _LanguageId )
+        #{
+        #    DirPartyTable   dirPartyTable;
+        #
+        #    dirPartyTable               = DirPartyTable::createNew(_partyType, _Name);
+        #    dirPartyTable.NameAlias     = _nameAlias;
+        #    dirPartyTable.LanguageId    = _LanguageId;
+        #    dirPartyTable.update();
+        #
+        #    return dirPartyTable.RecId;
         #
         #
         #}
@@ -37116,7 +37720,7 @@ ENDFORM
         #*/
         #    ;
         #return;
-        #    //TODO: open excel only once.
+        #
         #
         #/*
         #
@@ -37904,7 +38508,7 @@ ENDFORM
         #*/
         #    ;
         #return;
-        #    //TODO: open excel only once.
+        #
         #
         #/*
         #
@@ -38162,21 +38766,6 @@ ENDFORM
     ENDPROPERTIES
     
     METHODS
-      SOURCE #taxFiledsRecID
-        #private  RecId taxFiledsRecID(Tax1099Box tax1099Box )
-        #{
-        #
-        #
-        #    return (select firstonly
-        #                 RecId
-        #            from
-        #                 tax1099Fields
-        #             where
-        #                 tax1099Fields.Tax1099Box == tax1099Box).recid;
-        #
-        #
-        #}
-      ENDSOURCE
       SOURCE #buildDimension
         #private container buildDimension(SysExcelCells  cells, int row)
         #{
@@ -38598,6 +39187,21 @@ ENDFORM
         #    return ret;
         #}
       ENDSOURCE
+      SOURCE #taxFiledsRecID
+        #private  RecId taxFiledsRecID(Tax1099Box tax1099Box )
+        #{
+        #
+        #
+        #    return (select firstonly
+        #                 RecId
+        #            from
+        #                 tax1099Fields
+        #             where
+        #                 tax1099Fields.Tax1099Box == tax1099Box).recid;
+        #
+        #
+        #}
+      ENDSOURCE
       SOURCE #unpack
         #public boolean unpack(container packedClass)
         #{
@@ -38699,7 +39303,7 @@ ENDFORM
         #*/
         #    ;
         #return;
-        #    //TODO: open excel only once.
+        #
         #
         #/*
         #
@@ -40938,7 +41542,7 @@ ENDFORM
         #*/
         #    ;
         #return;
-        #    //TODO: open excel only once.
+        #
         #
         #/*
         #
@@ -41400,6 +42004,30 @@ ENDFORM
           UTILOBJECTID 101030
           NODETYPE 204
           NAME #triDMFieldMapping
+        ENDNODE
+        ENDGROUP
+        
+      GROUP #Maps
+        PROPERTIES
+          Name                #Maps
+          ProjectGroupType    #Maps
+          GroupMask           #
+          PreventEditProperties #No
+        ENDPROPERTIES
+        
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 44
+          UTILOBJECTID 101052
+          NODETYPE 236
+          NAME #triStageAddress
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 44
+          UTILOBJECTID 101051
+          NODETYPE 236
+          NAME #triStageSimpleContact
         ENDNODE
         ENDGROUP
         
