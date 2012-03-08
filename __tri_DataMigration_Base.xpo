@@ -3,6 +3,3316 @@ Formatversion: 1
 
 ***Element: DBT
 
+; Microsoft Dynamics AX Table : AssetTable unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  TABLE #AssetTable
+    EnforceFKRelation 0
+    PROPERTIES
+      Name                #AssetTable
+      Label               #@SYS12578
+      FormRef             #AssetTable
+      TitleField1         #AssetId
+      TitleField2         #Name
+      ConfigurationKey    #Asset
+      SecurityKey         #LedgerTables
+      CacheLookup         #NotInTTS
+      CreateRecIdIndex    #Yes
+      TableGroup          #Main
+      PrimaryIndex        #AssetNumIdx
+      ClusterIndex        #AssetNumIdx
+      SingularLabel       #@SYS25653
+      ModifiedDateTime    #Yes
+      DEL_modifiedTime    #Yes
+      ModifiedBy          #Yes
+      CreatedDateTime     #Yes
+      DEL_createdTime     #Yes
+      CreatedBy           #Yes
+      DeveloperDocumentation  #@SYS127383
+      Origin              #{2C0A048D-0000-1000-A599-F17474546162}
+      LegacyId            #1165
+    ENDPROPERTIES
+    
+    FIELDS
+      FIELD #triDMlegacyID
+        STRING
+        PROPERTIES
+          Name                #triDMlegacyID
+          Table               #AssetTable
+          Origin              #{793CF34F-8515-4FCF-B450-ADFE3AC395A3}
+          ExtendedDataType    #triDMlegacyID
+          StringSize          #40
+        ENDPROPERTIES
+        
+      FIELD #AcquisitionValueNO
+        REAL
+        PROPERTIES
+          Name                #AcquisitionValueNO
+          Table               #AssetTable
+          CountryRegionCodes  #NO
+          Origin              #{F6BECEEC-9281-4747-A982-6F28E15F0CCF}
+          LegacyId            #49
+          ExtendedDataType    #AssetAcquisitionValueNO
+        ENDPROPERTIES
+        
+      FIELD #AssessmentNO
+        REAL
+        PROPERTIES
+          Name                #AssessmentNO
+          Table               #AssetTable
+          CountryRegionCodes  #NO
+          Origin              #{B1CB1878-55A7-4BAB-AD5E-59D6F416F33D}
+          LegacyId            #47
+          ExtendedDataType    #AssetAssessmentNO
+        ENDPROPERTIES
+        
+      FIELD #AssessmentTaxNO
+        REAL
+        PROPERTIES
+          Name                #AssessmentTaxNO
+          Table               #AssetTable
+          CountryRegionCodes  #NO
+          Origin              #{10506399-9055-42B9-A15D-9E35362FCE73}
+          LegacyId            #48
+          ExtendedDataType    #AssetAssessmentTaxNO
+        ENDPROPERTIES
+        
+      FIELD #AssetActivityCode
+        INT64
+        PROPERTIES
+          Name                #AssetActivityCode
+          Visible             #No
+          Table               #AssetTable
+          Origin              #{252BC6BD-7584-4C39-96F0-A62AC4F88647}
+          LegacyId            #79
+          ExtendedDataType    #AssetActivityCodeRecId
+        ENDPROPERTIES
+        
+      FIELD #AssetGroup
+        STRING
+        PROPERTIES
+          Name                #AssetGroup
+          Mandatory           #Yes
+          AllowEdit           #No
+          Table               #AssetTable
+          Origin              #{118E7CA0-6FBD-4C0E-BA7A-6E2356084974}
+          LegacyId            #2
+          ExtendedDataType    #AssetGroupId
+        ENDPROPERTIES
+        
+      FIELD #AssetId
+        STRING
+        PROPERTIES
+          Name                #AssetId
+          GroupPrompt         #@SYS13864
+          Mandatory           #Yes
+          AllowEdit           #No
+          Table               #AssetTable
+          Origin              #{4B5D6573-1AC0-4EC1-A113-3F0B3AD6E3D9}
+          LegacyId            #1
+          ExtendedDataType    #AssetId
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #AssetPropertyGroup
+        INT64
+        PROPERTIES
+          Name                #AssetPropertyGroup
+          Visible             #No
+          Table               #AssetTable
+          Origin              #{5AE4313B-FA40-4401-A8AB-E06A8E6707DE}
+          LegacyId            #77
+          ExtendedDataType    #AssetPropertyGroupRecId
+        ENDPROPERTIES
+        
+      FIELD #AssetReplaceCost
+        REAL
+        PROPERTIES
+          Name                #AssetReplaceCost
+          Table               #AssetTable
+          Origin              #{CB6F4739-1F97-478B-8553-AC83B706D01A}
+          LegacyId            #41
+          ExtendedDataType    #AssetReplaceCost
+        ENDPROPERTIES
+        
+      FIELD #AssetType
+        ENUM
+        PROPERTIES
+          Name                #AssetType
+          Table               #AssetTable
+          Origin              #{CE86BBCE-89A3-4A05-9F66-95D0C3838C5D}
+          LegacyId            #24
+          EnumType            #AssetType
+        ENDPROPERTIES
+        
+      FIELD #Barcode
+        STRING
+        PROPERTIES
+          Name                #Barcode
+          Table               #AssetTable
+          Origin              #{AEF81EF5-8FAC-4EB5-9CB5-D4F8915F33D5}
+          LegacyId            #31
+          ExtendedDataType    #AssetBarcode
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #Condition
+        STRING
+        PROPERTIES
+          Name                #Condition
+          HelpText            #@SYS112482
+          Table               #AssetTable
+          Origin              #{EB479F1C-B9B6-425A-B22E-1F0D6AFB4753}
+          LegacyId            #117
+          ExtendedDataType    #AssetConditionId
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #DEL_ContactName
+        STRING
+        PROPERTIES
+          Name                #DEL_ContactName
+          ConfigurationKey    #SysDeletedObjects60
+          Table               #AssetTable
+          Origin              #{8271C665-BCDD-4B15-91DB-D9C7682E5B4C}
+          LegacyId            #106
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #DEL_Responsible
+        STRING
+        PROPERTIES
+          Name                #DEL_Responsible
+          ConfigurationKey    #SysDeletedObjects60
+          Table               #AssetTable
+          Origin              #{7C562D0F-3695-46DC-89F3-327272DEEB83}
+          LegacyId            #22
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #Department
+        INT64
+        PROPERTIES
+          Name                #Department
+          HelpText            #@SYS131449
+          Table               #AssetTable
+          Origin              #{0B46EB8D-4B0D-490D-82E0-191830522117}
+          LegacyId            #83
+          ExtendedDataType    #OMDepartmentRecId
+        ENDPROPERTIES
+        
+      FIELD #DisposalRestriction
+        STRING
+        PROPERTIES
+          Name                #DisposalRestriction
+          Label               #@SYS111155
+          HelpText            #@SYS111156
+          Table               #AssetTable
+          Origin              #{71985312-9CFC-4781-927F-9E782124F60C}
+          LegacyId            #108
+          ExtendedDataType    #AssetLongDescription
+          StringSize          #1000
+        ENDPROPERTIES
+        
+      FIELD #Documents
+        STRING
+        PROPERTIES
+          Name                #Documents
+          Label               #@SYS67386
+          HelpText            #@SYS67387
+          Table               #AssetTable
+          Origin              #{173E9A12-1EAD-462D-ADBF-D9C5A8A296B5}
+          LegacyId            #12
+          ExtendedDataType    #Filename
+          StringSize          #259
+        ENDPROPERTIES
+        
+      FIELD #GISReferenceNumber
+        STRING
+        PROPERTIES
+          Name                #GISReferenceNumber
+          Table               #AssetTable
+          Origin              #{298000B3-5FE0-4EAC-9D18-E60812E7B96C}
+          LegacyId            #103
+          ExtendedDataType    #AssetGISReferenceNumber
+          StringSize          #50
+        ENDPROPERTIES
+        
+      FIELD #GuaranteeDate
+        DATE
+        PROPERTIES
+          Name                #GuaranteeDate
+          Label               #@SYS67392
+          HelpText            #@SYS67393
+          Table               #AssetTable
+          Origin              #{6B1C6878-030F-48C2-93CE-028B8C634ED6}
+          LegacyId            #18
+          ExtendedDataType    #AssetTransDate
+        ENDPROPERTIES
+        
+      FIELD #InsuranceAgent
+        STRING
+        PROPERTIES
+          Name                #InsuranceAgent
+          Table               #AssetTable
+          Origin              #{196DEB32-23D0-4C99-8C3D-75586ACC86C2}
+          LegacyId            #112
+          ExtendedDataType    #AssetInsuranceAgent
+          StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #InsuranceDate1
+        DATE
+        PROPERTIES
+          Name                #InsuranceDate1
+          Table               #AssetTable
+          Origin              #{478E39CE-93CB-421C-95EF-9FBC6FE0CA05}
+          LegacyId            #35
+          ExtendedDataType    #AssetInsuranceDate1
+        ENDPROPERTIES
+        
+      FIELD #InsuranceDate2
+        DATE
+        PROPERTIES
+          Name                #InsuranceDate2
+          Table               #AssetTable
+          Origin              #{C8B05088-DFA5-4973-BDBD-7F7A6EAD3670}
+          LegacyId            #36
+          ExtendedDataType    #AssetInsuranceDate2
+        ENDPROPERTIES
+        
+      FIELD #InsurancePolicyNum
+        STRING
+        PROPERTIES
+          Name                #InsurancePolicyNum
+          Table               #AssetTable
+          Origin              #{AA19B6C1-C0E6-4A0D-B4C0-82828176047B}
+          LegacyId            #14
+          ExtendedDataType    #AssetInsurancePolicyNum
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #InsuranceVendor
+        STRING
+        PROPERTIES
+          Name                #InsuranceVendor
+          Label               #@SYS111138
+          HelpText            #@SYS111139
+          Table               #AssetTable
+          Origin              #{2D7DEC78-0DC2-4B70-9F28-C7BB97ECD6B1}
+          LegacyId            #111
+          ExtendedDataType    #VendAccount
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #InsuredAtMarketValue
+        ENUM
+        PROPERTIES
+          Name                #InsuredAtMarketValue
+          Label               #@SYS111159
+          HelpText            #@SYS111160
+          Table               #AssetTable
+          Origin              #{2F06D846-68C1-46F8-B24E-51DEB2394103}
+          LegacyId            #116
+          ExtendedDataType    #NoYesId
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #InsuredValue
+        REAL
+        PROPERTIES
+          Name                #InsuredValue
+          Table               #AssetTable
+          Origin              #{33C88828-1733-414E-BFCA-47848432EDF0}
+          LegacyId            #15
+          ExtendedDataType    #AssetInsuredValue
+        ENDPROPERTIES
+        
+      FIELD #IsMissing
+        ENUM
+        PROPERTIES
+          Name                #IsMissing
+          Label               #@SYS333761
+          HelpText            #@SYS333762
+          Table               #AssetTable
+          Origin              #{E9F28AA3-A100-4F69-A9C4-86BE0C1E9376}
+          LegacyId            #133
+          ExtendedDataType    #NoYesId
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #LastFactorUpdateDate
+        DATE
+        PROPERTIES
+          Name                #LastFactorUpdateDate
+          Table               #AssetTable
+          Origin              #{450BA14F-50D9-464A-9412-FBF8157AEF83}
+          LegacyId            #115
+          ExtendedDataType    #AssetLastFactorUpdateDate
+        ENDPROPERTIES
+        
+      FIELD #LastMaintenance
+        DATE
+        PROPERTIES
+          Name                #LastMaintenance
+          Table               #AssetTable
+          Origin              #{C10D444D-A76B-439C-8E12-E7D73EA370E8}
+          LegacyId            #58
+          ExtendedDataType    #AssetLastMaintenance
+        ENDPROPERTIES
+        
+      FIELD #Lease
+        STRING
+        PROPERTIES
+          Name                #Lease
+          Label               #@SYS111157
+          HelpText            #@SYS111158
+          Table               #AssetTable
+          Origin              #{4ED705C3-BD90-4D7F-B759-F95612C719F8}
+          LegacyId            #109
+          ExtendedDataType    #AssetLongDescription
+          StringSize          #1000
+        ENDPROPERTIES
+        
+      FIELD #Location
+        STRING
+        PROPERTIES
+          Name                #Location
+          Table               #AssetTable
+          Origin              #{60612F51-A83E-40ED-A8F7-A0EAD1A2C333}
+          LegacyId            #6
+          ExtendedDataType    #AssetLocationId
+        ENDPROPERTIES
+        
+      FIELD #LocationMemo
+        STRING
+        PROPERTIES
+          Name                #LocationMemo
+          Label               #@SYS111153
+          HelpText            #@SYS111154
+          Table               #AssetTable
+          Origin              #{CE8B7884-6681-476E-B28D-DCCBE33CC9C0}
+          LegacyId            #104
+          ExtendedDataType    #AssetLongDescription
+          StringSize          #1000
+        ENDPROPERTIES
+        
+      FIELD #MainAssetId
+        STRING
+        PROPERTIES
+          Name                #MainAssetId
+          Table               #AssetTable
+          Origin              #{66F69D80-089C-4ADE-A66B-E5D43A82ABC0}
+          LegacyId            #19
+          ExtendedDataType    #AssetIdMain
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #MaintenanceInfo1
+        STRING
+        PROPERTIES
+          Name                #MaintenanceInfo1
+          Label               #@SYS71204
+          Table               #AssetTable
+          Origin              #{61ED1C37-1AAA-4008-8288-3D3747DD390A}
+          LegacyId            #60
+          ExtendedDataType    #AssetMaintenanceInfo
+          StringSize          #254
+        ENDPROPERTIES
+        
+      FIELD #MaintenanceInfo2
+        STRING
+        PROPERTIES
+          Name                #MaintenanceInfo2
+          Label               #@SYS71205
+          Table               #AssetTable
+          Origin              #{1E0D3501-4B3F-4730-BEF1-BBA122683A1D}
+          LegacyId            #61
+          ExtendedDataType    #AssetMaintenanceInfo
+          StringSize          #254
+        ENDPROPERTIES
+        
+      FIELD #MaintenanceInfo3
+        STRING
+        PROPERTIES
+          Name                #MaintenanceInfo3
+          Label               #@SYS71206
+          Table               #AssetTable
+          Origin              #{5E1D1A87-F4EC-4E29-AE06-F1CB8DA6BDDF}
+          LegacyId            #62
+          ExtendedDataType    #AssetMaintenanceInfoMemo
+          StringSize          #(Memo)
+        ENDPROPERTIES
+        
+      FIELD #MajorType
+        STRING
+        PROPERTIES
+          Name                #MajorType
+          Table               #AssetTable
+          Origin              #{EC5E6BEC-7D2B-4305-A84A-C93C08AC47FF}
+          LegacyId            #100
+          ExtendedDataType    #AssetMajorTypeId
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #Make
+        STRING
+        PROPERTIES
+          Name                #Make
+          Label               #@SYS67389
+          HelpText            #@SYS67390
+          Table               #AssetTable
+          Origin              #{9897EC30-554E-44B6-B387-B9B0525CED7E}
+          LegacyId            #16
+          ExtendedDataType    #Name
+          StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #Model
+        STRING
+        PROPERTIES
+          Name                #Model
+          Label               #@SYS9923
+          HelpText            #@SYS67391
+          Table               #AssetTable
+          Origin              #{03BA7DCD-98ED-49D4-A0C5-1C516FEF00FB}
+          LegacyId            #17
+          ExtendedDataType    #Name
+          StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #ModelYear
+        STRING
+        PROPERTIES
+          Name                #ModelYear
+          Table               #AssetTable
+          Origin              #{EFCCDB8B-563B-4E38-B41D-ECCF93D0CEEF}
+          LegacyId            #107
+          ExtendedDataType    #AssetModelYear
+        ENDPROPERTIES
+        
+      FIELD #Name
+        STRING
+        PROPERTIES
+          Name                #Name
+          Table               #AssetTable
+          Origin              #{47F51387-D874-4E9D-B5CE-C33323B5608A}
+          LegacyId            #5
+          ExtendedDataType    #AssetName
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #NameAlias
+        STRING
+        PROPERTIES
+          Name                #NameAlias
+          Table               #AssetTable
+          AliasFor            #AssetId
+          Origin              #{B5977A7A-61A8-47C6-B3A5-7BCA6AB631D3}
+          LegacyId            #54
+          ExtendedDataType    #AssetNameAlias
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #NextMaintenance
+        DATE
+        PROPERTIES
+          Name                #NextMaintenance
+          Table               #AssetTable
+          Origin              #{49585B75-BAB2-4207-B3BE-6E6485B5CB8C}
+          LegacyId            #59
+          ExtendedDataType    #AssetNextMaintenance
+        ENDPROPERTIES
+        
+      FIELD #Notes
+        STRING
+        PROPERTIES
+          Name                #Notes
+          Table               #AssetTable
+          Origin              #{69F0BED4-69BF-4B53-9F28-C6EF29D9241F}
+          LegacyId            #65
+          ExtendedDataType    #AssetNotes
+          StringSize          #(Memo)
+        ENDPROPERTIES
+        
+      FIELD #ParcelId
+        STRING
+        PROPERTIES
+          Name                #ParcelId
+          Table               #AssetTable
+          Origin              #{9007D65B-25D2-4562-84A2-0C335CFCF06E}
+          LegacyId            #101
+          ExtendedDataType    #AssetParcelId
+          StringSize          #50
+        ENDPROPERTIES
+        
+      FIELD #PhysicalInventory
+        DATE
+        PROPERTIES
+          Name                #PhysicalInventory
+          Table               #AssetTable
+          Origin              #{0E79A2FC-3C7C-430C-B2D1-291C38FF6D95}
+          LegacyId            #63
+          ExtendedDataType    #AssetPhysicalInventory
+        ENDPROPERTIES
+        
+      FIELD #PolicyAmount
+        REAL
+        PROPERTIES
+          Name                #PolicyAmount
+          Table               #AssetTable
+          Origin              #{4C7FE8B5-5ED7-48BF-81F6-1ECE56BE7CBB}
+          LegacyId            #114
+          ExtendedDataType    #AssetPolicyAmount
+        ENDPROPERTIES
+        
+      FIELD #PolicyExpiration
+        DATE
+        PROPERTIES
+          Name                #PolicyExpiration
+          Table               #AssetTable
+          Origin              #{02A1C45D-7A73-4A99-ABF9-44664989E669}
+          LegacyId            #113
+          ExtendedDataType    #AssetPolicyExpiration
+        ENDPROPERTIES
+        
+      FIELD #PropertyType
+        ENUM
+        PROPERTIES
+          Name                #PropertyType
+          Table               #AssetTable
+          Origin              #{D5027CB5-6DB1-4A8C-9392-5E99FD2801CD}
+          LegacyId            #102
+          ExtendedDataType    #AssetPropertyTypeId
+          EnumType            #AssetPropertyType
+        ENDPROPERTIES
+        
+      FIELD #PurchLineRecId
+        INT64
+        PROPERTIES
+          Name                #PurchLineRecId
+          Visible             #No
+          ConfigurationKey    #LogisticsBasic
+          Table               #AssetTable
+          Origin              #{60CA3643-5E2B-441C-8231-BA6CABE67E57}
+          LegacyId            #68
+          ExtendedDataType    #PurchLineRefRecId
+        ENDPROPERTIES
+        
+      FIELD #Quantity
+        REAL
+        PROPERTIES
+          Name                #Quantity
+          Table               #AssetTable
+          Origin              #{C800B64D-BCD1-4E49-8FCE-7948F281CEAB}
+          LegacyId            #25
+          ExtendedDataType    #AssetQuantity
+        ENDPROPERTIES
+        
+      FIELD #Reference
+        STRING
+        PROPERTIES
+          Name                #Reference
+          HelpText            #@SYS333621
+          Table               #AssetTable
+          Origin              #{26F904AB-1D09-44C8-936A-683194E0965D}
+          LegacyId            #64
+          ExtendedDataType    #AssetReference
+          StringSize          #254
+        ENDPROPERTIES
+        
+      FIELD #ReturnOnInvestmentsNO
+        REAL
+        PROPERTIES
+          Name                #ReturnOnInvestmentsNO
+          Table               #AssetTable
+          CountryRegionCodes  #NO
+          Origin              #{2BF8ABBA-5006-4C3C-9068-6532AF28A34E}
+          LegacyId            #51
+          ExtendedDataType    #AssetReturnOnInvestmentsNO
+        ENDPROPERTIES
+        
+      FIELD #RoomNumber
+        STRING
+        PROPERTIES
+          Name                #RoomNumber
+          Table               #AssetTable
+          Origin              #{5525D2AA-60E7-4A6E-A293-F00FDD37EC9C}
+          LegacyId            #105
+          ExtendedDataType    #AssetRoomNumber
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #SerialNum
+        STRING
+        PROPERTIES
+          Name                #SerialNum
+          Label               #@SYS477
+          HelpText            #@SYS67388
+          Table               #AssetTable
+          Origin              #{46634271-56BC-4C6E-A31F-6D730D7D740C}
+          LegacyId            #13
+          ExtendedDataType    #Num
+          StringSize          #20
+        ENDPROPERTIES
+        
+      FIELD #SortingId
+        STRING
+        PROPERTIES
+          Name                #SortingId
+          Table               #AssetTable
+          Origin              #{DD3E0CAE-8A32-42EB-98E0-12739817A2B3}
+          LegacyId            #43
+          ExtendedDataType    #AssetSortingId
+        ENDPROPERTIES
+        
+      FIELD #SortingId2
+        STRING
+        PROPERTIES
+          Name                #SortingId2
+          Table               #AssetTable
+          Origin              #{EB86B079-0FDD-4769-AEAF-7B5BA9E5F4F4}
+          LegacyId            #52
+          ExtendedDataType    #AssetSortingId2
+        ENDPROPERTIES
+        
+      FIELD #SortingId3
+        STRING
+        PROPERTIES
+          Name                #SortingId3
+          Table               #AssetTable
+          Origin              #{5BEC7C92-97F3-4CED-AC7E-C90DADB03955}
+          LegacyId            #53
+          ExtendedDataType    #AssetSortingId3
+        ENDPROPERTIES
+        
+      FIELD #SubventionNO
+        REAL
+        PROPERTIES
+          Name                #SubventionNO
+          Table               #AssetTable
+          CountryRegionCodes  #NO
+          Origin              #{B0828FAF-7AC9-44A7-AA17-BF735B790CB6}
+          LegacyId            #45
+          ExtendedDataType    #AssetSubventionNO
+        ENDPROPERTIES
+        
+      FIELD #SubventionTaxFreeNO
+        REAL
+        PROPERTIES
+          Name                #SubventionTaxFreeNO
+          Table               #AssetTable
+          CountryRegionCodes  #NO
+          Origin              #{7F7C823D-920D-43AA-B70E-0A7D027BAC38}
+          LegacyId            #46
+          ExtendedDataType    #AssetSubventionTaxFreeNO
+        ENDPROPERTIES
+        
+      FIELD #TaxCountyNO
+        STRING
+        PROPERTIES
+          Name                #TaxCountyNO
+          Table               #AssetTable
+          CountryRegionCodes  #NO
+          Origin              #{8E9AD753-0EE6-4CAF-B506-4F47FB4D7CFF}
+          LegacyId            #44
+          ExtendedDataType    #AssetTaxCountyNO
+          StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #TechInfo1
+        STRING
+        PROPERTIES
+          Name                #TechInfo1
+          Label               #@SYS71201
+          Table               #AssetTable
+          Origin              #{54242727-5C9D-45FA-97C6-773104FC9599}
+          LegacyId            #55
+          ExtendedDataType    #AssetTechInfo
+          StringSize          #254
+        ENDPROPERTIES
+        
+      FIELD #TechInfo2
+        STRING
+        PROPERTIES
+          Name                #TechInfo2
+          Label               #@SYS71202
+          Table               #AssetTable
+          Origin              #{7A1311C8-CF8B-4124-983E-B552C6CACFD5}
+          LegacyId            #56
+          ExtendedDataType    #AssetTechInfo
+          StringSize          #254
+        ENDPROPERTIES
+        
+      FIELD #TechInfo3
+        STRING
+        PROPERTIES
+          Name                #TechInfo3
+          Label               #@SYS71203
+          Table               #AssetTable
+          Origin              #{02541D28-D3A9-4088-91CE-2B8404442F13}
+          LegacyId            #57
+          ExtendedDataType    #AssetTechInfo
+          StringSize          #254
+        ENDPROPERTIES
+        
+      FIELD #TitleHolder
+        STRING
+        PROPERTIES
+          Name                #TitleHolder
+          Table               #AssetTable
+          Origin              #{837A97EA-3C5D-438B-A5D0-9F3177D082A9}
+          LegacyId            #110
+          ExtendedDataType    #AssetTitleHolder
+          StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #UnitCost
+        REAL
+        PROPERTIES
+          Name                #UnitCost
+          Table               #AssetTable
+          Origin              #{821EFBE9-143B-4697-8B8F-DC298BD6DED0}
+          LegacyId            #66
+          ExtendedDataType    #AssetUnitCost
+        ENDPROPERTIES
+        
+      FIELD #UnitOfMeasure
+        STRING
+        PROPERTIES
+          Name                #UnitOfMeasure
+          Table               #AssetTable
+          Origin              #{EE1C6722-43DD-40B6-93E0-85849B47C0AA}
+          LegacyId            #34
+          ExtendedDataType    #AssetUnitOfMeasure
+        ENDPROPERTIES
+        
+      FIELD #ValueAt19840101NO
+        REAL
+        PROPERTIES
+          Name                #ValueAt19840101NO
+          Table               #AssetTable
+          CountryRegionCodes  #NO
+          Origin              #{0D40CECF-91BF-44BD-B3A0-64E3F592CF20}
+          LegacyId            #50
+          ExtendedDataType    #AssetValueAt19840101NO
+        ENDPROPERTIES
+        
+      FIELD #WorkerContactName
+        INT64
+        PROPERTIES
+          Name                #WorkerContactName
+          Table               #AssetTable
+          Origin              #{5EE8E15B-56FB-493D-AA3E-715BC21ADAA1}
+          LegacyId            #131
+          ExtendedDataType    #HcmContactNameRecId
+        ENDPROPERTIES
+        
+      FIELD #WorkerResponsible
+        INT64
+        PROPERTIES
+          Name                #WorkerResponsible
+          Label               #@SYS67464
+          HelpText            #@SYS67465
+          Table               #AssetTable
+          Origin              #{88DCAD0C-2AFF-402A-8B81-953B0C6BFFA8}
+          LegacyId            #132
+          ExtendedDataType    #HcmResponsibleRecId
+        ENDPROPERTIES
+        
+    ENDFIELDS
+    GROUPS
+      GROUP #AutoSummary
+        PROPERTIES
+          Name                #AutoSummary
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #Name
+          #AssetGroup
+          #AssetType
+          #Condition
+          #Make
+          #Model
+          #ModelYear
+          #MainAssetId
+          #InsuranceAgent
+          #InsuredValue
+          #PolicyExpiration
+          #Location
+          #Department
+          #PhysicalInventory
+          #WorkerResponsible
+          #WorkerContactName
+          #SortingId
+          #SortingId2
+          #SortingId3
+          #Reference
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #AutoReport
+        PROPERTIES
+          Name                #AutoReport
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #AssetId
+          #AssetGroup
+          #Name
+          #NameAlias
+          #Location
+          #MajorType
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #AutoLookup
+        PROPERTIES
+          Name                #AutoLookup
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #AssetId
+          #Name
+          #AssetGroup
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Description
+        PROPERTIES
+          Name                #Description
+          Label               #@SYS7576
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #Name
+          #NameAlias
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Disposal
+        PROPERTIES
+          Name                #Disposal
+          Label               #@SYS67400
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #DisposalRestriction
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Documents
+        PROPERTIES
+          Name                #Documents
+          Label               #@SYS54210
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #Documents
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Identification
+        PROPERTIES
+          Name                #Identification
+          Label               #@SYS5711
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #AssetGroup
+          #AssetId
+          #triDMlegacyID
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Insurance
+        PROPERTIES
+          Name                #Insurance
+          Label               #@SYS67403
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #InsuranceVendor
+          #InsuranceAgent
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Inventory
+        PROPERTIES
+          Name                #Inventory
+          Label               #@SYS981
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #PhysicalInventory
+          #WorkerContactName
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #IsMissing
+        PROPERTIES
+          Name                #IsMissing
+          Label               #@SYS333761
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #IsMissing
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Lease
+        PROPERTIES
+          Name                #Lease
+          Label               #@SYS112587
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #Lease
+          #TitleHolder
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #MainAsset
+        PROPERTIES
+          Name                #MainAsset
+          Label               #@SYS67401
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #MainAssetId
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Mapping
+        PROPERTIES
+          Name                #Mapping
+          Label               #@SYS111162
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #GISReferenceNumber
+          #ParcelId
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Model
+        PROPERTIES
+          Name                #Model
+          Label               #@SYS9923
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #Make
+          #Model
+          #ModelYear
+          #SerialNum
+          #GuaranteeDate
+          #TechInfo1
+          #TechInfo2
+          #TechInfo3
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Municipality
+        PROPERTIES
+          Name                #Municipality
+          Label               #@SYS11371
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #TaxCountyNO
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Other
+        PROPERTIES
+          Name                #Other
+          Label               #@SYS69996
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #ReturnOnInvestmentsNO
+          #AcquisitionValueNO
+          #ValueAt19840101NO
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Physical
+        PROPERTIES
+          Name                #Physical
+          Label               #@SYS126956
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #Location
+          #LocationMemo
+          #RoomNumber
+          #Department
+          #WorkerResponsible
+          #Barcode
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Policy
+        PROPERTIES
+          Name                #Policy
+          Label               #@SYS126957
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #InsurancePolicyNum
+          #PolicyExpiration
+          #PolicyAmount
+          #InsuredValue
+          #AssetReplaceCost
+          #LastFactorUpdateDate
+          #InsuranceDate1
+          #InsuranceDate2
+          #InsuredAtMarketValue
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #PurchaseOrders
+        PROPERTIES
+          Name                #PurchaseOrders
+          Label               #@SYS115660
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #PurchLineRecId
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Quantity
+        PROPERTIES
+          Name                #Quantity
+          Label               #@SYS114810
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #Quantity
+          #UnitOfMeasure
+          #UnitCost
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Reference
+        PROPERTIES
+          Name                #Reference
+          Label               #@SYS81755
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #Reference
+          #Notes
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Sorting
+        PROPERTIES
+          Name                #Sorting
+          Label               #@SYS4138
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #SortingId
+          #SortingId2
+          #SortingId3
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Subventions
+        PROPERTIES
+          Name                #Subventions
+          Label               #@SYS54448
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #SubventionNO
+          #SubventionTaxFreeNO
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Tracking
+        PROPERTIES
+          Name                #Tracking
+          Label               #@SYS81508
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #editAssetActivityCode
+          #editAssetPropertyGroup
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Type
+        PROPERTIES
+          Name                #Type
+          Label               #@SYS26386
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #AssetType
+          #MajorType
+          #PropertyType
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Update
+        PROPERTIES
+          Name                #Update
+          Label               #@SYS71207
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #LastMaintenance
+          #NextMaintenance
+          #MaintenanceInfo1
+          #MaintenanceInfo2
+          #MaintenanceInfo3
+          #Condition
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #ValueModelGroup
+        PROPERTIES
+          Name                #ValueModelGroup
+          Label               #@SYS71179
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #AssetId
+          #Name
+          #primaryValueModelStatusForAssetProject
+          #primaryValueModelForAssetProject
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Values
+        PROPERTIES
+          Name                #Values
+          Label               #@SYS16124
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #AssessmentNO
+          #AssessmentTaxNO
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #Warehouse
+        PROPERTIES
+          Name                #Warehouse
+          Label               #@SYS101253
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+        ENDGROUPFIELDS
+      ENDGROUP
+    ENDGROUPS
+    
+    INDICES
+      #GroupAssetIdx
+      PROPERTIES
+        Name                #GroupAssetIdx
+        AllowDuplicates     #No
+        Origin              #{2B0D0001-048D-1000-EE1B-EA396AA58573}
+        LegacyId            #1
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+        #AssetGroup
+        #AssetId
+      ENDINDEXFIELDS
+      
+      #AssetNumIdx
+      PROPERTIES
+        Name                #AssetNumIdx
+        AllowDuplicates     #No
+        Origin              #{2B0B0002-048D-1000-F425-6DC9864E756D}
+        LegacyId            #2
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+        #AssetId
+      ENDINDEXFIELDS
+      
+      #MainAssetIdx
+      PROPERTIES
+        Name                #MainAssetIdx
+        Origin              #{2B0C0003-048D-1000-89CC-2D68A5857365}
+        LegacyId            #3
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+        #MainAssetId
+        #AssetId
+      ENDINDEXFIELDS
+      
+      #NameAliasIdx
+      PROPERTIES
+        Name                #NameAliasIdx
+        ConfigurationKey    #Asset
+        Origin              #{2B0C0004-048D-1000-6FA5-315FA57E6961}
+        LegacyId            #4
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+        #NameAlias
+      ENDINDEXFIELDS
+      
+      #WorkerContactNameIdx
+      PROPERTIES
+        Name                #WorkerContactNameIdx
+        Origin              #{2BDF494F-7337-4AD7-AF93-6F4E71E55B42}
+        LegacyId            #38
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+        #WorkerContactName
+      ENDINDEXFIELDS
+      
+      #WorkerResponsibleIdx
+      PROPERTIES
+        Name                #WorkerResponsibleIdx
+        Origin              #{F55FF5D5-7D61-495E-86DE-A3064A96FEEC}
+        LegacyId            #39
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+        #WorkerResponsible
+      ENDINDEXFIELDS
+      
+    ENDINDICES
+    FULLTEXTINDICES
+    ENDFULLTEXTINDICES
+    REFERENCES
+      REFERENCE #AssetActivityCode
+        PROPERTIES
+          Name                #AssetActivityCode
+          Table               #AssetActivityCode
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          RelatedTableRole    #AssetActivityCode
+          Role                #AssetTable
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE NORMAL
+          PROPERTIES
+            Field               #AssetActivityCode
+            RelatedField        #RecId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetCondition
+        PROPERTIES
+          Name                #AssetCondition
+          Table               #AssetCondition
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #Condition
+            RelatedField        #Condition
+            SourceEDT           #AssetConditionId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetGroup_AssetGroup
+        PROPERTIES
+          Name                #AssetGroup_AssetGroup
+          Table               #AssetGroup
+          RelatedTableCardinality   #ExactlyOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Aggregation
+          UseDefaultRoleNames #Yes
+          RelatedTableRole    #AssetGroup_AssetGroup
+          Role                #AssetTable
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #AssetGroup
+            RelatedField        #GroupId
+            SourceEDT           #AssetGroupId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetLocation
+        PROPERTIES
+          Name                #AssetLocation
+          Table               #AssetLocation
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #Location
+            RelatedField        #Location
+            SourceEDT           #AssetLocationId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetMajorType
+        PROPERTIES
+          Name                #AssetMajorType
+          Table               #AssetMajorType
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #MajorType
+            RelatedField        #MajorType
+            SourceEDT           #AssetMajorTypeId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetPropertyGroup
+        PROPERTIES
+          Name                #AssetPropertyGroup
+          Table               #AssetPropertyGroup
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          RelatedTableRole    #AssetPropertyGroup
+          Role                #AssetTable
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE NORMAL
+          PROPERTIES
+            Field               #AssetPropertyGroup
+            RelatedField        #RecId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetSorting
+        PROPERTIES
+          Name                #AssetSorting
+          Table               #AssetSorting
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE NORMAL
+          PROPERTIES
+            Field               #SortingId
+            RelatedField        #SortingId
+            SourceEDT           #AssetSortingId
+          ENDPROPERTIES
+          
+          REFERENCETYPE EXTERNFIXED
+          PROPERTIES
+            Table               #AssetSorting
+            RelatedField        #SortCode
+            SourceEDT           #AssetSortingId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetSorting_SortingId2
+        PROPERTIES
+          Name                #AssetSorting_SortingId2
+          Table               #AssetSorting
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          RelatedTableRole    #AssetSorting_SortingId2
+          Role                #AssetTable
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE NORMAL
+          PROPERTIES
+            Field               #SortingId2
+            RelatedField        #SortingId
+            SourceEDT           #AssetSortingId2
+          ENDPROPERTIES
+          
+          REFERENCETYPE EXTERNFIXED
+          PROPERTIES
+            Value               #1
+            Table               #AssetSorting
+            RelatedField        #SortCode
+            SourceEDT           #AssetSortingId2
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetSorting_SortingId3
+        PROPERTIES
+          Name                #AssetSorting_SortingId3
+          Table               #AssetSorting
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          RelatedTableRole    #AssetSorting_SortingId3
+          Role                #AssetTable
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE NORMAL
+          PROPERTIES
+            Field               #SortingId3
+            RelatedField        #SortingId
+            SourceEDT           #AssetSortingId3
+          ENDPROPERTIES
+          
+          REFERENCETYPE EXTERNFIXED
+          PROPERTIES
+            Value               #2
+            Table               #AssetSorting
+            RelatedField        #SortCode
+            SourceEDT           #AssetSortingId3
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #AssetTable
+        PROPERTIES
+          Name                #AssetTable
+          Table               #AssetTable
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #MainAssetId
+            RelatedField        #AssetId
+            SourceEDT           #AssetIdMain
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #OMOperatingUnit
+        PROPERTIES
+          Name                #OMOperatingUnit
+          Table               #OMOperatingUnit
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          RelatedTableRole    #OMOperatingUnit
+          Role                #OMOperatingUnit_AssetTable
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #Department
+            RelatedField        #RecId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #PurchLine
+        PROPERTIES
+          Name                #PurchLine
+          Table               #PurchLine
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #PurchLineRecId
+            RelatedField        #RecId
+            SourceEDT           #PurchLineRefRecId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #UnitOfMeasure
+        PROPERTIES
+          Name                #UnitOfMeasure
+          Table               #UnitOfMeasure
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          RelatedTableRole    #UnitOfMeasure
+          Role                #AssetTable
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE NORMAL
+          PROPERTIES
+            Field               #UnitOfMeasure
+            RelatedField        #Symbol
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #VendTable
+        PROPERTIES
+          Name                #VendTable
+          Table               #VendTable
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          EDTRelation         #Yes
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #InsuranceVendor
+            RelatedField        #AccountNum
+            SourceEDT           #VendAccount
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #WorkerContactName_FK
+        PROPERTIES
+          Name                #WorkerContactName_FK
+          Table               #HcmWorker
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          RelatedTableRole    #HcmWorker
+          Role                #WorkerContactName_AssetTable
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #WorkerContactName
+            RelatedField        #RecId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+      REFERENCE #WorkerResponsible_FK
+        PROPERTIES
+          Name                #WorkerResponsible_FK
+          Table               #HcmWorker
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #ZeroMore
+          RelationshipType    #Association
+          UseDefaultRoleNames #Yes
+          RelatedTableRole    #HcmWorker_RecId
+          Role                #WorkerResponsible_AssetTable
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE PKFK
+          PROPERTIES
+            Field               #WorkerResponsible
+            RelatedField        #RecId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+    ENDREFERENCES
+    
+    DELETEACTIONS
+      #AssetAddition
+      PROPERTIES
+        Table               #AssetAddition
+        DeleteAction        #Cascade
+      ENDPROPERTIES
+      
+      #AssetBook
+      PROPERTIES
+        Table               #AssetBook
+        DeleteAction        #Cascade
+      ENDPROPERTIES
+      
+      #AssetBudget
+      PROPERTIES
+        Table               #AssetBudget
+        DeleteAction        #Restricted
+      ENDPROPERTIES
+      
+      #AssetDepBook
+      PROPERTIES
+        Table               #AssetDepBook
+        DeleteAction        #Cascade
+      ENDPROPERTIES
+      
+      #AssetDepBookTrans
+      PROPERTIES
+        Table               #AssetDepBookTrans
+        DeleteAction        #Restricted
+      ENDPROPERTIES
+      
+      #AssetTrans
+      PROPERTIES
+        Table               #AssetTrans
+        DeleteAction        #Restricted
+      ENDPROPERTIES
+      
+      #DocuRef
+      PROPERTIES
+        Table               #DocuRef
+        DeleteAction        #Cascade
+      ENDPROPERTIES
+      
+      #ProjTable
+      PROPERTIES
+        Table               #ProjTable
+        DeleteAction        #Restricted
+      ENDPROPERTIES
+      
+    ENDDELETEACTIONS
+    
+    METHODS
+      SOURCE #allowEditOfAssetNum
+        #public boolean allowEditOfAssetNum()
+        #{
+        #    NoYes   allowEdit;
+        #    ;
+        #
+        #    allowEdit = (AssetParameters::find().AutoNumber == NoYes::No);
+        #
+        #    if (allowEdit)
+        #    {
+        #        allowEdit = (this.assetGroup().AutoNumber == NoYes::No);
+        #    }
+        #
+        #    return allowEdit;
+        #}
+      ENDSOURCE
+      SOURCE #assetGroup
+        #public AssetGroup assetGroup()
+        #{
+        #    return AssetGroup::find(this.AssetGroup);
+        #}
+      ENDSOURCE
+      SOURCE #assetLedgerDimension
+        #public LedgerDimensionDefaultAccount assetLedgerDimension(
+        #    AssetPostingProfile  _assetPostingProfile   =  AssetParameters::find().PostingProfile,
+        #    AssetTransType       _assetTransType        = AssetTransType::Depreciation,
+        #    AssetBookId          _bookId                = this.defaultBookId())
+        #{
+        #    return AssetLedgerAccounts::assetLedgerDimension(this.AssetId,
+        #                                                   _bookId,
+        #                                                   _assetTransType,
+        #                                                   _assetPostingProfile);
+        #}
+        #// AOSRunmode::CalledFrom
+      ENDSOURCE
+      SOURCE #assetOffsetLedgerDimension
+        #public LedgerDimensionDefaultAccount assetOffsetLedgerDimension(
+        #    AssetPostingProfile  _assetPostingProfile   =  AssetParameters::find().PostingProfile,
+        #    AssetTransType       _assetTransType        = AssetTransType::Depreciation,
+        #    AssetBookId          _bookId                = this.defaultBookId(),
+        #    boolean              _throwError            = false)
+        #{
+        #    return AssetLedgerAccounts::assetOffsetLedgerDimension(this.AssetId,
+        #                                                         _bookId,
+        #                                                         _assetTransType,
+        #                                                         _assetPostingProfile,
+        #                                                         _throwError);
+        #}
+        #
+        #// AOSRunmode::CalledFrom
+      ENDSOURCE
+      SOURCE #book
+        #public AssetBook book(AssetBookId bookId = this.defaultBookId())
+        #{
+        #    return AssetBook::find(this.AssetId,bookId);
+        #}
+      ENDSOURCE
+      SOURCE #checkMainAssetId
+        #// AOSRunmode::CalledFrom
+        #public boolean checkMainAssetId(AssetId mainAssetId = this.MainAssetId) // Check that mainAssetId is not a child of the current Asset
+        #{
+        #    AssetTable childAsset;
+        #
+        #    if (!mainAssetId)
+        #    {
+        #        return true;
+        #    }
+        #
+        #    if (this.AssetId == mainAssetId)
+        #    {
+        #        return checkFailed("@SYS67410");
+        #    }
+        #
+        #    while select AssetId from childAsset
+        #        where childAsset.MainAssetId == this.AssetId
+        #    {
+        #        if (!childAsset.checkMainAssetId(mainAssetId))
+        #        {
+        #            return false;
+        #        }
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #createAssetBooksFromAssetGroup
+        #public server void createAssetBooksFromAssetGroup()
+        #{
+        #    AssetGroupBookSetup  assetGroupBookSetup;
+        #    ;
+        #    // For each AssetGroupBookSetup record of the AssetGroup, to which the AssetTable
+        #    // belongs, is created an AssetBook record if it does not exist yet.
+        #
+        #    while select assetGroupBookSetup
+        #        where assetGroupBookSetup.AssetGroup == this.AssetGroup
+        #    {
+        #        AssetBook::createFromAssetGroupBookSetup(this, assetGroupBookSetup);
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #createAssetDepBookBonusFromAssetGroup
+        #public server void createAssetDepBookBonusFromAssetGroup()
+        #{
+        #    AssetGroupDepBookSetupBonus  assetGroupDepBookSetupBonus;
+        #    ;
+        #    // For each AssetGroupDepBookSetupBonus record of the AssetGroup, to which the AssetTable
+        #    // belongs, is created an AssetDepBookBonus record if it does not exist yet.
+        #
+        #    while select assetGroupDepBookSetupBonus
+        #        where assetGroupDepBookSetupBonus.AssetGroupId == this.AssetGroup
+        #    {
+        #        AssetDepBookBonus::createFromAssetGroupDepBookSetupBonus(this, assetGroupDepBookSetupBonus);
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #createAssetDepBooksFromAssetGroup
+        #public server void createAssetDepBooksFromAssetGroup()
+        #{
+        #    AssetGroupDepBookSetup  assetGroupDepBookSetup;
+        #    ;
+        #    // For each AssetGroupDepBookSetup record of the AssetGroup, to which the AssetTable
+        #    // belongs, is created an AssetDepBook record if it does not exist yet.
+        #
+        #    while select assetGroupDepBookSetup
+        #        where assetGroupDepBookSetup.AssetGroupId == this.AssetGroup
+        #    {
+        #        AssetDepBook::createFromAssetGroupDepBookSetup(this, assetGroupDepBookSetup);
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #defaultBookId
+        #//BP Deviation documented
+        #display AssetBookId defaultBookId()
+        #{
+        #    return AssetParameters::find().BookIdDefault;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #defaultDimension
+        #/// <summary>
+        #///    Retrieves the default dimension for the asset book ID.
+        #/// </summary>
+        #/// <param name="_bookId">
+        #///    The asset book ID.
+        #/// </param>
+        #/// <returns>
+        #///    The default dimension for the specified asset book ID.
+        #/// </returns>
+        #public DimensionDefault defaultDimension(AssetBookId _bookId)
+        #{
+        #    AssetLending assetLending;
+        #    DimensionDefault defaultDimension;
+        #    List dimensionSources;
+        #
+        #    dimensionSources = new List(Types::Class);
+        #
+        #    // check if the asset is on loan
+        #    assetLending = AssetLending::findLent(this.AssetId);
+        #    if (assetLending)
+        #    {
+        #        // first source is dimensions from the asset lending
+        #        dimensionSources.addEnd(DimensionDefaultingEngine::getDefaultDimensionSpecifiers(assetLending.DefaultDimension));
+        #    }
+        #
+        #    // second source dimensions from asset book
+        #    dimensionSources.addEnd(DimensionDefaultingEngine::getDefaultDimensionSpecifiers(this.book(_bookId).DefaultDimension));
+        #
+        #    // Get dimension using defaults from various sources
+        #    defaultDimension = DimensionDefaultingEngine::getDefaultDimension(dimensionSources);
+        #
+        #    return defaultDimension;
+        #}
+      ENDSOURCE
+      SOURCE #delete
+        #/// <summary>
+        #/// Deletes a row from the table and puts the <c>AssetId</c> and <c>Barcode</c> fields in the available
+        #/// pool of their number sequence if they were auto-generated.
+        #/// </summary>
+        #public void delete()
+        #{
+        #    // Check to see if the associated dimension attribute value has been used
+        #    // in a way that would prevent deletion.
+        #    if (!DimensionValidation::canDeleteEntityValue(this))
+        #    {
+        #        throw error(strFmt("@SYS134392", this.AssetId));
+        #    }
+        #
+        #    ttsbegin;
+        #
+        #    // Update the associated dimension attribute value.
+        #    DimensionAttributeValue::updateForEntityValueDelete(this);
+        #
+        #    super();
+        #
+        #    if (this.assetGroup().AutoNumber && this.assetGroup().AutoNumberSequenceTable && this.AssetId)
+        #    {
+        #        NumberSeq::releaseNumber(this.assetGroup().AutoNumberSequenceTable, this.AssetId);
+        #    }
+        #
+        #    if (this.assetGroup().AutoNumberBarcode && this.assetGroup().BarcodeNumberSequenceTable && this.Barcode)
+        #    {
+        #        NumberSeq::releaseNumber(this.assetGroup().BarcodeNumberSequenceTable, this.Barcode);
+        #    }
+        #
+        #    ttscommit;
+        #}
+      ENDSOURCE
+      SOURCE #editAssetActivityCode
+        #/// <summary>
+        #///    Sets the activity code.
+        #/// </summary>
+        #/// <param name="_set">
+        #///    true if the activity code is set; otherwise, false.
+        #/// </param>
+        #/// <param name="_assetActivityCode">
+        #///    The new activity code when the <paramref name="set" /> parameter is true.
+        #/// </param>
+        #/// <returns>
+        #///    The activity code of the record in the <c>AssetActivityCode</c> table.
+        #/// </returns>
+        #//BP Deviation Documented
+        #public edit  AssetActivityCodeId editAssetActivityCode(boolean _set, AssetActivityCodeId _assetActivityCode)
+        #{
+        #    ;
+        #    if(_set)
+        #    {
+        #        this.AssetActivityCode = AssetActivityCode::findByAssetActivityCode(_assetActivityCode).RecId;
+        #    }
+        #    else
+        #    {
+        #        _assetActivityCode = AssetActivityCode::find(this.AssetActivityCode).AssetActivityCode;
+        #    }
+        #    return _assetActivityCode;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #editAssetPropertyGroup
+        #/// <summary>
+        #///    Sets the property group.
+        #/// </summary>
+        #/// <param name="_set">
+        #///    true if the property group is set; otherwise, false.
+        #/// </param>
+        #/// <param name="_assetPropertyGroup">
+        #///    The new property group when the <paramref name="set" /> parameter is true.
+        #/// </param>
+        #/// <returns>
+        #///    The property group of the record in the <c>AssetPropertyGroup</c> table.
+        #/// </returns>
+        #//BP Deviation Documented
+        #public edit  AssetPropertyGroupCodeId editAssetPropertyGroup(boolean _set, AssetPropertyGroupCodeId _assetPropertyGroup)
+        #{
+        #    ;
+        #    if(_set)
+        #    {
+        #        this.AssetPropertyGroup = AssetPropertyGroup::findByAssetPropertyGroup(_assetPropertyGroup).RecId;
+        #    }
+        #    else
+        #    {
+        #        _assetPropertyGroup = AssetPropertyGroup::find(this.AssetPropertyGroup).AssetPropertyGroup;
+        #    }
+        #    return _assetPropertyGroup;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #hasOpenAssetBook
+        #/// <summary>
+        #///    Calls the <c>AssetBook::hasOpenBookForAsset</c> method to check if any asset book with a status of
+        #///    Open is assigned to Fixed Asset.
+        #/// </summary>
+        #/// <returns>
+        #///    The output of the <c>AssetBook::hasOpenBookForAsset</c> method.
+        #/// </returns>
+        #public boolean hasOpenAssetBook()
+        #{
+        #    ;
+        #    return AssetBook::hasOpenBookForAsset(this.AssetId);
+        #}
+      ENDSOURCE
+      SOURCE #initAssetNumberSeq
+        #public server NumberSeq initAssetNumberSeq(AssetGroupId _assetGroupId = '')
+        #{
+        #    AssetParameters assetParameters = AssetParameters::find();
+        #    AssetGroup      assetGroup = AssetGroup::find(_assetGroupId ? _assetGroupId : this.AssetGroup);
+        #    NumberSeq       assetNumberSeq;
+        #    ;
+        #
+        #    if (assetGroup.AutoNumber && assetGroup.AutoNumberSequenceTable)
+        #    {
+        #        assetNumberSeq = NumberSeq::newGetNumFromId(assetGroup.AutoNumberSequenceTable, true);
+        #    }
+        #
+        #    if (!assetNumberSeq && assetParameters.AutoNumber)
+        #    {
+        #        assetNumberSeq = NumberSeq::newGetNum(AssetParameters::numRefAssetId(),true);
+        #    }
+        #
+        #    return assetNumberSeq;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #initBarcodeNumberSeq
+        #public server NumberSeq initBarcodeNumberSeq()
+        #{
+        #    AssetParameters assetParameters = AssetParameters::find();
+        #    AssetGroup      assetGroup = AssetGroup::find(this.AssetGroup);
+        #    NumberSeq       assetBarcodeNumberSeq;
+        #
+        #    // Autonumber barcodes
+        #    if (!assetParameters.BarcodeEqualsAssetNumber &&
+        #         assetGroup.AutoNumberBarcode             &&
+        #         assetGroup.BarcodeNumberSequenceTable)
+        #    {
+        #        assetBarcodeNumberSeq = NumberSeq::newGetNumFromId(assetGroup.BarcodeNumberSequenceTable, true);
+        #    }
+        #
+        #    return assetBarcodeNumberSeq;
+        #}
+      ENDSOURCE
+      SOURCE #initFromAssetGroupId
+        #// AOSRunmode::CalledFrom
+        #public void initFromAssetGroupId(AssetGroupId _assetGroupId)
+        #{
+        #    AssetGroup assetGroup;
+        #    ;
+        #    assetGroup = AssetGroup::find(_assetGroupId);
+        #    this.AssetType = assetGroup.AssetType;
+        #    this.MajorType = assetGroup.MajorType;
+        #    this.PropertyType = assetGroup.PropertyType;
+        #    this.Location = assetGroup.Location;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #initValue
+        #public void initValue()
+        #{
+        #    #define.DefaultQty(1)
+        #    ;
+        #    super();
+        #    this.Quantity = #DefaultQty;
+        #}
+      ENDSOURCE
+      SOURCE #insert
+        #public void insert(boolean _skipCreateBooks = false)
+        #{
+        #    ;
+        #
+        #    if (AssetParameters::find().BarcodeEqualsAssetNumber)
+        #    {
+        #        this.Barcode = this.AssetId;
+        #    }
+        #
+        #    this.setNameAlias();
+        #
+        #    super();
+        #
+        #    if (! _skipCreateBooks)
+        #    {
+        #            this.createAssetBooksFromAssetGroup();
+        #            this.createAssetDepBooksFromAssetGroup();
+        #            this.createAssetDepBookBonusFromAssetGroup();
+        #
+        #    }
+        #
+        #}
+      ENDSOURCE
+      SOURCE #modifiedField
+        #public void modifiedField(fieldId _fieldId)
+        #{
+        #    super(_fieldId);
+        #    switch (_fieldId)
+        #    {
+        #        case fieldNum(AssetTable, AssetGroup):
+        #            this.initFromAssetGroupId(this.AssetGroup);
+        #            break;
+        #        case fieldNum(AssetTable, Name):
+        #            this.setNameAlias();
+        #            break;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #postingProfile
+        #public AssetPostingProfile postingProfile(AssetBookId _bookId)
+        #{
+        #    AssetLending    assetLending;
+        #    ;
+        #
+        #    // check if the asset is on loan
+        #    assetLending = AssetLending::findLent(this.AssetId);
+        #    if (assetLending)
+        #    {
+        #        return assetLending.PostingProfile;
+        #    }
+        #
+        #    if (this.book(_bookId).PostingProfile)
+        #    {
+        #        return this.book(_bookId).PostingProfile;
+        #    }
+        #
+        #    return AssetParameters::find().PostingProfile;
+        #}
+      ENDSOURCE
+      SOURCE #primaryValueModelForAssetProject
+        #/// <summary>
+        #///    Calls the <c>AssetBook::getPrimaryBookForAssetProject</c> method.
+        #/// </summary>
+        #/// <returns>
+        #///    The <c>AssetBookId</c> value returned from the <c>AssetBook::getPrimaryBookForAssetProject</c>
+        #///    method.
+        #/// </returns>
+        #/// <remarks>
+        #///    This method returns the value model ID assigned to the asset ID associated with the current project.
+        #/// </remarks>
+        #//BP Deviation documented
+        #display AssetBookId primaryValueModelForAssetProject()
+        #{
+        #    ;
+        #    return AssetBook::getPrimaryBookForAssetProject(this.AssetId).BookId;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #primaryValueModelStatusForAssetProject
+        #/// <summary>
+        #///    Returns the status of the value model (<c>AssetBook</c>) of a fixed asset record.
+        #/// </summary>
+        #/// <returns>
+        #///    The status of fixed asset from the <c>AssetBook</c> table.
+        #/// </returns>
+        #/// <remarks>
+        #///    This method returns the value that results from a call to the
+        #///    <c>AssetBook::getPrimaryBookForAssetProject</c> method.
+        #/// </remarks>
+        #public display AssetStatusStr primaryValueModelStatusForAssetProject()
+        #{
+        #    AssetBook       assetBook;
+        #    AssetStatusStr  assetStatus;
+        #
+        #    assetBook = AssetBook::getPrimaryBookForAssetProject(this.AssetId);
+        #
+        #    if (assetBook)
+        #    {
+        #        assetStatus = enum2str(assetBook.Status);
+        #    }
+        #
+        #    return assetStatus;
+        #}
+      ENDSOURCE
+      SOURCE #renamePrimaryKey
+        #public void renamePrimaryKey()
+        #{
+        #    Common originalRecord = this.orig();
+        #
+        #    super();
+        #
+        #    DimensionStorage::syncRenamedValue(this, originalRecord);
+        #}
+      ENDSOURCE
+      SOURCE #setNameAlias
+        #public void setNameAlias()
+        #{
+        #    if (! this.NameAlias)
+        #        this.NameAlias = name2Alias(this.Name);
+        #}
+      ENDSOURCE
+      SOURCE #topMainAsset
+        #public AssetId topMainAsset() // gives the top level asset in a component tree
+        #{
+        #    AssetId  assetId     = this.AssetId;
+        #    AssetId  mainAssetId = this.MainAssetId;
+        #    ;
+        #
+        #    while (mainAssetId)
+        #    {
+        #        assetId     = mainAssetId;
+        #        mainAssetId = (select firstonly MainAssetId from assetTable
+        #                           where assetTable.AssetId == mainAssetId).MainAssetId;
+        #    }
+        #
+        #    return assetId;
+        #}
+      ENDSOURCE
+      SOURCE #update
+        #public void update()
+        #{
+        #    AssetTable this_Orig = this.orig();
+        #
+        #    AssetBook   assetBook;
+        #
+        #    ttsbegin;
+        #
+        #    this.setNameAlias();
+        #
+        #    super();
+        #
+        #    if (this.SortingId != this_Orig.SortingId)
+        #    {
+        #        while select forupdate assetBook index hint AssetBookIdx
+        #               where assetBook.AssetId == this.AssetId
+        #        {
+        #            assetBook.SortingId  = this.SortingId;
+        #            assetBook.SortingId2 = this.SortingId2;
+        #            assetBook.SortingId3 = this.SortingId3;
+        #            assetBook.update();
+        #        }
+        #    }
+        #    ttscommit;
+        #}
+      ENDSOURCE
+      SOURCE #validateDelete
+        #public boolean validateDelete()
+        #{
+        #    boolean ret;
+        #
+        #    ret = super();
+        #
+        #    if (ret)
+        #    {
+        #        if (this.AssetId && (select RecId from assetTable
+        #                                 where assetTable.MainAssetId == this.AssetId).RecId)
+        #        {
+        #            return checkFailed(strFmt("@SYS67409",this.AssetId));
+        #        }
+        #    }
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #validateWrite
+        #public boolean validateWrite()
+        #{
+        #    boolean ret;
+        #
+        #    ret = super();
+        #
+        #    if (ret)
+        #    {
+        #        ret = this.checkMainAssetId();
+        #    }
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #valueModelsCurrent
+        #//BP Deviation documented
+        #display NoYes valueModelsCurrent()
+        #{
+        #    NoYes          valueModelsCurrent = false;
+        #    AssetBook      assetBook;
+        #    AssetBookTable assetBookTable;
+        #    ;
+        #    select firstonly RecId from assetBook
+        #        where assetBook.AssetId == this.AssetId
+        #        join RecId from assetBookTable
+        #        where assetBookTable.BookId == assetBook.BookId &&
+        #              assetBookTable.CurrentOperationsTax == CurrentOperationsTax::Current;
+        #
+        #    if (assetBook)
+        #    {
+        #        valueModelsCurrent = true;
+        #    }
+        #
+        #    return valueModelsCurrent;
+        #}
+        #
+        #
+      ENDSOURCE
+      SOURCE #valueModelsOperations
+        #//BP Deviation documented
+        #display NoYes valueModelsOperations()
+        #{
+        #    NoYes          valueModelsOperations = false;
+        #    AssetBook      assetBook;
+        #    AssetBookTable assetBookTable;
+        #    ;
+        #    select firstonly RecId from assetBook
+        #        where assetBook.AssetId == this.AssetId
+        #        join RecId from assetBookTable
+        #        where assetBookTable.BookId == assetBook.BookId &&
+        #              assetBookTable.CurrentOperationsTax == CurrentOperationsTax::Operations;
+        #
+        #    if (assetBook)
+        #    {
+        #        valueModelsOperations = true;
+        #    }
+        #
+        #    return valueModelsOperations;
+        #}
+      ENDSOURCE
+      SOURCE #valueModelsTax
+        #//BP Deviation documented
+        #display NoYes valueModelsTax()
+        #{
+        #    NoYes          valueModelsTax = false;
+        #    AssetBook      assetBook;
+        #    AssetBookTable assetBookTable;
+        #    ;
+        #    select firstonly RecId from assetBook
+        #        where assetBook.AssetId == this.AssetId
+        #        join RecId from assetBookTable
+        #        where assetBookTable.BookId == assetBook.BookId &&
+        #              assetBookTable.CurrentOperationsTax == CurrentOperationsTax::Tax;
+        #
+        #    if (assetBook)
+        #    {
+        #        valueModelsTax = true;
+        #    }
+        #    return valueModelsTax;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #checkExist
+        #public static boolean checkExist(AssetId  _assetId)
+        #{
+        #    boolean ret = true;
+        #    ;
+        #
+        #    if (!AssetTable::exist(_assetId))
+        #    {
+        #        ret = checkFailed(strFmt(AssetTable::txtNotExist(), _assetId));
+        #    }
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #childList
+        #public client server static container childList(AssetId _assetId)
+        #{
+        #    AssetTable assetTable;
+        #    container  childList;
+        #    ;
+        #
+        #    assetTable.recordLevelSecurity(true);
+        #
+        #    while select AssetId from assetTable
+        #        where assetTable.MainAssetId == _assetId
+        #    {
+        #        childList += assetTable.AssetId;
+        #    }
+        #    return childList;
+        #}
+      ENDSOURCE
+      SOURCE #depreciatingAncestor
+        #//  This function finds the depreciating asset for the passed asset number
+        #
+        #// AOSRunmode::CalledFrom
+        #public static AssetTable depreciatingAncestor(AssetBook _assetBook)
+        #{
+        #    AssetTable assetTable = AssetTable::find(_assetBook.AssetId);
+        #    AssetBook  mainAssetBook;
+        #    ;
+        #    if (_assetBook.Depreciation)
+        #    {
+        #        return assetTable;
+        #    }
+        #
+        #    if (!assetTable.MainAssetId)
+        #    {
+        #        return null;
+        #    }
+        #
+        #    mainAssetBook = AssetBook::find(assetTable.MainAssetId, _assetBook.BookId);
+        #    return AssetTable::depreciatingAncestor(mainAssetBook);
+        #}
+      ENDSOURCE
+      SOURCE #depreciatingDepBookAncestor
+        #//  This function finds the depreciating asset for the passed asset number
+        #public static AssetTable depreciatingDepBookAncestor(AssetDepBook _assetDepBook)
+        #{
+        #    AssetTable assetTable = AssetTable::find(_assetDepBook.AssetId);
+        #    AssetDepBook  mainAssetBook;
+        #    ;
+        #    if (_assetDepBook.Depreciation)
+        #    {
+        #        return assetTable;
+        #    }
+        #
+        #    if (!assetTable.MainAssetId)
+        #    {
+        #        return null;
+        #    }
+        #
+        #    mainAssetBook = AssetDepBook::find(_assetDepBook.DepreciationBookId, assetTable.MainAssetId);
+        #    return AssetTable::depreciatingDepBookAncestor(mainAssetBook);
+        #}
+      ENDSOURCE
+      SOURCE #exist
+        #public static boolean exist(AssetId  assetId)
+        #{
+        #    boolean found;
+        #    ;
+        #
+        #    found = (select firstonly RecId from assetTable
+        #                           where assetTable.AssetId == assetId).RecId != 0;
+        #
+        #    return found;
+        #}
+      ENDSOURCE
+      SOURCE #find
+        #public static AssetTable find(
+        #    AssetId             _assetId,
+        #    boolean             _forUpdate = false,
+        #    ConcurrencyModel    _concurrencyModel = ConcurrencyModel::Auto)
+        #{
+        #    AssetTable assetTable;
+        #    ;
+        #
+        #    assetTable.selectForUpdate(_forUpdate);
+        #    if (_forUpdate && _concurrencyModel != ConcurrencyModel::Auto)
+        #    {
+        #        assetTable.concurrencyModel(_concurrencyModel);
+        #    }
+        #
+        #    select firstonly assetTable
+        #        where assetTable.AssetId == _assetId;
+        #
+        #    return assetTable;
+        #}
+      ENDSOURCE
+      SOURCE #findByLedgerDimension
+        #public static AssetTable findByLedgerDimension(
+        #    LedgerDimensionAccount  _ledgerDimension,
+        #    boolean                 _forupdate = false,
+        #    ConcurrencyModel        _concurrencyModel = ConcurrencyModel::Auto)
+        #{
+        #    AssetTable                          assetTable;
+        #    DimensionAttributeValueCombination  ledgerDimension;
+        #
+        #    assetTable.selectForUpdate(_forupdate);
+        #    if (_forupdate  && _concurrencyModel != ConcurrencyModel::Auto)
+        #    {
+        #        assetTable.concurrencyModel(_concurrencyModel);
+        #    }
+        #
+        #    select firstonly assetTable
+        #        join RecId from ledgerDimension where
+        #            ledgerDimension.DisplayValue == assetTable.AssetId &&
+        #            ledgerDimension.RecId == _ledgerDimension;
+        #
+        #    return assetTable;
+        #}
+      ENDSOURCE
+      SOURCE #groupId
+        #public static AssetGroupId groupId(AssetId _assetId)
+        #{
+        #    return AssetTable::find(_assetId).AssetGroup;
+        #}
+      ENDSOURCE
+      SOURCE #isLowValuePoolAsset
+        #/// <summary>
+        #///    Determines if the asset contains any value models or depreciation books which use the low value
+        #///    pool depreciation method.
+        #/// </summary>
+        #/// <param name="_assetId">
+        #///    The asset to check.
+        #/// </param>
+        #/// <param name="_bookType">
+        #///    An <c>AssetBookType</c> value that determines whether the assets must be included in a value model
+        #///    or a depreciation book; optional.
+        #/// </param>
+        #/// <returns>
+        #///    true if the asset is a low value pool asset; otherwise, false.
+        #/// </returns>
+        #
+        #
+        #public static boolean isLowValuePoolAsset(AssetId  _assetId, AssetBookType _bookType = AssetBookType::ValueModel)
+        #{
+        #    AssetTable                  assetTable;
+        #    AssetDepBook                assetDepBook;
+        #    AssetDepBookTable           assetDepBookTable;
+        #    AssetBook                   assetBook;
+        #    AssetBookTable              assetBookTable;
+        #    AssetDepreciationProfile    assetDepreciationProfile;
+        #    boolean                     retValue = false;
+        #    #ISOCountryRegionCodes
+        #    ;
+        #
+        #    if (_assetId && SysCountryRegionCode::isLegalEntityInCountryRegion([#isoAU]))
+        #    {
+        #        if (_bookType == AssetBookType::ValueModel)
+        #        {
+        #            select firstonly RecId from assetTable where assetTable.AssetId == _assetId
+        #                join AssetId from assetBook where assetBook.AssetId == assetTable.AssetId
+        #                join BookId from assetBookTable where assetBookTable.BookId == assetBook.BookId
+        #                join Profile, Method from assetDepreciationProfile where assetDepreciationProfile.Profile == assetBookTable.DepreciationProfile
+        #                    && assetDepreciationProfile.Method == AssetDepreciationMethod::LowValuePool;
+        #        }
+        #        else
+        #        {
+        #            select firstonly RecId from assetTable where assetTable.AssetId == _assetId
+        #                join AssetId from assetDepBook where assetDepBook.AssetId == assetTable.AssetId
+        #                join DepreciationBookId from assetDepBookTable where assetDepBookTable.DepreciationBookId == assetDepBook.DepreciationBookId
+        #                join Profile, Method from assetDepreciationProfile where assetDepreciationProfile.Profile == assetDepBookTable.DepreciationProfile
+        #                    && assetDepreciationProfile.Method == AssetDepreciationMethod::LowValuePool;
+        #        }
+        #    }
+        #
+        #    if (assetTable)
+        #    {
+        #        retValue = true;
+        #    }
+        #
+        #    return retValue;
+        #}
+      ENDSOURCE
+      SOURCE #lookupAccountNum
+        #public client static void lookupAccountNum(
+        #    FormControl         _ctrl,
+        #    CompanyId           _company = curext(),
+        #    AssetBookType       _assetBookType = AssetBookType::ValueModel)
+        #{
+        #    FormSegmentedEntryControl formSegmentedEntryControl;
+        #    FormStringControl   formStringControl;
+        #    Args                args;
+        #    CompanyId           companyId;
+        #    FormRun             formRun;
+        #    ;
+        #
+        #    // The following block is needed for the case that intercompany transactions is disabled and someone passes
+        #    // in an empty string. Ideally one would remove the "curext()" defaulting from the paramter list, but this
+        #    // code was added as part of a bug fix, and did not have the scope or need of changing the interface.
+        #    if (!_company)
+        #    {
+        #        companyId = curext();
+        #    }
+        #    else
+        #    {
+        #        companyId = _company;
+        #        if (! xDataArea::exist(companyId))
+        #            throw error(strFmt("@SYS10666",companyId));
+        #    }
+        #
+        #    changecompany(companyId)
+        #    {
+        #        args = new Args();
+        #        args.name(formStr(AssetLookup));
+        #        args.caller(_ctrl);
+        #        args.parmEnumType(enumNum(AssetBookType));
+        #        args.parmEnum(_assetBookType);
+        #        formRun = classfactory.formRunClass(args);
+        #        formRun.init();
+        #        if (_ctrl is FormStringControl)
+        #        {
+        #            formStringControl = _ctrl as FormStringControl;
+        #            formStringControl.performFormLookup(formRun);
+        #        }
+        #        else if (_ctrl is FormSegmentedEntryControl)
+        #        {
+        #            formSegmentedEntryControl = _ctrl as FormSegmentedEntryControl;
+        #            formSegmentedEntryControl.performFormLookup(formRun);
+        #        }
+        #        else
+        #        {
+        #            throw error(Error::wrongUseOfFunction(funcName()));
+        #        }
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #lookupAccountNumConsumption
+        #public client static void lookupAccountNumConsumption(
+        #    FormStringControl   _ctrl,
+        #    CompanyId           _company = curext(),
+        #    AssetBookType       _assetBookType = AssetBookType::ValueModel)
+        #{
+        #    Args                args;
+        #    CompanyId           companyId;
+        #    FormRun             formRun;
+        #    ;
+        #
+        #    // The following block is needed for the case that intercompany transactions is disabled and someone passes
+        #    // in an empty string. Ideally one would remove the "curext()" defaulting from the paramter list, but this
+        #    // code was added as part of a bug fix, and did not have the scope or need of changing the interface.
+        #    if (!_company)
+        #    {
+        #        companyId = curext();
+        #    }
+        #    else
+        #    {
+        #        companyId = _company;
+        #        if (! xDataArea::exist(companyId))
+        #            throw error(strFmt("@SYS10666",companyId));
+        #    }
+        #
+        #    changecompany(companyId)
+        #    {
+        #        args = new Args();
+        #        args.name(formStr(AssetConsumptionLookup));
+        #        args.caller(_ctrl);
+        #        args.parmEnumType(enumNum(AssetBookType));
+        #        args.parmEnum(_assetBookType);
+        #        formRun = classfactory.formRunClass(args);
+        #        formRun.init();
+        #        _ctrl.performFormLookup(formRun);
+        #    }
+        #}
+        #
+      ENDSOURCE
+      SOURCE #lookupAccountNumLVP
+        #/// <summary>
+        #///    Opens the Asset lookup window which will restrict assets to those that contain a value model or
+        #///    depreciation book that uses a low value pool depreciation method.
+        #/// </summary>
+        #/// <param name="_ctrl">
+        #///    The control performing the lookup.
+        #/// </param>
+        #/// <param name="_company">
+        #///    The company to restrict assets to. By default, this is the current company; optional.
+        #/// </param>
+        #/// <param name="_assetBookType">
+        #///    Determines if the assets must be included in a value model or a depreciation book; optional.
+        #/// </param>
+        #/// <exception cref="M:Exception::Error">
+        #///    An error is thrown if the specified company does not exist.
+        #/// </exception>
+        #
+        #
+        #public client static void lookupAccountNumLVP(
+        #    FormStringControl   _ctrl,
+        #    CompanyId           _company = curext(),
+        #    AssetBookType       _assetBookType = AssetBookType::ValueModel)
+        #{
+        #    Args                args;
+        #    CompanyId           companyId;
+        #    FormRun             formRun;
+        #    ;
+        #
+        #    // The following block is needed for the case that intercompany transactions is disabled and someone passes
+        #    // in an empty string. Ideally one would remove the "curext()" defaulting from the paramter list, but this
+        #    // code was added as part of a bug fix, and did not have the scope or need of changing the interface.
+        #    if (!_company)
+        #    {
+        #        companyId = curext();
+        #    }
+        #    else
+        #    {
+        #        companyId = _company;
+        #        if (! xDataArea::exist(companyId))
+        #            throw error(strFmt("@SYS10666",companyId));
+        #    }
+        #
+        #    changecompany(companyId)
+        #    {
+        #        args = new Args();
+        #        args.name(formStr(AssetLVPLookup));
+        #        args.caller(_ctrl);
+        #        args.parmEnumType(enumNum(AssetBookType));
+        #        args.parmEnum(_assetBookType);
+        #        formRun = classfactory.formRunClass(args);
+        #        formRun.init();
+        #        _ctrl.performFormLookup(formRun);
+        #    }
+        #}
+        #
+      ENDSOURCE
+      SOURCE #treeImage
+        #public static int treeImage(AssetId assetId)
+        #{
+        #    #resAppl;
+        #
+        #    if ((select firstonly RecId from assetTable
+        #            where assetTable.MainAssetId == assetId).RecId)
+        #    {
+        #        return #ImageBOM;
+        #    }
+        #
+        #    return #ImageItem;
+        #}
+      ENDSOURCE
+      SOURCE #txtNotExist
+        #public static TxtNotExist txtNotExist()
+        #{
+        #    return "@SYS67413";
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDTABLE
+  
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Fixed assets</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS12578</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Fixed asset</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS25653</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The AssetTable contains the details related to the fixed assets.</Table:Field>
+    <Table:Field name="Description">{locked}</Table:Field>
+    <Table:Field name="LabelId">@SYS127383</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Number</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS13864</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identify the current condition of the asset, for example, poor, good, or excellent.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS112482</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">The department or division that is responsible for the asset</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS131449</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Disposal restrictions</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111155</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Enter any restrictions for properly disposing of the asset.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111156</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Document location</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67386</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Location of documents regarding the fixed asset.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67387</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Guarantee date</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67392</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Date of the start of the guarantee for this fixed asset.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67393</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Insurance vendor</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111138</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identify the insurance company that insures the asset.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111139</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Insured at fair market value</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111159</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Is the asset insured at its fair market value?</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111160</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Missing asset</Table:Field>
+    <Table:Field name="Description">248219 - FA Transfers</Table:Field>
+    <Table:Field name="LabelId">@SYS333761</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Select this check box if the asset cannot be located</Table:Field>
+    <Table:Field name="Description">248219 - FA Transfers Help text</Table:Field>
+    <Table:Field name="LabelId">@SYS333762</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Lease note</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111157</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">If the asset is leased, enter notes about the lease.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111158</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Location memo</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111153</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Notes about the location of the asset.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111154</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Information 1</Table:Field>
+    <Table:Field name="Description">AX 6 terminology refresh</Table:Field>
+    <Table:Field name="LabelId">@SYS71204</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Information 2</Table:Field>
+    <Table:Field name="Description">aX 6 terminology refresh</Table:Field>
+    <Table:Field name="LabelId">@SYS71205</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Information 3</Table:Field>
+    <Table:Field name="Description">AX 6 terminology refresh</Table:Field>
+    <Table:Field name="LabelId">@SYS71206</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Make</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67389</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Name of the manufacturer of the item.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67390</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Model</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS9923</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Model number of the item.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67391</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">General reference information for the fixed asset</Table:Field>
+    <Table:Field name="Description">AssetRefenence help text</Table:Field>
+    <Table:Field name="LabelId">@SYS333621</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Serial number</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS477</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Serial number for this fixed asset.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67388</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Technical information 1</Table:Field>
+    <Table:Field name="Description">AX 6 terminology refresh</Table:Field>
+    <Table:Field name="LabelId">@SYS71201</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Technical information 2</Table:Field>
+    <Table:Field name="Description">aX 6 terminology refresh</Table:Field>
+    <Table:Field name="LabelId">@SYS71202</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Technical information 3</Table:Field>
+    <Table:Field name="Description">AX 6 terminology refresh</Table:Field>
+    <Table:Field name="LabelId">@SYS71203</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Responsible</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67464</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Employee who is responsible for the fixed asset.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67465</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Description</Table:Field>
+    <Table:Field name="Description">[VendorOnboardingPhase1] Description</Table:Field>
+    <Table:Field name="LabelId">@SYS7576</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Disposal</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67400</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Documents</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS54210</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identification</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS5711</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Insurance</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67403</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Inventory</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS981</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Lease</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS112587</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Main fixed asset</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67401</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Mapping</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS111162</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Municipality</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS11371</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Other</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS69996</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Physical</Table:Field>
+    <Table:Field name="Description">FA physical location</Table:Field>
+    <Table:Field name="LabelId">@SYS126956</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Policy</Table:Field>
+    <Table:Field name="Description">FA insurance policy</Table:Field>
+    <Table:Field name="LabelId">@SYS126957</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Purchase orders</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS115660</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Quantity</Table:Field>
+    <Table:Field name="Description">Used in FA</Table:Field>
+    <Table:Field name="LabelId">@SYS114810</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Reference</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS81755</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Sorting</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS4138</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Subventions</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS54448</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Entry type</Table:Field>
+    <Table:Field name="Description">source document framework</Table:Field>
+    <Table:Field name="LabelId">@SYS81508</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Type</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS26386</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Update</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS71207</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Value model</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS71179</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Values</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS16124</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Warehouse</Table:Field>
+    <Table:Field name="Description">When used for special location of fixed assets.</Table:Field>
+    <Table:Field name="LabelId">@SYS101253</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">This will create a circular dependency. Enter another main fixed asset.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67410</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">A financial dimension value is based on the %1 record and has been used on a  transaction. You cannot delete the %1 record</Table:Field>
+    <Table:Field name="Description">Financial dimension framework</Table:Field>
+    <Table:Field name="LabelId">@SYS134392</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Fixed asset %1 has components attached.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67409</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Company %1 does not exist.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS10666</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Fixed asset %1 does not exist.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS67413</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+
+***Element: DBT
+
 ; Microsoft Dynamics AX Table : CustTable unloaded
 ; --------------------------------------------------------------------------------
   TABLEVERSION 1
@@ -34192,6 +37502,41 @@ Formatversion: 1
         EnumValue           #12
       ENDPROPERTIES
       
+      #AssetTable
+      PROPERTIES
+        Name                #AssetTable
+        Label               #Asset Table
+        EnumValue           #13
+      ENDPROPERTIES
+      
+      #AssetBook
+      PROPERTIES
+        Name                #AssetBook
+        Label               #Asset Book
+        EnumValue           #14
+      ENDPROPERTIES
+      
+      #AssetBookTable
+      PROPERTIES
+        Name                #AssetBookTable
+        Label               #Asset Book Table
+        EnumValue           #15
+      ENDPROPERTIES
+      
+      #assetDepProfile
+      PROPERTIES
+        Name                #assetDepProfile
+        Label               #Asset Depreciation Profile
+        EnumValue           #16
+      ENDPROPERTIES
+      
+      #AssetJournal
+      PROPERTIES
+        Name                #AssetJournal
+        Label               #Asset Journal
+        EnumValue           #17
+      ENDPROPERTIES
+      
     ENDTYPEELEMENTS
   ENDENUMTYPE
   
@@ -34289,82 +37634,6 @@ Formatversion: 1
         #{
         #}
       ENDSOURCE
-      SOURCE #addAddress
-        #private void addAddress(triDMContact addrStage)
-        #{
-        #    LogisticsPostalAddress      address;
-        #    DirPartyPostalAddressView   addressView;
-        #
-        #    DirPartyRecId               recID;
-        #    DirParty                    dirParty;
-        #    LogisticsLocationExt        locationExt;
-        #    LogisticsLocation           location;
-        #    LogisticsLocationRole       locationRole;
-        #    container                   conRoles;
-        #
-        #
-        #    recID = this.findPartyRecID(addrStage.triDMlegacyID);
-        #    if(recID == 0 )
-        #        return;
-        #
-        #    try
-        #    {
-        #        ttsBegin;
-        #        address.CountryRegionId     = addrStage.CountryRegionId;
-        #        address.State               = addrStage.State;
-        #        address.ZipCode             = addrStage.ZipCode;
-        #        address.Street              = addrStage.Street;
-        #        address.StreetNumber        = addrStage.StreetNumber;
-        #        address.City                = addrStage.City;
-        #
-        #        addressView.LocationName    = addrStage.Description;
-        #        addressView.IsPrimary       = addrStage.IsPrimary;
-        #        addressView.IsPrivate       = addrStage.IsPrivate;
-        #        addressView.Party           = recID;
-        #        addressview.initFromPostalAddress(address);
-        #
-        #        conRoles = conNull();
-        #
-        #        select locationRole where locationRole.Name == addrStage.Purpose;
-        #        if(locationRole.RecId != 0)
-        #        {
-        #            conRoles = conIns(conRoles,1,locationRole.RecId);
-        #        }
-        #
-        #        DirParty = DirParty::constructFromPartyRecId(addressView.Party);
-        #
-        #        DirParty.createOrUpdatePostalAddress(addressView,conRoles);
-        #
-        #        select forUpdate location where location.RecId == address.Location;
-        #        if(location.RecId != 0)
-        #        {
-        #            locationExt.Location = location.RecId;
-        #            locationExt.TaxGroup = addrStage.TaxGroup;
-        #            locationExt.insert();
-        #        }
-        #
-        #        ttsCommit;
-        #
-        #
-        #    }
-        #    catch
-        #    {
-        #        ttsBegin;
-        #        addrStage.triDMErrorMsg = infolog.text();
-        #        addrStage.triDMstatus = triDMstatus::error;
-        #        addrStage.update();
-        #        ttsCommit;
-        #        ttsAbort;
-        #        throw error( infolog.text());
-        #    }
-        #
-        #    ttsBegin;
-        #    addrStage.triDMstatus = triDMstatus::Imported;
-        #    addrStage.update();
-        #    ttsCommit;
-        #
-        #}
-      ENDSOURCE
       SOURCE #CleanUp
         #public void CleanUp()
         #{
@@ -34419,9 +37688,8 @@ Formatversion: 1
       SOURCE #run
         #public void run()
         #{
-        #    // create contact
-        #    // create contact address
-        #    // creaet contact conatct info
+        #    this.CreateContact();
+        #    this.CleanUp();
         #
         #
         #}
@@ -35233,62 +38501,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #addSimpleMainContactInfo
-        #private void addSimpleMainContactInfo(triDMVendTable _tbl, VendTable _vendTable)
-        #{
-        #    DirPartyContactInfoView     contactView;
-        #    DirParty                    dirParty;
-        #
-        #    DirParty = DirParty::constructFromPartyRecId(_vendTable.Party);
-        #    //Contact description    Phone    Fax    telex    extension    international calling code    Purpose    Primary    Private    Email    URL
-        #
-        #
-        #    if(_tbl.Phone)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Phone;
-        #        contactView.Party        = _vendTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        contactView.LocatorExtension = _tbl.Extention;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #    if(_tbl.Fax)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Fax ;
-        #        contactView.Party        = _vendTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #
-        #    if(_tbl.Email)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::Email ;
-        #        contactView.Party        = _vendTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #
-        #    if(_tbl.url)
-        #    {
-        #        contactView.LocationName = _tbl.Contactdescription;
-        #        contactView.Type         = LogisticsElectronicAddressMethodType::URL ;
-        #        contactView.Party        = _vendTable.Party;
-        #        contactView.IsPrimary    = _tbl.isPrimary ;
-        #        contactView.IsPrivate    = _tbl.isPrivate;
-        #        dirParty.createOrUpdateContactInfo(contactView);
-        #    }
-        #
-        #
-        #}
-      ENDSOURCE
       SOURCE #caption
         #public ClassDescription caption()
         #{
@@ -35302,21 +38514,6 @@ Formatversion: 1
       SOURCE #classDeclaration
         #class triDM_ProcessStageData_vendors extends triDM_ProcessStageData
         #{
-        #}
-      ENDSOURCE
-      SOURCE #addPartyInfo
-        #private void addPartyInfo(VendTable _vendTable, tridmvendtable _tbl)
-        #{
-        #    DirPartyTable   dirPartyTable;
-        #
-        #    dirPartyTable               = DirPartyTable::createNew(_tbl.PartyType, _tbl.Name);
-        #    dirPartyTable.NameAlias     = _tbl.NameAlias;
-        #    dirPartyTable.LanguageId    = _tbl.LanguageId;
-        #    dirPartyTable.update();
-        #
-        #    _vendTable.Party = dirPartyTable.RecId;
-        #
-        #
         #}
       ENDSOURCE
       SOURCE #CleanUp
@@ -35438,6 +38635,329 @@ Formatversion: 1
 
 ***Element: CLS
 
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_AssetTable unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triDM_ProcessStageData_AssetTable
+    PROPERTIES
+      Name                #triDM_ProcessStageData_AssetTable
+      Extends             #triDM_ProcessStageData
+      Origin              #{13DA3732-DA8D-4242-939E-37B8E1E7E72F}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #saveData
+        #private void saveData(SysExcelCells  cells, int row)
+        #{
+        #
+        #  //this.value(cells.item(row,#Description).value())
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #    keyColumn   = dlgkeyColumn.value();
+        #    wrkSheetNum = dlgWrkSheetNum.value();
+        #    startRow    = dlgstartRow.value();
+        #    lastCol     = dlgLastCol.value();
+        #    inboundFile = dlgInboundFile.value();
+        #
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList ];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dialog.addTabPage("@SYS345639");
+        #
+        #
+        #    dialog.addGroup('@SYS345624');
+        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
+        #
+        #
+        #
+        #    dialog.addGroup('@SYS345629');
+        #
+        #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,'@SYS345630','@SYS345631');
+        #    dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
+        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "Import Asset Table data";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_AssetTable extends triDM_ProcessStageData
+        #{
+        #    Filename        inboundFile;
+        #    int             startRow;
+        #    int             lastCol;
+        #    int             keyColumn;
+        #    int             wrkSheetNum;
+        #
+        #
+        #    DialogField     dlgInboundFile;
+        #    DialogField     dlgLastCol;
+        #    DialogField     dlgstartRow;
+        #    DialogField     dlgkeyColumn;
+        #    DialogField     dlgWrkSheetNum;
+        #
+        #
+        #    #define.CurrentVersion(1)
+        #    #define.Version1(1)
+        #    #localmacro.CurrentList
+        #        inboundFile,
+        #        startRow,
+        #        lastCol,
+        #        keyColumn,
+        #        wrkSheetNum
+        #
+        #    #endmacro
+        #
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #
+        #   triDMVendTable  tbl;
+        #
+        #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    SysExcelWorkbooks       workbooks;
+        #    SysExcelWorksheet       worksheet;
+        #    SysExcelCells           cells;
+        #
+        #
+        #    workbooks = this.openExcel(inboundFile);
+        #    worksheet = this.getWorkSheet(workbooks,wrkSheetNum);
+        #    cells     = worksheet.cells();
+        #
+        #    // loop through rows
+        #
+        #
+        #
+        #    this.closeExcel(workbooks);
+        #
+        #    this.cleanUp();
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common _tbl)
+        #{
+        #    triDMVendTable          tbl;
+        #    NumberSeq                   numberSeq;
+        #    NumberSequenceReference     numberSequenceReference;
+        #
+        #
+        #    tbl.data(_tbl);
+        #
+        #    if(! tbl.LanguageId)
+        #        tbl.LanguageId = 'EN-US';
+        #
+        #    if(! tbl.Currency)
+        #        tbl.Currency = 'USD';
+        #
+        #    if(! tbl.AccountNum)
+        #    {
+        #        ttsBegin;
+        #        numberSequenceReference = VendParameters::numRefVendAccount();
+        #        numberseq = NumberSeq::newGetNum(numberSequenceReference);
+        #
+        #        tbl.AccountNum = numberSeq.num();
+        #
+        #        ttsCommit;
+        #    }
+        #
+        #
+        #    _tbl.data(tbl);
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Import Info</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345639</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">File Locations Settings</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345624</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Inbound File</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345625</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Location of file to be Processed</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345626</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Settings</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@SYS345629</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Data Row Starts</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345630</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Row to start processing data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345631</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345632</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column of data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345633</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Key Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345634</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Column used to determine the end of rows</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345636</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">WorkSheet</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@SYS345635</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identifiy the wrksheet to process</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345637</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+
+***Element: CLS
+
 ; Microsoft Dynamics AX Class: triDM_ProcessStageData unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
@@ -35450,6 +38970,157 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
+      SOURCE #getWorkSheet
+        #public SysExcelWorksheet getWorkSheet(SysExcelWorkbooks  workbooks, int wrkSheetNum)
+        #{
+        #    SysExcelWorkbook        workbook;
+        #    SysExcelWorksheets      worksheets;
+        #    SysExcelWorksheet       worksheet;
+        #
+        #    workbook    = workbooks.item(1);
+        #    worksheets  = workbook.worksheets();
+        #    worksheet   = worksheets.itemFromNum(wrkSheetNum);
+        #
+        #
+        #    return workSheet;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #closeExcel
+        #public void closeExcel(SysExcelWorkbooks _workBooks)
+        #{
+        #    SysExcelApplication     application;
+        #    ExecutePermission       perm;
+        #    SysExcelWorkbooks       workbooks;
+        #
+        #     // perm = new FileIoPermission(filename, #io_read);
+        #    perm = new ExecutePermission();
+        #    perm.assert();
+        #
+        #
+        #    application = SysExcelApplication::construct();
+        #    workbooks = application.workbooks();
+        #    workbooks = _workBooks;
+        #
+        #
+        #    workBooks.close();
+        #
+        #    application.quit();
+        #
+        #}
+      ENDSOURCE
+      SOURCE #openExcel
+        #public SysExcelWorkbooks openExcel(filepath filename)
+        #{
+        #    ExecutePermission       perm;
+        #    SysExcelApplication     application;
+        #    SysExcelWorkbooks       workbooks;
+        #
+        #     // perm = new FileIoPermission(filename, #io_read);
+        #    perm = new ExecutePermission();
+        #    perm.assert();
+        #
+        #    application = SysExcelApplication::construct();
+        #    workbooks = application.workbooks();
+        #    try
+        #    {
+        #        workbooks.open(filename);
+        #    }
+        #    catch (Exception::Error)
+        #    {
+        #        throw error("@SYS19358");
+        #    }
+        #
+        #    return workbooks;
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #addAddress
+        #public void addAddress(common _tbl)
+        #{
+        #    LogisticsPostalAddress      address;
+        #    DirPartyPostalAddressView   addressView;
+        #    triStageAddress             addrStage;
+        #
+        #    DirPartyRecId               recID;
+        #    DirParty                    dirParty;
+        #    LogisticsLocationExt        locationExt;
+        #    LogisticsLocation           location;
+        #    LogisticsLocationRole       locationRole;
+        #    container                   conRoles;
+        #
+        #    addrStage.data(_tbl);
+        #
+        #    recID = this.findPartyRecID(addrStage.triDMlegacyID);
+        #    if(recID == 0 )
+        #        return;
+        #
+        #    try
+        #    {
+        #        ttsBegin;
+        #        address.CountryRegionId     = addrStage.CountryRegionId;
+        #        address.State               = addrStage.State;
+        #        address.ZipCode             = addrStage.ZipCode;
+        #        address.Street              = addrStage.Street;
+        #        address.StreetNumber        = addrStage.StreetNumber;
+        #        address.City                = addrStage.City;
+        #
+        #        addressView.LocationName    = addrStage.Description;
+        #        addressView.IsPrimary       = addrStage.IsPrimary;
+        #        addressView.IsPrivate       = addrStage.IsPrivate;
+        #        addressView.Party           = recID;
+        #        addressview.initFromPostalAddress(address);
+        #
+        #        conRoles = conNull();
+        #
+        #        select locationRole where locationRole.Name == addrStage.Purpose;
+        #        if(locationRole.RecId != 0)
+        #        {
+        #            conRoles = conIns(conRoles,1,locationRole.RecId);
+        #        }
+        #
+        #        DirParty = DirParty::constructFromPartyRecId(addressView.Party);
+        #
+        #        DirParty.createOrUpdatePostalAddress(addressView,conRoles);
+        #
+        #        select forUpdate location where location.RecId == address.Location;
+        #        if(location.RecId != 0)
+        #        {
+        #            locationExt.Location = location.RecId;
+        #            locationExt.TaxGroup = addrStage.TaxGroup;
+        #            locationExt.insert();
+        #        }
+        #
+        #        ttsCommit;
+        #
+        #
+        #    }
+        #    catch
+        #    {
+        #
+        #        ttsAbort;
+        #
+        #    }
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #addPartyInfo
+        #public DirPartyRecId addPartyInfo(DirPartyType _partyType, Name _name, namealias _nameAlias, LanguageId _LanguageId )
+        #{
+        #    DirPartyTable   dirPartyTable;
+        #
+        #    dirPartyTable               = DirPartyTable::createNew(_partyType, _Name);
+        #    dirPartyTable.NameAlias     = _nameAlias;
+        #    dirPartyTable.LanguageId    = _LanguageId;
+        #    dirPartyTable.update();
+        #
+        #    return dirPartyTable.RecId;
+        #
+        #
+        #}
+      ENDSOURCE
       SOURCE #addSimpleMainContactInfo
         #public void addSimpleMainContactInfo(Common _tbl, dirPartyRecID _Party)
         #{
@@ -35568,7 +39239,7 @@ Formatversion: 1
         #public void run()
         #{
         #
-        #    // do generic mapping
+        #
         #}
       ENDSOURCE
       SOURCE #setDefaultValues
@@ -35616,35 +39287,71 @@ Formatversion: 1
         #
         #    switch (_importType)
         #    {
-        #        case triDMImportType::Vendor        : triDM_ProcessStageData = new triDM_ProcessStageData_vendors();
-        #            break;
-        #        case triDMImportType::USZipCode     : triDM_ProcessStageData = new triDM_ProcessStageData_USZip();
-        #            break;
-        #        case triDMImportType::CADZipCode    : triDM_ProcessStageData = new triDM_ProcessStageData_CANZip();
-        #            break;
+        #        case triDMImportType::Vendor        : triDM_ProcessStageData = new triDM_ProcessStageData_vendors();    break;
+        #        case triDMImportType::USZipCode     : triDM_ProcessStageData = new triDM_ProcessStageData_USZip();      break;
+        #        case triDMImportType::CADZipCode    : triDM_ProcessStageData = new triDM_ProcessStageData_CANZip();     break;
         #        case triDMImportType::VendAddr      :
-        #        case triDMImportType::CustAddr      : triDM_ProcessStageData = new triDM_ProcessStageData_Address();
-        #            break;
-        #        case triDMImportType::VendBank      : triDM_ProcessStageData = new triDM_ProcessStageData_VendBank();
-        #            break;
-        #        case triDMImportType::Customer      : triDM_ProcessStageData = new triDM_ProcessStageData_Customers();
-        #            break;
-        #        case triDMImportType::CustBank      : triDM_ProcessStageData = new triDM_ProcessStageData_CustBank();
-        #            break;
+        #        case triDMImportType::CustAddr      : triDM_ProcessStageData = new triDM_ProcessStageData_Address();    break;
+        #        case triDMImportType::VendBank      : triDM_ProcessStageData = new triDM_ProcessStageData_VendBank();   break;
+        #        case triDMImportType::Customer      : triDM_ProcessStageData = new triDM_ProcessStageData_Customers();  break;
+        #        case triDMImportType::CustBank      : triDM_ProcessStageData = new triDM_ProcessStageData_CustBank();   break;
         #        case triDMImportType::VendContact   :
-        #        case triDMImportType::CustCont      :
-        #            triDM_ProcessStageData = new triDM_ProcessStageData_VendContacts();
-        #            break;
-        #        case triDMImportType::GenJrnl       : triDM_ProcessStageData = new triDM_ProcessStageData_GL();
-        #            break;
-        #        case triDMImportType::GLOpenAP      : triDM_ProcessStageData = new triDM_ProcessStageData_openAP();
-        #            break;
-        #        case triDMImporttype::GLOpenAR      : triDM_ProcessStageData = new triDM_ProcessStageData_openAR();
-        #            break;
+        #        case triDMImportType::CustCont      : triDM_ProcessStageData = new triDM_ProcessStageData_VendContacts();break;
+        #        case triDMImportType::GenJrnl       : triDM_ProcessStageData = new triDM_ProcessStageData_GL();         break;
+        #        case triDMImportType::GLOpenAP      : triDM_ProcessStageData = new triDM_ProcessStageData_openAP();     break;
+        #        case triDMImporttype::GLOpenAR      : triDM_ProcessStageData = new triDM_ProcessStageData_openAR();     break;
+        #        case triDMImportType::AssetTable    : triDM_ProcessStageData = new triDM_ProcessStageData_AssetTable(); break;
+        #
         #    }
         #
         #    triDM_ProcessStageData.parmImportType( _importType);
         #    return triDM_ProcessStageData;
+        #}
+      ENDSOURCE
+      SOURCE #excelValue
+        #anytype excelValue(COMVariant  value)
+        #{
+        #
+        #    switch (value.variantType())
+        #    {
+        #        case COMVariantType::VT_I2:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_I4:
+        #            return value.int();
+        #
+        #        case COMVariantType::VT_R4, COMVariantType::VT_R8:
+        #            return value.double();
+        #
+        #        case COMVariantType::VT_CY:
+        #            return value.currency();
+        #
+        #        case COMVariantType::VT_DATE:
+        #            return value.date();
+        #
+        #        case COMVariantType::VT_BSTR:
+        #            return value.bStr();
+        #
+        #        case COMVariantType::VT_BOOL:
+        #            return value.boolean();
+        #
+        #        case COMVariantType::VT_DECIMAL:
+        #            return value.decimal();
+        #
+        #        case COMVariantType::VT_I1:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_UI1:
+        #            return value.uInt();
+        #
+        #        case COMVariantType::VT_UI2:
+        #            return value.uShort();
+        #
+        #        case COMVariantType::VT_UI4:
+        #            return value.uLong();
+        #
+        #    }
+        #    return '';
         #}
       ENDSOURCE
       SOURCE #main
@@ -35667,93 +39374,18 @@ Formatversion: 1
         #
         #}
       ENDSOURCE
-      SOURCE #addAddress
-        #public void addAddress(common _tbl)
-        #{
-        #    LogisticsPostalAddress      address;
-        #    DirPartyPostalAddressView   addressView;
-        #    triStageAddress             addrStage;
-        #
-        #    DirPartyRecId               recID;
-        #    DirParty                    dirParty;
-        #    LogisticsLocationExt        locationExt;
-        #    LogisticsLocation           location;
-        #    LogisticsLocationRole       locationRole;
-        #    container                   conRoles;
-        #
-        #    addrStage.data(_tbl);
-        #
-        #    recID = this.findPartyRecID(addrStage.triDMlegacyID);
-        #    if(recID == 0 )
-        #        return;
-        #
-        #    try
-        #    {
-        #        ttsBegin;
-        #        address.CountryRegionId     = addrStage.CountryRegionId;
-        #        address.State               = addrStage.State;
-        #        address.ZipCode             = addrStage.ZipCode;
-        #        address.Street              = addrStage.Street;
-        #        address.StreetNumber        = addrStage.StreetNumber;
-        #        address.City                = addrStage.City;
-        #
-        #        addressView.LocationName    = addrStage.Description;
-        #        addressView.IsPrimary       = addrStage.IsPrimary;
-        #        addressView.IsPrivate       = addrStage.IsPrivate;
-        #        addressView.Party           = recID;
-        #        addressview.initFromPostalAddress(address);
-        #
-        #        conRoles = conNull();
-        #
-        #        select locationRole where locationRole.Name == addrStage.Purpose;
-        #        if(locationRole.RecId != 0)
-        #        {
-        #            conRoles = conIns(conRoles,1,locationRole.RecId);
-        #        }
-        #
-        #        DirParty = DirParty::constructFromPartyRecId(addressView.Party);
-        #
-        #        DirParty.createOrUpdatePostalAddress(addressView,conRoles);
-        #
-        #        select forUpdate location where location.RecId == address.Location;
-        #        if(location.RecId != 0)
-        #        {
-        #            locationExt.Location = location.RecId;
-        #            locationExt.TaxGroup = addrStage.TaxGroup;
-        #            locationExt.insert();
-        #        }
-        #
-        #        ttsCommit;
-        #
-        #
-        #    }
-        #    catch
-        #    {
-        #
-        #        ttsAbort;
-        #
-        #    }
-        #
-        #
-        #}
-      ENDSOURCE
-      SOURCE #addPartyInfo
-        #public DirPartyRecId addPartyInfo(DirPartyType _partyType, Name _name, namealias _nameAlias, LanguageId _LanguageId )
-        #{
-        #    DirPartyTable   dirPartyTable;
-        #
-        #    dirPartyTable               = DirPartyTable::createNew(_partyType, _Name);
-        #    dirPartyTable.NameAlias     = _nameAlias;
-        #    dirPartyTable.LanguageId    = _LanguageId;
-        #    dirPartyTable.update();
-        #
-        #    return dirPartyTable.RecId;
-        #
-        #
-        #}
-      ENDSOURCE
     ENDMETHODS
   ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">File cannot be opened.</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS19358</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: CLS
 
@@ -36622,6 +40254,9 @@ FORM #triDMDataMigration
         PROPERTIES
           Name                #triDMImport
           Table               #triDMImport
+          AllowEdit           #No
+          AllowCreate         #No
+          AllowDelete         #No
         ENDPROPERTIES
         
         FIELDLIST
@@ -37009,7 +40644,7 @@ ENDFORM
     #    static void utilScriptTableSpec(Args _args)
     #    {
     #        #define.NewLine('\n')
-    #        DictTable dictTable = new DictTable(tableNum(LedgerJournalTable)); // change table name here
+    #        DictTable dictTable = new DictTable(tableNum(LedgerJournalTrans_Asset)); // change table name here
     #
     #        SysDictField                sysDictField;
     #        SysDictType                 sysDictType;
@@ -37181,6 +40816,13 @@ ENDFORM
     #    import.insert();
     #    import.clear();
     #
+    #    import.ImportType       = triDMImportType::AssetTable;
+    #    import.ImportDesc       = 'Import Asset Table';
+    #    import.StageTableName   = '';
+    #    import.PrimaryTable     = 'Asset Table';
+    #    import.insert();
+    #    import.clear();
+    #
     #
     #}
   ENDSOURCE
@@ -37251,6 +40893,27 @@ ENDFORM
         #public boolean canGoBatchJournal()
         #{
         #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = 'Excel General Journal Import';
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #close
+        #void close()
+        #{
+        #    ;
+        #    processEnd = DateTimeUtil::getSystemDateTime();
+        #    info(this.caption());
+        #    info(strfmt('process started %1 || stopped at %2',processStart,processend));
+        #    Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
+        #
         #}
       ENDSOURCE
       SOURCE #caption
@@ -37430,6 +41093,34 @@ ENDFORM
         #    return dialog;
         #}
       ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dialog.addTabPage("@SYS345639");
+        #
+        #
+        #    dialog.addGroup('@SYS345624');
+        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
+        #
+        #
+        #    //dlgErrorPath    = dialog.addFieldValue(extendedtypestr(FilePath),errorPath,'@SYS345627','@SYS345628');
+        #
+        #
+        #
+        #    dialog.addGroup('@SYS345629');
+        #
+        #    //dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,'@SYS345630','@SYS345631');
+        #    //dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
+        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
       SOURCE #getFromDialog
         #public boolean getFromDialog()
         #{
@@ -37448,6 +41139,108 @@ ENDFORM
         #
         #
         #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dialog.addTabPage("@SYS345639");
+        #
+        #
+        #    dialog.addGroup('@SYS345624');
+        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
+        #
+        #
+        #    //dlgErrorPath    = dialog.addFieldValue(extendedtypestr(FilePath),errorPath,'@SYS345627','@SYS345628');
+        #
+        #
+        #
+        #    dialog.addGroup('@SYS345629');
+        #
+        #    //dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,'@SYS345630','@SYS345631');
+        #    //dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
+        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #    keyColumn   = dlgkeyColumn.value();
+        #    wrkSheetNum = dlgWrkSheetNum.value();
+        #
+        #    //errorPath   = dlgErrorPath.value();
+        #
+        #    //startRow    = dlgstartRow.value();
+        #    //lastCol     = dlgLastCol.value();
+        #    inboundFile = dlgInboundFile.value();
+        #
+        #    startRow    = 2; // skip header line
+        #
+        #
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #processData
+        #/// <summary>
+        #/// This is the stub for the class that inherits it to use for data processing
+        #/// </summary>
+        #/// <param name="cells">
+        #///
+        #/// </param>
+        #/// <returns>
+        #/// true if a record is accepted for processing. return flase if a record is intentionally
+        #/// skipped by buisness logic. any errors should be thrown to calling method
+        #/// </returns>
+        #/// <remarks>
+        #/// called from method processFile
+        #/// </remarks>
+        #boolean processData(SysExcelCells  cells, int row)
+        #{
+        #    boolean             ret;
+        #    LedgerJournalId     journalNum;
+        #
+        #    if (row == 1 || row == 4)
+        #    {
+        #        return false;
+        #    }
+        #
+        #    if (row == 2)
+        #    {
+        #        journalNum = this.createHeader(cells, row);
+        #    }
+        #
+        #    if (row > 5)
+        #    {
+        #        ret = this.CreateLine(cells,row,journalNum);
+        #    }
+        #
+        #
+        #
+        #    return ret;
+        #
         #}
       ENDSOURCE
       SOURCE #pack
@@ -37520,8 +41313,7 @@ ENDFORM
         #    int                     row = 0 ;
         #    ;
         #
-        #
-        #   // perm = new FileIoPermission(filename, #io_read);
+        #    // perm = new FileIoPermission(filename, #io_read);
         #    perm = new ExecutePermission();
         #    perm.assert();
         #
@@ -37544,7 +41336,79 @@ ENDFORM
         #
         #    do
         #    {
+        #        allRecs = allRecs + 1;
+        #        try
+        #        {
+        #            if(this.ProcessData(cells,row))
+        #            {
+        #                importedRecs = importedRecs + 1;
+        #            }
+        #            else
+        #            {
+        #                skippedRecs = skippedRecs + 1;
+        #            }
+        #        }
+        #        catch (Exception::Error)
+        #        {
         #
+        #            this.writeError(cells,row,filename);
+        #            errorRecs = errorRecs + 1;
+        #        }
+        #        row++;
+        #        // see if this is the last row
+        #        type = cells.item(row, keyColumn).value().variantType();
+        #    }
+        #    while (type != COMVariantType::VT_EMPTY);
+        #    application.quit();
+        #    this.close();
+        #}
+      ENDSOURCE
+      SOURCE #processFile
+        #/// <summary>
+        #/// main process to open the excel file and import data
+        #/// </summary>
+        #/// <param name="filename">
+        #///  a reference to the the file
+        #/// </param>
+        #
+        #void processFile(filepath filename)
+        #{
+        #    SysExcelApplication     application;
+        #    SysExcelWorkbooks       workbooks;
+        #    SysExcelWorkbook        workbook;
+        #    SysExcelWorksheets      worksheets;
+        #    SysExcelWorksheet       worksheet;
+        #    SysExcelCells           cells;
+        #    COMVariantType          type;
+        #    ExecutePermission         perm;
+        #
+        #    boolean                 isFirstRow = true;
+        #    int                     row = 0 ;
+        #    ;
+        #
+        #    // perm = new FileIoPermission(filename, #io_read);
+        #    perm = new ExecutePermission();
+        #    perm.assert();
+        #
+        #    application = SysExcelApplication::construct();
+        #    workbooks = application.workbooks();
+        #    try
+        #    {
+        #        workbooks.open(filename);
+        #    }
+        #    catch (Exception::Error)
+        #    {
+        #        throw error("@SYS19358");
+        #    }
+        #
+        #    workbook    = workbooks.item(1);
+        #    worksheets  = workbook.worksheets();
+        #    worksheet   = worksheets.itemFromNum(wrkSheetNum);
+        #    cells       = worksheet.cells();
+        #    row         = startRow;
+        #
+        #    do
+        #    {
         #        allRecs = allRecs + 1;
         #        try
         #        {
@@ -37617,6 +41481,71 @@ ENDFORM
         #    ret = false;
         #
         #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #value
+        #anytype value(COMVariant  value)
+        #{
+        #
+        #    ;
+        #
+        #    switch (value.variantType())
+        #    {
+        #        case COMVariantType::VT_I2:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_I4:
+        #            return value.int();
+        #
+        #        case COMVariantType::VT_R4, COMVariantType::VT_R8:
+        #            return value.double();
+        #
+        #        case COMVariantType::VT_CY:
+        #            return value.currency();
+        #
+        #        case COMVariantType::VT_DATE:
+        #            return value.date();
+        #
+        #        case COMVariantType::VT_BSTR:
+        #            return value.bStr();
+        #
+        #        case COMVariantType::VT_BOOL:
+        #            return value.boolean();
+        #
+        #        case COMVariantType::VT_DECIMAL:
+        #            return value.decimal();
+        #
+        #        case COMVariantType::VT_I1:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_UI1:
+        #            return value.uInt();
+        #
+        #        case COMVariantType::VT_UI2:
+        #            return value.uShort();
+        #
+        #        case COMVariantType::VT_UI4:
+        #            return value.uLong();
+        #
+        #    }
+        #    return '';
         #}
       ENDSOURCE
       SOURCE #unpack
@@ -37773,6 +41702,168 @@ ENDFORM
         #
         #*/
         #
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #value
+        #anytype value(COMVariant  value)
+        #{
+        #
+        #    ;
+        #
+        #    switch (value.variantType())
+        #    {
+        #        case COMVariantType::VT_I2:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_I4:
+        #            return value.int();
+        #
+        #        case COMVariantType::VT_R4, COMVariantType::VT_R8:
+        #            return value.double();
+        #
+        #        case COMVariantType::VT_CY:
+        #            return value.currency();
+        #
+        #        case COMVariantType::VT_DATE:
+        #            return value.date();
+        #
+        #        case COMVariantType::VT_BSTR:
+        #            return value.bStr();
+        #
+        #        case COMVariantType::VT_BOOL:
+        #            return value.boolean();
+        #
+        #        case COMVariantType::VT_DECIMAL:
+        #            return value.decimal();
+        #
+        #        case COMVariantType::VT_I1:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_UI1:
+        #            return value.uInt();
+        #
+        #        case COMVariantType::VT_UI2:
+        #            return value.uShort();
+        #
+        #        case COMVariantType::VT_UI4:
+        #            return value.uLong();
+        #
+        #    }
+        #    return '';
+        #}
+      ENDSOURCE
+      SOURCE #writeError
+        #/// <summary>
+        #/// write a log of thrown errors by file being processed
+        #/// </summary>
+        #/// <param name="InRecord">
+        #/// contain a row of data that was thrown by error
+        #/// </param>
+        #/// <param name="_filename">
+        #/// the file name and path where the error happened
+        #/// </param>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #///
+        #/// </exception>
+        #
+        #void writeError(SysExcelCells  cells, int row,FileName _filename)
+        #{   /*
+        #    FileIoPermission    perm;
+        #    ErrorMSg            txt;
+        #    FilePath            fullPathName;
+        #    Filename            fileSplitPath;
+        #    Filename            fileExt;
+        #    Filename            filename;
+        #
+        #    SysExcelApplication     sysExcelApplication;
+        #    SysExcelWorkbooks       sysExcelWorkBooks;
+        #    SysExcelWorkbook        sysExcelWorkBook;
+        #    SysExcelWorkSheets      sysExcelWorkSheets;
+        #    SysExcelWorkSheet       sysExcelWorkSheet;
+        #    int                     i;
+        #    #define.dot('.')
+        #*/
+        #    ;
+        #return;
+        #
+        #
+        #/*
+        #
+        #    //if a error path has been set
+        #
+        #    [fileSplitPath, filename, fileExt] = fileNameSplit(_filename);
+        #
+        #    if(errorPath)
+        #        fullPathName = errorPath + #FilePathDelimiter +  'error_' + filename + #dot + fileExt;
+        #    //else
+        #    //    fullPathName = inboundPath + #FilePathDelimiter + 'error_' + filename + #dot + fileExt;
+        #
+        #    perm = new FileIoPermission(fullPathName , #io_append);
+        #    perm.assert();
+        #
+        #    // deal with excel
+        #    sysExcelApplication = SysExcelApplication::construct();
+        #    sysExcelWorkBooks   = sysExcelApplication.workbooks();
+        #    sysExcelWorkBook    = sysExcelWorkBooks.add();
+        #    sysExcelWorkSheets  = sysExcelWorkbook.worksheets();
+        #    sysExcelWorkSheet   = sysExcelWorkSheets.itemFromNum(1);
+        #    sysExcelApplication.visible(false);
+        #    // house keeping of error vars.
+        #    txt =   infolog.text();
+        #    infolog.clear(0);
+        #
+        #    for (i = 1; i <= lastCol ;i++ )
+        #    {
+        #        sysExcelWorkSheet.cells().item(row,i).value(this.value(cells.item(row,i).value()));
+        #    }
+        #    i = lastcol +1 ;
+        #
+        #
+        #    sysExcelWorkSheet.cells().item(row,i).value(txt);
+        #    // close excel operations
+        #    // Suppress the pop-up window:
+        #    // A file named foo already exists in this location. Do you want to replace it?
+        #    sysExcelApplication.displayAlerts(false);
+        #    // Save the Excel file
+        #    sysExcelWorkbook.saveAs(fileName);
+        #    sysExcelWorkBook.comObject().save();
+        #    sysExcelWorkBook.saved(true);
+        #    // Make sure you close the Excel application
+        #    // Especially if you run the job without showing Excel on the desktop
+        #    // (sysExcelApplication.visible(false))
+        #    sysExcelApplication.quit();
+        #
+        #
+        #    CodeAccessPermission::revertAssert();
+        #
+        #*/
+        #
+        #}
+      ENDSOURCE
+      SOURCE #description
+        #client server static classDescription description()
+        #{
+        #    return 'Import General Ledger from Excel';
         #}
       ENDSOURCE
       SOURCE #description
@@ -41887,7 +45978,7 @@ ENDFORM
     Origin              #{D26FE3A7-5D56-4A9C-ABAD-6C8D65AA3054}
   ENDPROPERTIES
   
-    PROJECTCLASS ProjectNode
+    PROJECTCLASS 
     GROUP #DataDictionary
       PROPERTIES
         Name                #DataDictionary
@@ -41912,6 +46003,13 @@ ENDFORM
             PreventEditProperties #No
           ENDPROPERTIES
           
+          BEGINNODE
+            FILETYPE 0
+            UTILTYPE 44
+            UTILOBJECTID 1165
+            NODETYPE 204
+            NAME #AssetTable
+          ENDNODE
           BEGINNODE
             FILETYPE 0
             UTILTYPE 44
@@ -42200,6 +46298,13 @@ ENDFORM
         UTILOBJECTID 1024670
         NODETYPE 329
         NAME #triDM_ProcessStageData_vendors
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024700
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_AssetTable
       ENDNODE
       BEGINNODE
         FILETYPE 0
