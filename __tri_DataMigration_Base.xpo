@@ -35,16 +35,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     FIELDS
-      FIELD #triDMlegacyID
-        STRING
-        PROPERTIES
-          Name                #triDMlegacyID
-          Table               #AssetTable
-          Origin              #{793CF34F-8515-4FCF-B450-ADFE3AC395A3}
-          ExtendedDataType    #triDMlegacyID
-          StringSize          #40
-        ENDPROPERTIES
-        
       FIELD #AcquisitionValueNO
         REAL
         PROPERTIES
@@ -766,6 +756,16 @@ Formatversion: 1
           LegacyId            #110
           ExtendedDataType    #AssetTitleHolder
           StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #triDMlegacyID
+        STRING
+        PROPERTIES
+          Name                #triDMlegacyID
+          Table               #AssetTable
+          Origin              #{793CF34F-8515-4FCF-B450-ADFE3AC395A3}
+          ExtendedDataType    #triDMlegacyID
+          StringSize          #40
         ENDPROPERTIES
         
       FIELD #UnitCost
@@ -33799,6 +33799,8 @@ Formatversion: 1
           HelpText            #@TRI6
           Table               #triDMImport
           Origin              #{D00C8159-0A46-465C-9521-223086C5443E}
+          ExtendedDataType    #TableName
+          StringSize          #40
         ENDPROPERTIES
         
       FIELD #StageTableName
@@ -38635,90 +38637,18 @@ Formatversion: 1
 
 ***Element: CLS
 
-; Microsoft Dynamics AX Class: triDM_ProcessStageData_AssetTable unloaded
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_ExcelToPrimary unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
   
-  CLASS #triDM_ProcessStageData_AssetTable
+  CLASS #triDM_ProcessStageData_ExcelToPrimary
     PROPERTIES
-      Name                #triDM_ProcessStageData_AssetTable
+      Name                #triDM_ProcessStageData_ExcelToPrimary
       Extends             #triDM_ProcessStageData
       Origin              #{13DA3732-DA8D-4242-939E-37B8E1E7E72F}
     ENDPROPERTIES
     
     METHODS
-      SOURCE #saveData
-        #private void saveData(SysExcelCells  cells, int row)
-        #{
-        #
-        #  //this.value(cells.item(row,#Description).value())
-        #
-        #
-        #}
-      ENDSOURCE
-      SOURCE #getFromDialog
-        #public boolean getFromDialog()
-        #{
-        #    ;
-        #
-        #    keyColumn   = dlgkeyColumn.value();
-        #    wrkSheetNum = dlgWrkSheetNum.value();
-        #    startRow    = dlgstartRow.value();
-        #    lastCol     = dlgLastCol.value();
-        #    inboundFile = dlgInboundFile.value();
-        #
-        #    return super();
-        #}
-      ENDSOURCE
-      SOURCE #pack
-        #public container pack()
-        #{
-        #    return [#CurrentVersion,#CurrentList ];
-        #
-        #}
-      ENDSOURCE
-      SOURCE #unpack
-        #public boolean unpack(container packedClass)
-        #{
-        #    Version version = runbase::getVersion(packedClass);
-        #;
-        #    switch (version)
-        #    {
-        #        case #CurrentVersion:
-        #            [version,#CurrentList] = packedClass;
-        #            break;
-        #        default:
-        #            return false;
-        #    }
-        #
-        #    return true;
-        #}
-      ENDSOURCE
-      SOURCE #dialog
-        #protected Object dialog()
-        #{
-        #    DialogRunbase       dialog = super();
-        #
-        #;
-        #    dialog.caption(this.caption());
-        #    dialog.addTabPage("@SYS345639");
-        #
-        #
-        #    dialog.addGroup('@SYS345624');
-        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
-        #
-        #
-        #
-        #    dialog.addGroup('@SYS345629');
-        #
-        #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,'@SYS345630','@SYS345631');
-        #    dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
-        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
-        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
-        #
-        #    return dialog;
-        #}
-      ENDSOURCE
       SOURCE #caption
         #public ClassDescription caption()
         #{
@@ -38730,7 +38660,7 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #classDeclaration
-        #class triDM_ProcessStageData_AssetTable extends triDM_ProcessStageData
+        #class triDM_ProcessStageData_ExcelToPrimary extends triDM_ProcessStageData
         #{
         #    Filename        inboundFile;
         #    int             startRow;
@@ -38770,24 +38700,75 @@ Formatversion: 1
         #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
         #}
       ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dialog.addTabPage("@SYS345639");
+        #
+        #
+        #    dialog.addGroup('@SYS345624');
+        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
+        #
+        #
+        #
+        #    dialog.addGroup('@SYS345629');
+        #
+        #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,'@SYS345630','@SYS345631');
+        #    dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
+        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #    keyColumn   = dlgkeyColumn.value();
+        #    wrkSheetNum = dlgWrkSheetNum.value();
+        #    startRow    = dlgstartRow.value();
+        #    lastCol     = dlgLastCol.value();
+        #    inboundFile = dlgInboundFile.value();
+        #
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList ];
+        #
+        #}
+      ENDSOURCE
       SOURCE #run
         #public void run()
         #{
         #    SysExcelWorkbooks       workbooks;
-        #    SysExcelWorksheet       worksheet;
         #    SysExcelCells           cells;
+        #    int                     row;
+        #    COMVariantType          type;
+        #    TableId                 tableId;
         #
-        #
+        #    tableId = this.findPrimaryTableID();
+        #    row = startRow;
         #    workbooks = this.openExcel(inboundFile);
-        #    worksheet = this.getWorkSheet(workbooks,wrkSheetNum);
-        #    cells     = worksheet.cells();
+        #    cells = this.getExcellCells(workbooks,wrkSheetNum);
         #
-        #    // loop through rows
-        #
-        #
+        #    this.initMap(tableId);
+        #    do
+        #    {
+        #        this.mapExcelData(cells,row,tableId);
+        #        row ++;
+        #    }
+        #    while (type != COMVariantType::VT_EMPTY);
         #
         #    this.closeExcel(workbooks);
-        #
         #    this.cleanUp();
         #}
       ENDSOURCE
@@ -38821,6 +38802,23 @@ Formatversion: 1
         #
         #    _tbl.data(tbl);
         #
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
         #}
       ENDSOURCE
     ENDMETHODS
@@ -38970,70 +38968,57 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #getWorkSheet
-        #public SysExcelWorksheet getWorkSheet(SysExcelWorkbooks  workbooks, int wrkSheetNum)
+      SOURCE #findPrimaryTableID
+        #public TableId findPrimaryTableID()
         #{
-        #    SysExcelWorkbook        workbook;
-        #    SysExcelWorksheets      worksheets;
+        #
+        #    triDMImport import;
+        #
+        #    select import where import.ImportType == importType;
+        #
+        #    return tableName2id( import.PrimaryTable );
+        #}
+      ENDSOURCE
+      SOURCE #mapExcelData
+        #protected void mapExcelData(SysExcelCells  _cells, int _row, TableId _tableId)
+        #{
+        #
+        #    MapEnumerator   en = new MapEnumerator(mapFields);
+        #    Common      anyTable;
+        #    DictTable   dictTable;
+        #    int         fieldid;
+        #    int         colId;
+        #
+        #    dictTable = new DictTable( _tableId );
+        #    anyTable = dictTable.makeRecord();
+        #
+        #    anyTable.clear();
+        #
+        #    while(en.moveNext())
+        #    {
+        #        fieldid = en.currentKey();
+        #        colId = en.currentValue();
+        #        if(en.currentValue() != 0)
+        #        {
+        #            anyTable.(en.currentKey()) = this.excelValue(_cells.item(_row,colId).value());
+        #        }
+        #    }
+        #    anyTable.insert();
+        #
+        #}
+      ENDSOURCE
+      SOURCE #getExcellCells
+        #public SysExcelCells getExcellCells(SysExcelWorkbooks  _workbooks, int  _wrkSheetNum)
+        #{
+        #    SysExcelCells           cells;
         #    SysExcelWorksheet       worksheet;
         #
-        #    workbook    = workbooks.item(1);
-        #    worksheets  = workbook.worksheets();
-        #    worksheet   = worksheets.itemFromNum(wrkSheetNum);
+        #
+        #    worksheet = this.getWorkSheet(_workbooks, _wrkSheetNum);
+        #    cells     = worksheet.cells();
         #
         #
-        #    return workSheet;
-        #
-        #}
-      ENDSOURCE
-      SOURCE #closeExcel
-        #public void closeExcel(SysExcelWorkbooks _workBooks)
-        #{
-        #    SysExcelApplication     application;
-        #    ExecutePermission       perm;
-        #    SysExcelWorkbooks       workbooks;
-        #
-        #     // perm = new FileIoPermission(filename, #io_read);
-        #    perm = new ExecutePermission();
-        #    perm.assert();
-        #
-        #
-        #    application = SysExcelApplication::construct();
-        #    workbooks = application.workbooks();
-        #    workbooks = _workBooks;
-        #
-        #
-        #    workBooks.close();
-        #
-        #    application.quit();
-        #
-        #}
-      ENDSOURCE
-      SOURCE #openExcel
-        #public SysExcelWorkbooks openExcel(filepath filename)
-        #{
-        #    ExecutePermission       perm;
-        #    SysExcelApplication     application;
-        #    SysExcelWorkbooks       workbooks;
-        #
-        #     // perm = new FileIoPermission(filename, #io_read);
-        #    perm = new ExecutePermission();
-        #    perm.assert();
-        #
-        #    application = SysExcelApplication::construct();
-        #    workbooks = application.workbooks();
-        #    try
-        #    {
-        #        workbooks.open(filename);
-        #    }
-        #    catch (Exception::Error)
-        #    {
-        #        throw error("@SYS19358");
-        #    }
-        #
-        #    return workbooks;
-        #
-        #
+        #    return cells;
         #}
       ENDSOURCE
       SOURCE #addAddress
@@ -39183,16 +39168,83 @@ Formatversion: 1
       SOURCE #classDeclaration
         # abstract class   triDM_ProcessStageData extends RunBaseBatch
         #{
-        #    // expects the triDmImport record buffer
-        #    // maps dynamically the stage table to primary ax table
-        #    // subclasses or table methods will handle global address info.
-        #    triDMImportType importType;
         #
+        #    triDMImportType importType;
+        #    Map             mapFields;
         #}
       ENDSOURCE
       SOURCE #CleanUp
         #abstract void CleanUp()
         #{
+        #}
+      ENDSOURCE
+      SOURCE #closeExcel
+        #public void closeExcel(SysExcelWorkbooks _workBooks)
+        #{
+        #    SysExcelApplication     application;
+        #    ExecutePermission       perm;
+        #    SysExcelWorkbooks       workbooks;
+        #
+        #     // perm = new FileIoPermission(filename, #io_read);
+        #    perm = new ExecutePermission();
+        #    perm.assert();
+        #
+        #
+        #    application = SysExcelApplication::construct();
+        #    workbooks = application.workbooks();
+        #    workbooks = _workBooks;
+        #
+        #
+        #    workBooks.close();
+        #
+        #    application.quit();
+        #
+        #}
+      ENDSOURCE
+      SOURCE #excelValue
+        #anytype excelValue(COMVariant  value)
+        #{
+        #
+        #    switch (value.variantType())
+        #    {
+        #        case COMVariantType::VT_I2:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_I4:
+        #            return value.int();
+        #
+        #        case COMVariantType::VT_R4, COMVariantType::VT_R8:
+        #            return value.double();
+        #
+        #        case COMVariantType::VT_CY:
+        #            return value.currency();
+        #
+        #        case COMVariantType::VT_DATE:
+        #            return value.date();
+        #
+        #        case COMVariantType::VT_BSTR:
+        #            return value.bStr();
+        #
+        #        case COMVariantType::VT_BOOL:
+        #            return value.boolean();
+        #
+        #        case COMVariantType::VT_DECIMAL:
+        #            return value.decimal();
+        #
+        #        case COMVariantType::VT_I1:
+        #            return value.byte();
+        #
+        #        case COMVariantType::VT_UI1:
+        #            return value.uInt();
+        #
+        #        case COMVariantType::VT_UI2:
+        #            return value.uShort();
+        #
+        #        case COMVariantType::VT_UI4:
+        #            return value.uLong();
+        #
+        #    }
+        #    return '';
         #}
       ENDSOURCE
       SOURCE #findPartyRecID
@@ -39221,10 +39273,53 @@ Formatversion: 1
         #    return recId;
         #}
       ENDSOURCE
+      SOURCE #getWorkSheet
+        #public SysExcelWorksheet getWorkSheet(SysExcelWorkbooks  workbooks, int wrkSheetNum)
+        #{
+        #    SysExcelWorkbook        workbook;
+        #    SysExcelWorksheets      worksheets;
+        #    SysExcelWorksheet       worksheet;
+        #
+        #    workbook    = workbooks.item(1);
+        #    worksheets  = workbook.worksheets();
+        #    worksheet   = worksheets.itemFromNum(wrkSheetNum);
+        #
+        #
+        #    return workSheet;
+        #
+        #}
+      ENDSOURCE
       SOURCE #new
         #private void new()
         #{
         #    super();
+        #}
+      ENDSOURCE
+      SOURCE #openExcel
+        #public SysExcelWorkbooks openExcel(filepath filename)
+        #{
+        #    ExecutePermission       perm;
+        #    SysExcelApplication     application;
+        #    SysExcelWorkbooks       workbooks;
+        #
+        #     // perm = new FileIoPermission(filename, #io_read);
+        #    perm = new ExecutePermission();
+        #    perm.assert();
+        #
+        #    application = SysExcelApplication::construct();
+        #    workbooks = application.workbooks();
+        #    try
+        #    {
+        #        workbooks.open(filename);
+        #    }
+        #    catch (Exception::Error)
+        #    {
+        #        throw error("@SYS19358");
+        #    }
+        #
+        #    return workbooks;
+        #
+        #
         #}
       ENDSOURCE
       SOURCE #parmImportType
@@ -39290,68 +39385,30 @@ Formatversion: 1
         #        case triDMImportType::Vendor        : triDM_ProcessStageData = new triDM_ProcessStageData_vendors();    break;
         #        case triDMImportType::USZipCode     : triDM_ProcessStageData = new triDM_ProcessStageData_USZip();      break;
         #        case triDMImportType::CADZipCode    : triDM_ProcessStageData = new triDM_ProcessStageData_CANZip();     break;
+        #
         #        case triDMImportType::VendAddr      :
         #        case triDMImportType::CustAddr      : triDM_ProcessStageData = new triDM_ProcessStageData_Address();    break;
+        #
         #        case triDMImportType::VendBank      : triDM_ProcessStageData = new triDM_ProcessStageData_VendBank();   break;
         #        case triDMImportType::Customer      : triDM_ProcessStageData = new triDM_ProcessStageData_Customers();  break;
         #        case triDMImportType::CustBank      : triDM_ProcessStageData = new triDM_ProcessStageData_CustBank();   break;
+        #
         #        case triDMImportType::VendContact   :
-        #        case triDMImportType::CustCont      : triDM_ProcessStageData = new triDM_ProcessStageData_VendContacts();break;
+        #        case triDMImportType::CustCont      : triDM_ProcessStageData = new triDM_ProcessStageData_VendContacts();  break;
+        #
         #        case triDMImportType::GenJrnl       : triDM_ProcessStageData = new triDM_ProcessStageData_GL();         break;
         #        case triDMImportType::GLOpenAP      : triDM_ProcessStageData = new triDM_ProcessStageData_openAP();     break;
         #        case triDMImporttype::GLOpenAR      : triDM_ProcessStageData = new triDM_ProcessStageData_openAR();     break;
-        #        case triDMImportType::AssetTable    : triDM_ProcessStageData = new triDM_ProcessStageData_AssetTable(); break;
+        #
+        #        case triDMImportType::AssetBook         :
+        #        case triDMImportType::AssetBookTable    :
+        #        case triDMImportType::assetDepProfile   :
+        #        case triDMImportType::AssetTable        : triDM_ProcessStageData = new triDM_ProcessStageData_ExcelToPrimary();  break;
         #
         #    }
         #
         #    triDM_ProcessStageData.parmImportType( _importType);
         #    return triDM_ProcessStageData;
-        #}
-      ENDSOURCE
-      SOURCE #excelValue
-        #anytype excelValue(COMVariant  value)
-        #{
-        #
-        #    switch (value.variantType())
-        #    {
-        #        case COMVariantType::VT_I2:
-        #            return value.byte();
-        #
-        #        case COMVariantType::VT_I4:
-        #            return value.int();
-        #
-        #        case COMVariantType::VT_R4, COMVariantType::VT_R8:
-        #            return value.double();
-        #
-        #        case COMVariantType::VT_CY:
-        #            return value.currency();
-        #
-        #        case COMVariantType::VT_DATE:
-        #            return value.date();
-        #
-        #        case COMVariantType::VT_BSTR:
-        #            return value.bStr();
-        #
-        #        case COMVariantType::VT_BOOL:
-        #            return value.boolean();
-        #
-        #        case COMVariantType::VT_DECIMAL:
-        #            return value.decimal();
-        #
-        #        case COMVariantType::VT_I1:
-        #            return value.byte();
-        #
-        #        case COMVariantType::VT_UI1:
-        #            return value.uInt();
-        #
-        #        case COMVariantType::VT_UI2:
-        #            return value.uShort();
-        #
-        #        case COMVariantType::VT_UI4:
-        #            return value.uLong();
-        #
-        #    }
-        #    return '';
         #}
       ENDSOURCE
       SOURCE #main
@@ -39372,6 +39429,22 @@ Formatversion: 1
         #
         #
         #
+        #}
+      ENDSOURCE
+      SOURCE #initMap
+        #protected void initMap(TableId  _tableId)
+        #{
+        #    triDMFieldMapping   dmField;
+        #    mapFields = new  Map(Types::Integer,Types::Integer);
+        #
+        #
+        #
+        #    while select dmField where dmField.refTableName == tableId2name(_tableId)
+        #                            && dmField.FileCol > 0
+        #    {
+        #         mapFields.insert(dmField.refFieldID, dmField.FileCol);
+        #
+        #    }
         #}
       ENDSOURCE
     ENDMETHODS
@@ -40905,27 +40978,6 @@ ENDFORM
         #    return ret;
         #}
       ENDSOURCE
-      SOURCE #close
-        #void close()
-        #{
-        #    ;
-        #    processEnd = DateTimeUtil::getSystemDateTime();
-        #    info(this.caption());
-        #    info(strfmt('process started %1 || stopped at %2',processStart,processend));
-        #    Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
-        #
-        #}
-      ENDSOURCE
-      SOURCE #caption
-        #public ClassDescription caption()
-        #{
-        #    ClassDescription ret;
-        #
-        #    ret = 'Excel General Journal Import';
-        #
-        #    return ret;
-        #}
-      ENDSOURCE
       SOURCE #classDeclaration
         #class triExcel_GL_Import extends RunBaseBatch
         #{
@@ -41093,89 +41145,6 @@ ENDFORM
         #    return dialog;
         #}
       ENDSOURCE
-      SOURCE #dialog
-        #protected Object dialog()
-        #{
-        #    DialogRunbase       dialog = super();
-        #
-        #;
-        #    dialog.caption(this.caption());
-        #    dialog.addTabPage("@SYS345639");
-        #
-        #
-        #    dialog.addGroup('@SYS345624');
-        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
-        #
-        #
-        #    //dlgErrorPath    = dialog.addFieldValue(extendedtypestr(FilePath),errorPath,'@SYS345627','@SYS345628');
-        #
-        #
-        #
-        #    dialog.addGroup('@SYS345629');
-        #
-        #    //dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,'@SYS345630','@SYS345631');
-        #    //dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
-        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
-        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
-        #
-        #    return dialog;
-        #}
-      ENDSOURCE
-      SOURCE #getFromDialog
-        #public boolean getFromDialog()
-        #{
-        #    ;
-        #
-        #    keyColumn   = dlgkeyColumn.value();
-        #    wrkSheetNum = dlgWrkSheetNum.value();
-        #
-        #    //errorPath   = dlgErrorPath.value();
-        #
-        #    //startRow    = dlgstartRow.value();
-        #    //lastCol     = dlgLastCol.value();
-        #    inboundFile = dlgInboundFile.value();
-        #
-        #    startRow    = 2; // skip header line
-        #
-        #
-        #    return super();
-        #}
-      ENDSOURCE
-      SOURCE #pack
-        #public container pack()
-        #{
-        #    return [#CurrentVersion,#CurrentList];
-        #
-        #}
-      ENDSOURCE
-      SOURCE #dialog
-        #protected Object dialog()
-        #{
-        #    DialogRunbase       dialog = super();
-        #
-        #;
-        #    dialog.caption(this.caption());
-        #    dialog.addTabPage("@SYS345639");
-        #
-        #
-        #    dialog.addGroup('@SYS345624');
-        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
-        #
-        #
-        #    //dlgErrorPath    = dialog.addFieldValue(extendedtypestr(FilePath),errorPath,'@SYS345627','@SYS345628');
-        #
-        #
-        #
-        #    dialog.addGroup('@SYS345629');
-        #
-        #    //dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,'@SYS345630','@SYS345631');
-        #    //dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
-        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
-        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
-        #
-        #    return dialog;
-        #}
-      ENDSOURCE
       SOURCE #getFromDialog
         #public boolean getFromDialog()
         #{
@@ -41241,126 +41210,6 @@ ENDFORM
         #
         #    return ret;
         #
-        #}
-      ENDSOURCE
-      SOURCE #pack
-        #public container pack()
-        #{
-        #    return [#CurrentVersion,#CurrentList];
-        #
-        #}
-      ENDSOURCE
-      SOURCE #processData
-        #/// <summary>
-        #/// This is the stub for the class that inherits it to use for data processing
-        #/// </summary>
-        #/// <param name="cells">
-        #///
-        #/// </param>
-        #/// <returns>
-        #/// true if a record is accepted for processing. return flase if a record is intentionally
-        #/// skipped by buisness logic. any errors should be thrown to calling method
-        #/// </returns>
-        #/// <remarks>
-        #/// called from method processFile
-        #/// </remarks>
-        #boolean processData(SysExcelCells  cells, int row)
-        #{
-        #    boolean             ret;
-        #    LedgerJournalId     journalNum;
-        #
-        #    if (row == 1 || row == 4)
-        #    {
-        #        return false;
-        #    }
-        #
-        #    if (row == 2)
-        #    {
-        #        journalNum = this.createHeader(cells, row);
-        #    }
-        #
-        #    if (row > 5)
-        #    {
-        #        ret = this.CreateLine(cells,row,journalNum);
-        #    }
-        #
-        #
-        #
-        #    return ret;
-        #
-        #}
-      ENDSOURCE
-      SOURCE #processFile
-        #/// <summary>
-        #/// main process to open the excel file and import data
-        #/// </summary>
-        #/// <param name="filename">
-        #///  a reference to the the file
-        #/// </param>
-        #
-        #void processFile(filepath filename)
-        #{
-        #    SysExcelApplication     application;
-        #    SysExcelWorkbooks       workbooks;
-        #    SysExcelWorkbook        workbook;
-        #    SysExcelWorksheets      worksheets;
-        #    SysExcelWorksheet       worksheet;
-        #    SysExcelCells           cells;
-        #    COMVariantType          type;
-        #    ExecutePermission         perm;
-        #
-        #    boolean                 isFirstRow = true;
-        #    int                     row = 0 ;
-        #    ;
-        #
-        #    // perm = new FileIoPermission(filename, #io_read);
-        #    perm = new ExecutePermission();
-        #    perm.assert();
-        #
-        #    application = SysExcelApplication::construct();
-        #    workbooks = application.workbooks();
-        #    try
-        #    {
-        #        workbooks.open(filename);
-        #    }
-        #    catch (Exception::Error)
-        #    {
-        #        throw error("@SYS19358");
-        #    }
-        #
-        #    workbook    = workbooks.item(1);
-        #    worksheets  = workbook.worksheets();
-        #    worksheet   = worksheets.itemFromNum(wrkSheetNum);
-        #    cells       = worksheet.cells();
-        #    row         = startRow;
-        #
-        #    do
-        #    {
-        #        allRecs = allRecs + 1;
-        #        try
-        #        {
-        #            if(this.ProcessData(cells,row))
-        #            {
-        #                importedRecs = importedRecs + 1;
-        #            }
-        #            else
-        #            {
-        #                skippedRecs = skippedRecs + 1;
-        #            }
-        #        }
-        #        catch (Exception::Error)
-        #        {
-        #
-        #            this.writeError(cells,row,filename);
-        #            errorRecs = errorRecs + 1;
-        #        }
-        #        row++;
-        #        // see if this is the last row
-        #        type = cells.item(row, keyColumn).value().variantType();
-        #    }
-        #    while (type != COMVariantType::VT_EMPTY);
-        #    application.quit();
-        #    this.close();
         #}
       ENDSOURCE
       SOURCE #processFile
@@ -41548,71 +41397,6 @@ ENDFORM
         #    return '';
         #}
       ENDSOURCE
-      SOURCE #unpack
-        #public boolean unpack(container packedClass)
-        #{
-        #    Version version = runbase::getVersion(packedClass);
-        #;
-        #    switch (version)
-        #    {
-        #        case #CurrentVersion:
-        #            [version,#CurrentList] = packedClass;
-        #            break;
-        #        default:
-        #            return false;
-        #    }
-        #
-        #    return true;
-        #}
-      ENDSOURCE
-      SOURCE #value
-        #anytype value(COMVariant  value)
-        #{
-        #
-        #    ;
-        #
-        #    switch (value.variantType())
-        #    {
-        #        case COMVariantType::VT_I2:
-        #            return value.byte();
-        #
-        #        case COMVariantType::VT_I4:
-        #            return value.int();
-        #
-        #        case COMVariantType::VT_R4, COMVariantType::VT_R8:
-        #            return value.double();
-        #
-        #        case COMVariantType::VT_CY:
-        #            return value.currency();
-        #
-        #        case COMVariantType::VT_DATE:
-        #            return value.date();
-        #
-        #        case COMVariantType::VT_BSTR:
-        #            return value.bStr();
-        #
-        #        case COMVariantType::VT_BOOL:
-        #            return value.boolean();
-        #
-        #        case COMVariantType::VT_DECIMAL:
-        #            return value.decimal();
-        #
-        #        case COMVariantType::VT_I1:
-        #            return value.byte();
-        #
-        #        case COMVariantType::VT_UI1:
-        #            return value.uInt();
-        #
-        #        case COMVariantType::VT_UI2:
-        #            return value.uShort();
-        #
-        #        case COMVariantType::VT_UI4:
-        #            return value.uLong();
-        #
-        #    }
-        #    return '';
-        #}
-      ENDSOURCE
       SOURCE #writeError
         #/// <summary>
         #/// write a log of thrown errors by file being processed
@@ -41702,168 +41486,6 @@ ENDFORM
         #
         #*/
         #
-        #}
-      ENDSOURCE
-      SOURCE #unpack
-        #public boolean unpack(container packedClass)
-        #{
-        #    Version version = runbase::getVersion(packedClass);
-        #;
-        #    switch (version)
-        #    {
-        #        case #CurrentVersion:
-        #            [version,#CurrentList] = packedClass;
-        #            break;
-        #        default:
-        #            return false;
-        #    }
-        #
-        #    return true;
-        #}
-      ENDSOURCE
-      SOURCE #value
-        #anytype value(COMVariant  value)
-        #{
-        #
-        #    ;
-        #
-        #    switch (value.variantType())
-        #    {
-        #        case COMVariantType::VT_I2:
-        #            return value.byte();
-        #
-        #        case COMVariantType::VT_I4:
-        #            return value.int();
-        #
-        #        case COMVariantType::VT_R4, COMVariantType::VT_R8:
-        #            return value.double();
-        #
-        #        case COMVariantType::VT_CY:
-        #            return value.currency();
-        #
-        #        case COMVariantType::VT_DATE:
-        #            return value.date();
-        #
-        #        case COMVariantType::VT_BSTR:
-        #            return value.bStr();
-        #
-        #        case COMVariantType::VT_BOOL:
-        #            return value.boolean();
-        #
-        #        case COMVariantType::VT_DECIMAL:
-        #            return value.decimal();
-        #
-        #        case COMVariantType::VT_I1:
-        #            return value.byte();
-        #
-        #        case COMVariantType::VT_UI1:
-        #            return value.uInt();
-        #
-        #        case COMVariantType::VT_UI2:
-        #            return value.uShort();
-        #
-        #        case COMVariantType::VT_UI4:
-        #            return value.uLong();
-        #
-        #    }
-        #    return '';
-        #}
-      ENDSOURCE
-      SOURCE #writeError
-        #/// <summary>
-        #/// write a log of thrown errors by file being processed
-        #/// </summary>
-        #/// <param name="InRecord">
-        #/// contain a row of data that was thrown by error
-        #/// </param>
-        #/// <param name="_filename">
-        #/// the file name and path where the error happened
-        #/// </param>
-        #/// <remarks>
-        #///
-        #/// </remarks>
-        #/// <exception cref="Exception::Error">
-        #///
-        #/// </exception>
-        #
-        #void writeError(SysExcelCells  cells, int row,FileName _filename)
-        #{   /*
-        #    FileIoPermission    perm;
-        #    ErrorMSg            txt;
-        #    FilePath            fullPathName;
-        #    Filename            fileSplitPath;
-        #    Filename            fileExt;
-        #    Filename            filename;
-        #
-        #    SysExcelApplication     sysExcelApplication;
-        #    SysExcelWorkbooks       sysExcelWorkBooks;
-        #    SysExcelWorkbook        sysExcelWorkBook;
-        #    SysExcelWorkSheets      sysExcelWorkSheets;
-        #    SysExcelWorkSheet       sysExcelWorkSheet;
-        #    int                     i;
-        #    #define.dot('.')
-        #*/
-        #    ;
-        #return;
-        #
-        #
-        #/*
-        #
-        #    //if a error path has been set
-        #
-        #    [fileSplitPath, filename, fileExt] = fileNameSplit(_filename);
-        #
-        #    if(errorPath)
-        #        fullPathName = errorPath + #FilePathDelimiter +  'error_' + filename + #dot + fileExt;
-        #    //else
-        #    //    fullPathName = inboundPath + #FilePathDelimiter + 'error_' + filename + #dot + fileExt;
-        #
-        #    perm = new FileIoPermission(fullPathName , #io_append);
-        #    perm.assert();
-        #
-        #    // deal with excel
-        #    sysExcelApplication = SysExcelApplication::construct();
-        #    sysExcelWorkBooks   = sysExcelApplication.workbooks();
-        #    sysExcelWorkBook    = sysExcelWorkBooks.add();
-        #    sysExcelWorkSheets  = sysExcelWorkbook.worksheets();
-        #    sysExcelWorkSheet   = sysExcelWorkSheets.itemFromNum(1);
-        #    sysExcelApplication.visible(false);
-        #    // house keeping of error vars.
-        #    txt =   infolog.text();
-        #    infolog.clear(0);
-        #
-        #    for (i = 1; i <= lastCol ;i++ )
-        #    {
-        #        sysExcelWorkSheet.cells().item(row,i).value(this.value(cells.item(row,i).value()));
-        #    }
-        #    i = lastcol +1 ;
-        #
-        #
-        #    sysExcelWorkSheet.cells().item(row,i).value(txt);
-        #    // close excel operations
-        #    // Suppress the pop-up window:
-        #    // A file named foo already exists in this location. Do you want to replace it?
-        #    sysExcelApplication.displayAlerts(false);
-        #    // Save the Excel file
-        #    sysExcelWorkbook.saveAs(fileName);
-        #    sysExcelWorkBook.comObject().save();
-        #    sysExcelWorkBook.saved(true);
-        #    // Make sure you close the Excel application
-        #    // Especially if you run the job without showing Excel on the desktop
-        #    // (sysExcelApplication.visible(false))
-        #    sysExcelApplication.quit();
-        #
-        #
-        #    CodeAccessPermission::revertAssert();
-        #
-        #*/
-        #
-        #}
-      ENDSOURCE
-      SOURCE #description
-        #client server static classDescription description()
-        #{
-        #    return 'Import General Ledger from Excel';
         #}
       ENDSOURCE
       SOURCE #description
@@ -45978,7 +45600,7 @@ ENDFORM
     Origin              #{D26FE3A7-5D56-4A9C-ABAD-6C8D65AA3054}
   ENDPROPERTIES
   
-    PROJECTCLASS 
+    PROJECTCLASS ProjectNode
     GROUP #DataDictionary
       PROPERTIES
         Name                #DataDictionary
@@ -46304,7 +45926,7 @@ ENDFORM
         UTILTYPE 45
         UTILOBJECTID 1024700
         NODETYPE 329
-        NAME #triDM_ProcessStageData_AssetTable
+        NAME #triDM_ProcessStageData_ExcelToPrimary
       ENDNODE
       BEGINNODE
         FILETYPE 0
