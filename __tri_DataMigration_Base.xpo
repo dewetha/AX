@@ -26164,6 +26164,20 @@ Formatversion: 1
         #    // Create default location if using existing party
         #    LogisticsLocationDefault::createDefaultForExistingParty(this);
         #
+        #    //MOS_VendorCreation >>
+        #    VendTable::updateOnHold([this],
+        #                            CustVendorBlocked::All,
+        #                            DateTimeUtil::utcNow(),
+        #                            true,
+        #                            false,
+        #                            VendParameters::find().MOSHoldReasonCode);
+        #    if (this.isFormDataSource())
+        #    {
+        #        this.dataSource().reread();
+        #        this.dataSource().refresh();
+        #    }
+        #    //MOS_VendorCreation <<
+        #
         #    ttscommit;
         #}
       ENDSOURCE
@@ -37674,16 +37688,18 @@ Formatversion: 1
         #            tbl.triDMErrorMsg = infolog.text();
         #            tbl.triDMstatus = triDMstatus::error;
         #            tbl.update();
+        #            infolog.clear(0);
         #            ttsCommit;
+        #            recErrors++;
         #            ttsAbort;
-        #            throw error( infolog.text());
+        #
         #
         #        }
         #        ttsBegin;
         #        tbl.triDMstatus = triDMstatus::Imported;
         #        tbl.update();
         #        ttsCommit;
-        #
+        #        recfound++;
         #    }
         #}
       ENDSOURCE
@@ -37715,6 +37731,7 @@ Formatversion: 1
     PROPERTIES
       Name                #triDM_ProcessStageData_CustBank
       Extends             #triDM_ProcessStageData
+      Origin              #{596D397D-1DCE-4A58-A0B1-E9F005645B21}
     ENDPROPERTIES
     
     METHODS
@@ -37756,6 +37773,7 @@ Formatversion: 1
         #            recid = this.findPartyRecID(bank.triDMlegacyID);
         #
         #            bankAccount.initFromStageTable(bank);
+        #            bankAccount.insert();
         #
         #            //this.addAddress(bank);
         #
@@ -37766,10 +37784,19 @@ Formatversion: 1
         #            ttsBegin;
         #            bank.triDMErrorMsg = infolog.text();
         #            bank.triDMstatus = triDMstatus::error;
+        #            infolog.clear(0);
         #            bank.update();
         #            ttsCommit;
+        #            recErrors++;
         #            ttsAbort;
         #        }
+        #        ttsBegin;
+        #        bank.triDMstatus = triDMstatus::Imported;
+        #        bank.update();
+        #        ttsCommit;
+        #        recfound++;
+        #
+        #
         #    }
         #}
       ENDSOURCE
@@ -37799,6 +37826,7 @@ Formatversion: 1
     PROPERTIES
       Name                #triDM_ProcessStageData_Customers
       Extends             #triDM_ProcessStageData
+      Origin              #{DB3A5CDF-9DFE-4835-B32D-4F3E39DE3B33}
     ENDPROPERTIES
     
     METHODS
@@ -37844,10 +37872,7 @@ Formatversion: 1
         #            customer.insert();
         #            ttsCommit;
         #
-        #            ttsBegin;
-        #            tbl.triDMstatus = triDMstatus::Imported;
-        #            tbl.update();
-        #            ttsCommit;
+        #
         #
         #            this.addSimpleMainContactInfo(tbl, customer.Party);
         #        }
@@ -37856,15 +37881,17 @@ Formatversion: 1
         #            ttsBegin;
         #            tbl.triDMErrorMsg = infolog.text();
         #            tbl.triDMstatus = triDMstatus::error;
+        #            infolog.clear(0);
         #            tbl.update();
         #            ttsCommit;
+        #            recErrors++;
         #            ttsAbort;
         #        }
         #        ttsBegin;
         #        tbl.triDMstatus = triDMstatus::Imported;
         #        tbl.update();
         #        ttsCommit;
-        #
+        #        recfound++;
         #    }
         #
         #}
@@ -38028,6 +38055,7 @@ Formatversion: 1
         #
         #            addrStage.triDMstatus = triDMstatus::Imported;
         #            addrStage.update();
+        #            recfound++;
         #
         #        }
         #        catch (Exception::Error)
@@ -38036,9 +38064,11 @@ Formatversion: 1
         #            addrStage.triDMErrorMsg = infolog.text();
         #            addrStage.triDMstatus = triDMstatus::error;
         #            addrStage.update();
+        #            infolog.clear(0);
         #            ttsCommit;
+        #            recErrors++;
         #            ttsAbort;
-        #            throw error( infolog.text());
+        #
         #        }
         #        ttsCommit;
         #    }
@@ -38127,7 +38157,9 @@ Formatversion: 1
         #            bank.triDMErrorMsg = infolog.text();
         #            bank.triDMstatus = triDMstatus::error;
         #            bank.update();
+        #            infolog.clear(0);
         #            ttsCommit;
+        #            recErrors++;
         #            ttsAbort;
         #
         #        }
@@ -38136,7 +38168,7 @@ Formatversion: 1
         #        bank.triDMstatus = triDMstatus::Imported;
         #        bank.update();
         #        ttsCommit;
-        #
+        #        recFound++;
         #
         #    }
         #
@@ -38548,12 +38580,9 @@ Formatversion: 1
         #                vendor.Party = this.addPartyInfo(tbl.PartyType,tbl.Name,tbl.NameAlias,tbl.LanguageId );
         #                vendor.insert();
         #                ttsCommit;
-        #                /*
-        #                ttsBegin;
-        #                tbl.triDMstatus = triDMstatus::Imported;
-        #                tbl.update();
-        #                ttsCommit;
-        #                */
+        #
+        #
+        #
         #                this.addSimpleMainContactInfo(tbl,vendor.Party);
         #            }
         #            catch
@@ -38562,14 +38591,21 @@ Formatversion: 1
         #                tbl.triDMErrorMsg = infolog.text();
         #                tbl.triDMstatus = triDMstatus::error;
         #                tbl.update();
+        #                infolog.clear(0);
         #                ttsCommit;
+        #                recErrors++;
         #                ttsAbort;
         #            }
+        #
+        #            ttsBegin;
+        #            tbl.triDMstatus = triDMstatus::Imported;
+        #            tbl.update();
+        #            ttsCommit;
+        #            recFound++;
+        #
+        #
         #        }
-        #        ttsBegin;
-        #        tbl.triDMstatus = triDMstatus::Imported;
-        #        tbl.update();
-        #        ttsCommit;
+        #
         #
         #    }
         #
@@ -38763,7 +38799,16 @@ Formatversion: 1
         #    this.initMap(tableId);
         #    do
         #    {
-        #        this.mapExcelData(cells,row,tableId);
+        #        try
+        #        {
+        #            this.mapExcelData(cells,row,tableId);
+        #        }
+        #        catch
+        #        {
+        #            this.writeErrorToExcel( this.getWorkSheet(workbooks, wrkSheetNum),row,lastcol+1,infolog.text());
+        #            continue;
+        #        }
+        #
         #        row ++;
         #    }
         #    while (type != COMVariantType::VT_EMPTY);
@@ -38968,57 +39013,10 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #findPrimaryTableID
-        #public TableId findPrimaryTableID()
+      SOURCE #finalize
+        #void finalize()
         #{
-        #
-        #    triDMImport import;
-        #
-        #    select import where import.ImportType == importType;
-        #
-        #    return tableName2id( import.PrimaryTable );
-        #}
-      ENDSOURCE
-      SOURCE #mapExcelData
-        #protected void mapExcelData(SysExcelCells  _cells, int _row, TableId _tableId)
-        #{
-        #
-        #    MapEnumerator   en = new MapEnumerator(mapFields);
-        #    Common      anyTable;
-        #    DictTable   dictTable;
-        #    int         fieldid;
-        #    int         colId;
-        #
-        #    dictTable = new DictTable( _tableId );
-        #    anyTable = dictTable.makeRecord();
-        #
-        #    anyTable.clear();
-        #
-        #    while(en.moveNext())
-        #    {
-        #        fieldid = en.currentKey();
-        #        colId = en.currentValue();
-        #        if(en.currentValue() != 0)
-        #        {
-        #            anyTable.(en.currentKey()) = this.excelValue(_cells.item(_row,colId).value());
-        #        }
-        #    }
-        #    anyTable.insert();
-        #
-        #}
-      ENDSOURCE
-      SOURCE #getExcellCells
-        #public SysExcelCells getExcellCells(SysExcelWorkbooks  _workbooks, int  _wrkSheetNum)
-        #{
-        #    SysExcelCells           cells;
-        #    SysExcelWorksheet       worksheet;
-        #
-        #
-        #    worksheet = this.getWorkSheet(_workbooks, _wrkSheetNum);
-        #    cells     = worksheet.cells();
-        #
-        #
-        #    return cells;
+        #    info(strFmt('records processed:%1 records with errors:%2 records skipped:%3',recfound, recErrors,recSkipped));
         #}
       ENDSOURCE
       SOURCE #addAddress
@@ -39171,11 +39169,16 @@ Formatversion: 1
         #
         #    triDMImportType importType;
         #    Map             mapFields;
+        #    int             recErrors;
+        #    int             recFound;
+        #    int             recSkipped;
+        #
         #}
       ENDSOURCE
       SOURCE #CleanUp
         #abstract void CleanUp()
         #{
+        #   // use this to clean up processed data from staging tables
         #}
       ENDSOURCE
       SOURCE #closeExcel
@@ -39273,6 +39276,31 @@ Formatversion: 1
         #    return recId;
         #}
       ENDSOURCE
+      SOURCE #findPrimaryTableID
+        #public TableId findPrimaryTableID()
+        #{
+        #
+        #    triDMImport import;
+        #
+        #    select import where import.ImportType == importType;
+        #
+        #    return tableName2id( import.PrimaryTable );
+        #}
+      ENDSOURCE
+      SOURCE #getExcellCells
+        #public SysExcelCells getExcellCells(SysExcelWorkbooks  _workbooks, int  _wrkSheetNum)
+        #{
+        #    SysExcelCells           cells;
+        #    SysExcelWorksheet       worksheet;
+        #
+        #
+        #    worksheet = this.getWorkSheet(_workbooks, _wrkSheetNum);
+        #    cells     = worksheet.cells();
+        #
+        #
+        #    return cells;
+        #}
+      ENDSOURCE
       SOURCE #getWorkSheet
         #public SysExcelWorksheet getWorkSheet(SysExcelWorkbooks  workbooks, int wrkSheetNum)
         #{
@@ -39286,6 +39314,52 @@ Formatversion: 1
         #
         #
         #    return workSheet;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #initMap
+        #protected void initMap(TableId  _tableId)
+        #{
+        #    triDMFieldMapping   dmField;
+        #    mapFields = new  Map(Types::Integer,Types::Integer);
+        #
+        #
+        #
+        #    while select dmField where dmField.refTableName == tableId2name(_tableId)
+        #                            && dmField.FileCol > 0
+        #    {
+        #         mapFields.insert(dmField.refFieldID, dmField.FileCol);
+        #
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #mapExcelData
+        #protected void mapExcelData(SysExcelCells  _cells, int _row, TableId _tableId)
+        #{
+        #
+        #    MapEnumerator   en = new MapEnumerator(mapFields);
+        #    Common      anyTable;
+        #    DictTable   dictTable;
+        #    int         fieldid;
+        #    int         colId;
+        #
+        #    dictTable = new DictTable( _tableId );
+        #    anyTable = dictTable.makeRecord();
+        #
+        #    anyTable.clear();
+        #
+        #    while(en.moveNext())
+        #    {
+        #        fieldid = en.currentKey();
+        #        colId = en.currentValue();
+        #        if(en.currentValue() != 0)
+        #        {
+        #            anyTable.(en.currentKey()) = this.excelValue(_cells.item(_row,colId).value());
+        #        }
+        #    }
+        #
+        #    anyTable.insert();
+        #    recFound++;
         #
         #}
       ENDSOURCE
@@ -39374,6 +39448,15 @@ Formatversion: 1
         #}
         #
       ENDSOURCE
+      SOURCE #writeErrorToExcel
+        #protected void writeErrorToExcel( SysExcelWorkSheet excelWorkSheet, int _row, int _col, str _err)
+        #{
+        #    recErrors++;
+        #    excelWorkSheet.cells().item(_row,_col).value(_err);
+        #    infolog.clear(0);
+        #
+        #}
+      ENDSOURCE
       SOURCE #construct
         #public static triDM_ProcessStageData construct(triDMImportType _importType)
         #{
@@ -39429,22 +39512,6 @@ Formatversion: 1
         #
         #
         #
-        #}
-      ENDSOURCE
-      SOURCE #initMap
-        #protected void initMap(TableId  _tableId)
-        #{
-        #    triDMFieldMapping   dmField;
-        #    mapFields = new  Map(Types::Integer,Types::Integer);
-        #
-        #
-        #
-        #    while select dmField where dmField.refTableName == tableId2name(_tableId)
-        #                            && dmField.FileCol > 0
-        #    {
-        #         mapFields.insert(dmField.refFieldID, dmField.FileCol);
-        #
-        #    }
         #}
       ENDSOURCE
     ENDMETHODS
