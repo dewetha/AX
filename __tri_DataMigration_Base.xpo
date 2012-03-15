@@ -37561,6 +37561,13 @@ Formatversion: 1
         EnumValue           #17
       ENDPROPERTIES
       
+      #Budget
+      PROPERTIES
+        Name                #Budget
+        Label               #Budget
+        EnumValue           #18
+      ENDPROPERTIES
+      
     ENDTYPEELEMENTS
   ENDENUMTYPE
   
@@ -39635,12 +39642,12 @@ Formatversion: 1
         #    COMVariantType          type;
         #    TableId                 tableId;
         #
-        #    tableId = this.findPrimaryTableID();
+        #    //tableId = this.findPrimaryTableID();
         #    row = 2;
         #    workbooks = this.openExcel(inboundFile);
         #    cells = this.getExcellCells(workbooks,wrkSheetNum);
         #
-        #    this.initMap(tableId);
+        #    //this.initMap(tableId);
         #    do
         #    {
         #        try
@@ -39818,6 +39825,527 @@ Formatversion: 1
 
 ***Element: CLS
 
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_Budget unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triDM_ProcessStageData_Budget
+    PROPERTIES
+      Name                #triDM_ProcessStageData_Budget
+      Extends             #triDM_ProcessStageData
+      Origin              #{6E855035-8A7D-4FAD-97AA-9ED8E2F9B7A9}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #buildDimension
+        #public container buildDimension(SysExcelCells  cells, int row)
+        #{
+        #    container   con;
+        #    str         fullLedgerDim;
+        #    str         mainAccount;
+        #    int         numOfSeg ;
+        #    str         seg1;
+        #    str         seg2;
+        #    str         seg3;
+        #    str         seg4;
+        #    str         seg5;
+        #    str         seg6;
+        #    str         seg7;
+        #    int         intMainAcct;
+        #
+        #
+        #
+        #    mainAccount = this.Excelvalue(cells.item(row, #Account).value());
+        #    seg1 = this.Excelvalue(cells.item(row, #SubAccount).value());
+        #    seg2 = this.Excelvalue(cells.item(row, #LoB).value());
+        #    seg3 = this.Excelvalue(cells.item(row, #CBU).value());
+        #    seg4 = this.Excelvalue(cells.item(row, #Service).value());
+        #    seg5 = this.Excelvalue(cells.item(row, #Costcenter).value());
+        #    seg6 = this.Excelvalue(cells.item(row, #Client).value());
+        #    seg7 = this.Excelvalue(cells.item(row, #Program).value());
+        #
+        #    intMainAcct = str2int(mainAccount);
+        #
+        #
+        #    if (intMainAcct > 8999 || intMainAcct < 5000   )
+        #    {
+        #        fullLedgerDim = strFmt('%1', mainAccount);
+        #        numOfSeg = 0;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg ];
+        #    }
+        #    if (intMainAcct > 4999 && intMainAcct < 8000)
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3-%4-%5-%6-%7', mainAccount, seg1, seg2,seg3,seg4,seg6,seg7);
+        #        numOfSeg = 6;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg2,seg3,seg4,seg6,seg7 ];
+        #    }
+        #    if (intMainAcct > 7999 && intMainAcct < 9000  )
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3', mainAccount, seg1,seg5);
+        #        numOfSeg = 2;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg5 ];
+        #    }
+        #
+        #    return con;
+        #}
+      ENDSOURCE
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "Import Excel Journal data";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_Budget extends triDM_ProcessStageData
+        #{
+        #    Filename            inboundFile;
+        #    int                 startRow;
+        #    int                 lastCol;
+        #    int                 keyColumn;
+        #    int                 wrkSheetNum;
+        #    RecId               headRecID;
+        #
+        #    DialogField     dlgInboundFile;
+        #    DialogField     dlgLastCol;
+        #    DialogField     dlgstartRow;
+        #    DialogField     dlgkeyColumn;
+        #    DialogField     dlgWrkSheetNum;
+        #
+        #
+        #    #define.CurrentVersion(1)
+        #    #define.Version1(1)
+        #    #localmacro.CurrentList
+        #        inboundFile,
+        #        startRow,
+        #        lastCol,
+        #        keyColumn,
+        #        wrkSheetNum
+        #
+        #    #endmacro
+        #    // header
+        #
+        #    #define.Defaultdate(1)
+        #    #define.BudgetRegisterEntryStatus(2)
+        #    #define.OnetimeRevision(3)
+        #    #define.BudgetType(4)
+        #    #define.BudgetModel(5)
+        #    #define.Submodel(6)
+        #    #define.Type(7)
+        #    #define.BudgetCode(8)
+        #    #define.ReasonCode(9)
+        #    #define.Companyid(10)
+        #
+        #    // details
+        #    #define.CashFlowForecast(11 )
+        #    #define.Date(12 )
+        #    #define.Comment(13 )
+        #    #define.SalesTaxGroup(14 )
+        #    #define.Currency(15 )
+        #    #define.Amounttype(16 )
+        #    #define.Account(17 )
+        #    #define.SubAccount(18 )
+        #    #define.LoB(19 )
+        #    #define.CBU(20 )
+        #    #define.Service(21 )
+        #    #define.Client( 22)
+        #    #define.Program(23 )
+        #    #define.Costcenter(24 )
+        #
+        #
+        #    #define.P1Amount(25 )
+        #    #define.P1Qty(26 )
+        #    #define.P2Amount( 27)
+        #    #define.P2Qty(28 )
+        #    #define.P3Amount(29 )
+        #    #define.P3Qty(30 )
+        #    #define.P4Amount(31 )
+        #    #define.P4Qty(32 )
+        #    #define.P5Amount(33 )
+        #    #define.P5Qty(34 )
+        #    #define.P6Amount(35 )
+        #    #define.P6Qty(36 )
+        #    #define.P7Amount(37 )
+        #    #define.P7Qty(38 )
+        #    #define.P8Amount(39 )
+        #    #define.P8Qty(40 )
+        #    #define.P9Amount(41 )
+        #    #define.P9Qty(42 )
+        #    #define.P10Amount(43 )
+        #    #define.P10Qty(44 )
+        #    #define.P11Amount(45 )
+        #    #define.P11Qty(46 )
+        #    #define.P12Amount(47 )
+        #    #define.P12Qty(48 )
+        #    #define.P13Amount(49 )
+        #    #define.P13Qty(50 )
+        #
+        #
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #    //super();
+        #}
+      ENDSOURCE
+      SOURCE #createHeader
+        #private BudgetTransactionHeader createHeader(SysExcelCells  cells, int row)
+        #{
+        #    BudgetTransactionHeader BudgetTransactionHeader;
+        #
+        #
+        #    BudgetTransactionHeader.initValue();
+        #    BudgetTransactionHeader.Date = this.Excelvalue(cells.item(row, #Defaultdate).value());
+        #    BudgetTransactionHeader.TransactionStatus       =  this.Excelvalue(cells.item(row, #BudgetRegisterEntryStatus).value());
+        #    BudgetTransactionHeader.IsOneTimeAmendment      =  this.Excelvalue(cells.item(row, #OnetimeRevision).value());
+        #    BudgetTransactionHeader.BudgetTransactionType   =  this.Excelvalue(cells.item(row, #BudgetType).value());
+        #    BudgetTransactionHeader.BudgetModelId           =  this.Excelvalue(cells.item(row, #BudgetModel).value());
+        #    BudgetTransactionHeader.BudgetSubModelId        =  this.Excelvalue(cells.item(row, #Submodel).value());
+        #    BudgetTransactionHeader.BudgetModelType         =  this.Excelvalue(cells.item(row, #Type).value());
+        #    BudgetTransactionHeader.BudgetTransactionCode   =  this.Excelvalue(cells.item(row, #BudgetCode).value());
+        #    // todo lookup reason code
+        #    BudgetTransactionHeader.ReasonTableRef          =  this.Excelvalue(cells.item(row, #ReasonCode).value());
+        #    BudgetTransactionHeader.BudgetModelDataAreaId   =  this.Excelvalue(cells.item(row, #Companyid).value());
+        #
+        #    BudgetTransactionHeader.insert();
+        #
+        #    return BudgetTransactionHeader;
+        #}
+      ENDSOURCE
+      SOURCE #createLine
+        #private boolean createLine(SysExcelCells  _cells, int _row,  BudgetTransactionHeader    _header, int _Period )
+        #{
+        #    boolean                     ret;
+        #    BudgetTransactionLine       budgetTransactionLine;
+        #    Qty                         qty;
+        #    Amount                      amt;
+        #    container                   ledgerDimensions;
+        #
+        #
+        #    switch (_Period)
+        #    {
+        #        case 1:
+        #                qty = this.Excelvalue(_cells.item(_row, #P1Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P1Amount).value());
+        #            break;
+        #
+        #        case 2:
+        #                qty = this.Excelvalue(_cells.item(_row, #P2Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P2Amount).value());
+        #            break;
+        #        case 3:
+        #                qty = this.Excelvalue(_cells.item(_row, #P3Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P4Amount).value());
+        #            break;
+        #
+        #        case 4:
+        #                qty = this.Excelvalue(_cells.item(_row, #P4Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P4Amount).value());
+        #            break;
+        #        case 5:
+        #                qty = this.Excelvalue(_cells.item(_row, #P5Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P5Amount).value());
+        #            break;
+        #
+        #        case 6:
+        #                qty = this.Excelvalue(_cells.item(_row, #P6Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P6Amount).value());
+        #            break;
+        #        case 7:
+        #                qty = this.Excelvalue(_cells.item(_row, #P7Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P7Amount).value());
+        #            break;
+        #
+        #        case 8:
+        #                qty = this.Excelvalue(_cells.item(_row, #P8Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P8Amount).value());
+        #            break;
+        #        case 9:
+        #                qty = this.Excelvalue(_cells.item(_row, #P9Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P9Amount).value());
+        #            break;
+        #
+        #        case 10:
+        #                qty = this.Excelvalue(_cells.item(_row, #P10Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P10Amount).value());
+        #            break;
+        #        case 11:
+        #                qty = this.Excelvalue(_cells.item(_row, #P11Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P11Amount).value());
+        #            break;
+        #
+        #        case 12:
+        #                qty = this.Excelvalue(_cells.item(_row, #P12Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P12Amount).value());
+        #            break;
+        #        case 13 :
+        #                qty = this.Excelvalue(_cells.item(_row, #P13Qty).value());
+        #                amt = this.Excelvalue(_cells.item(_row, #P13Amount).value());
+        #            break;
+        #    }
+        #
+        #
+        #
+        #    budgetTransactionLine.initFromBudgetTransactionHeader(_header);
+        #
+        #    ledgerDimensions = this.buildDimension(_cells,_row);
+        #    budgetTransactionLine.LedgerDimension = AxdDimensionUtil::getLedgerAccountId(ledgerDimensions);
+        #    budgetTransactionLine.IncludeInCashFlowForecast = this.Excelvalue(_cells.item(_row, #CashFlowForecast).value());
+        #    budgetTransactionLine.Date = this.Excelvalue(_cells.item(_row, #Date).value());
+        #    budgetTransactionLine.Comment   = this.Excelvalue(_cells.item(_row, #Comment).value());
+        #    budgetTransactionLine.TaxGroup  = this.Excelvalue(_cells.item(_row, #SalesTaxGroup).value());
+        #    budgetTransactionLine.TransactionCurrency  = this.Excelvalue(_cells.item(_row, #Currency).value());
+        #    budgetTransactionLine.BudgetType    = this.Excelvalue(_cells.item(_row, #Amounttype).value());
+        #    budgetTransactionLine.AccountingCurrencyAmount = amt;
+        #    budgetTransactionLine.Quantity = qty;
+        #
+        #    budgetTransactionLine.insert();
+        #    ret = true;
+        #
+        #
+        #    return ret;
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dialog.addTabPage("@SYS345639");
+        #
+        #
+        #    dialog.addGroup('@SYS345624');
+        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
+        #
+        #    dialog.addGroup('@SYS345629');
+        #
+        #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,"Transactions Start on Row",'@SYS345631');
+        #    dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
+        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #    keyColumn   = dlgkeyColumn.value();
+        #    wrkSheetNum = dlgWrkSheetNum.value();
+        #    startRow    = dlgstartRow.value();
+        #    lastCol     = dlgLastCol.value();
+        #    inboundFile = dlgInboundFile.value();
+        #
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList ];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    SysExcelWorkbooks       workbooks;
+        #    SysExcelCells           cells;
+        #    int                     row;
+        #    COMVariantType          type;
+        #    int                     period;
+        #    BudgetTransactionHeader budgetTransactionHeader;
+        #
+        #    row = 2;
+        #    workbooks = this.openExcel(inboundFile);
+        #    cells = this.getExcellCells(workbooks,wrkSheetNum);
+        #
+        #
+        #    do
+        #    {
+        #        try
+        #        {
+        #            budgetTransactionHeader = this.createHeader(cells, row);
+        #            for (period = 1 ;period < 14 ; period++)
+        #            {
+        #                this.CreateLine(cells,row,budgetTransactionHeader, period );
+        #            }
+        #
+        #        }
+        #        catch
+        #        {
+        #            this.writeErrorToExcel( this.getWorkSheet(workbooks, wrkSheetNum),row,lastcol+1,infolog.text());
+        #            continue;
+        #        }
+        #
+        #        row ++;
+        #    }
+        #    while (type != COMVariantType::VT_EMPTY);
+        #
+        #    this.closeExcel(workbooks);
+        #    this.cleanUp();
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common anyStageTable)
+        #{
+        #    //super(anyStageTable);
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Import Info</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345639</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">File Locations Settings</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345624</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Inbound File</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345625</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Location of file to be Processed</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345626</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Settings</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@SYS345629</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Row to start processing data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345631</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345632</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column of data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345633</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Key Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345634</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Column used to determine the end of rows</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345636</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">WorkSheet</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@SYS345635</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identifiy the wrksheet to process</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345637</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+
+***Element: CLS
+
 ; Microsoft Dynamics AX Class: triDM_ProcessStageData unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
@@ -39830,18 +40358,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #BuildSegementContainer
-        #protected container BuildSegementContainer(str mainAccount)
-        #{
-        #    // incomplete needs desugn work
-        #    container    con;
-        #
-        #
-        #
-        #    return con;
-        #
-        #}
-      ENDSOURCE
       SOURCE #addAddress
         #public void addAddress(common _tbl)
         #{
@@ -39983,6 +40499,18 @@ Formatversion: 1
         #        dirParty.createOrUpdateContactInfo(contactView);
         #    }
         #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #BuildSegementContainer
+        #protected container BuildSegementContainer(str mainAccount)
+        #{
+        #    // incomplete needs desugn work
+        #    container    con;
+        #
+        #
+        #
+        #    return con;
         #
         #}
       ENDSOURCE
@@ -40355,6 +40883,7 @@ Formatversion: 1
         #        case triDMImportType::AssetTable        : triDM_ProcessStageData = new triDM_ProcessStageData_ExcelToPrimary();  break;
         #
         #        case triDMImportType::AssetJournal  : triDM_ProcessStageData = new triDM_ProcessStageData_AssetJournal(); break;
+        #        case triDMImportType::Budget        : triDM_ProcessStageData = new triDM_ProcessStageData_Budget();break ;
         #
         #    }
         #
@@ -41661,7 +42190,7 @@ ENDFORM
     #    static void utilScriptTableSpec(Args _args)
     #    {
     #        #define.NewLine('\n')
-    #        DictTable dictTable = new DictTable(tableNum(LedgerJournalTrans_Asset)); // change table name here
+    #        DictTable dictTable = new DictTable(tableNum(BudgetTransactionLine)); // change table name here
     #
     #        SysDictField                sysDictField;
     #        SysDictType                 sysDictType;
@@ -47042,6 +47571,13 @@ ENDFORM
         UTILOBJECTID 1024703
         NODETYPE 329
         NAME #triDM_ProcessStageData_AssetJournal
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024704
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_Budget
       ENDNODE
       BEGINNODE
         FILETYPE 0
