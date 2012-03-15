@@ -36436,6 +36436,15 @@ Formatversion: 1
           ExtendedDataType    #TableId
         ENDPROPERTIES
         
+      FIELD #triDMImportType
+        ENUM
+        PROPERTIES
+          Name                #triDMImportType
+          Table               #triDMFieldMapping
+          Origin              #{F21F5EE5-5EE8-4CF1-857E-A5A7484C1FC6}
+          EnumType            #triDMImportType
+        ENDPROPERTIES
+        
     ENDFIELDS
     GROUPS
       GROUP #AutoReport
@@ -36466,19 +36475,18 @@ Formatversion: 1
     FULLTEXTINDICES
     ENDFULLTEXTINDICES
     REFERENCES
-      REFERENCE #mainRel
+      REFERENCE #importRel
         PROPERTIES
-          Name                #mainRel
+          Name                #importRel
           Table               #triDMImport
-          EntityRelationshipRole  #foreignKey
           UseDefaultRoleNames #Yes
         ENDPROPERTIES
         
         FIELDREFERENCES
           REFERENCETYPE NORMAL
           PROPERTIES
-            Field               #refTableName
-            RelatedField        #StageTableName
+            Field               #triDMImportType
+            RelatedField        #ImportType
           ENDPROPERTIES
           
         ENDFIELDREFERENCES
@@ -38690,7 +38698,7 @@ Formatversion: 1
         #{
         #    ClassDescription ret;
         #
-        #    ret = "Import Asset Table data";
+        #    ret = "Import Excel data";
         #
         #    return ret;
         #}
@@ -38820,6 +38828,7 @@ Formatversion: 1
       SOURCE #setDefaultValues
         #public void setDefaultValues(Common _tbl)
         #{
+        #    /*
         #    triDMVendTable          tbl;
         #    NumberSeq                   numberSeq;
         #    NumberSequenceReference     numberSequenceReference;
@@ -38846,7 +38855,7 @@ Formatversion: 1
         #
         #
         #    _tbl.data(tbl);
-        #
+        #    */
         #}
       ENDSOURCE
       SOURCE #unpack
@@ -39001,6 +39010,814 @@ Formatversion: 1
 
 ***Element: CLS
 
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_ExcelToJournal unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triDM_ProcessStageData_ExcelToJournal
+    PROPERTIES
+      Name                #triDM_ProcessStageData_ExcelToJournal
+      Extends             #triDM_ProcessStageData
+      Origin              #{F53DB779-ED4E-41B4-8D3A-26333D0F60AB}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "Import Excel Journal data";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_ExcelToJournal extends triDM_ProcessStageData
+        #{
+        #    Filename            inboundFile;
+        #    int                 startRow;
+        #    int                 lastCol;
+        #    int                 keyColumn;
+        #    int                 wrkSheetNum;
+        #    LedgerJournalId     journalNum;
+        #
+        #    DialogField     dlgInboundFile;
+        #    DialogField     dlgLastCol;
+        #    DialogField     dlgstartRow;
+        #    DialogField     dlgkeyColumn;
+        #    DialogField     dlgWrkSheetNum;
+        #
+        #
+        #    #define.CurrentVersion(1)
+        #    #define.Version1(1)
+        #    #localmacro.CurrentList
+        #        inboundFile,
+        #        startRow,
+        #        lastCol,
+        #        keyColumn,
+        #        wrkSheetNum
+        #
+        #    #endmacro
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #    //super();
+        #}
+      ENDSOURCE
+      SOURCE #createHeader
+        #private LedgerJournalId createHeader(SysExcelCells  cells, int row)
+        #{
+        #    int                     i;
+        #    AxLedgerJournalTable    journalTable;
+        #    int                     endCol;
+        #
+        #    #define.Name(2);        // description
+        #    #define.JournalName(1)
+        #    #define.ReversingEntry(3)
+        #    #define.reversingDate(4)
+        #
+        #
+        #    journalTable = AxLedgerJournalTable::construct();
+        #
+        #
+        #    journalTable.parmName(this.excelValue(cells.item(row,#Name).value()));
+        #    journalTable.parmJournalName(this.Excelvalue( cells.item(row,#JournalName).value()));
+        #    journalTable.parmReverseEntry(this.Excelvalue( cells.item(row,#ReversingEntry).value()));
+        #    journalTable.parmReverseDate(this.Excelvalue( cells.item(row,#reversingDate).value()));
+        #
+        #   journalTable.save();
+        #
+        #    return journalTable.parmJournalNum() ;
+        #}
+      ENDSOURCE
+      SOURCE #createLine
+        #private boolean createLine(SysExcelCells  cells, int row,LedgerJournalId _journalNum )
+        #{
+        #    boolean                 ret;
+        #    AxLedgerJournalTrans    journalTrans;
+        #    container               ledgerDimensions;
+        #
+        #    /*
+        #
+        #
+        #    journalTrans = AxLedgerJournalTrans::construct();
+        #    journalTrans.parmJournalNum(_journalNum);
+        #
+        #    ledgerDimensions = this.buildDimension(cells,row);
+        #
+        #    journalTrans.parmLedgerDimension(AxdDimensionUtil::getLedgerAccountId(ledgerDimensions));
+        #
+        #    journalTrans.parmTxt(this.value(cells.item(row,#Description).value()) );
+        #    journalTrans.parmTransDate(this.value(cells.item(row,#transdate).value()));
+        #    journalTrans.parmAccountType(this.value(cells.item(row,#Accounttype).value()));
+        #
+        #    journalTrans.parmOffsetAccountType(LedgerJournalAcType::Ledger);
+        #    journalTrans.parmAmountCurCredit(this.value(cells.item(row,#Credit).value()));
+        #    journalTrans.parmAmountCurDebit(this.value(cells.item(row,#Debit).value()));
+        #    journalTrans.parmCurrencyCode(this.value(cells.item(row,#Currency).value()));
+        #    journalTrans.parmTaxGroup(this.value(cells.item(row,#Salestaxgroup).value()));
+        #    journalTrans.parmBankAccountId(this.value(cells.item(row,#Bankaccount).value()));
+        #    journalTrans.parmExchRate(this.value(cells.item(row,#Exchangerate).value()));
+        #
+        #
+        #    journalTrans.save();
+        #
+        #    */
+        #
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dialog.addTabPage("@SYS345639");
+        #
+        #
+        #    dialog.addGroup('@SYS345624');
+        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
+        #
+        #    dialog.addGroup('@SYS345629');
+        #
+        #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,"Transactions Start on Row",'@SYS345631');
+        #    dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
+        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #    keyColumn   = dlgkeyColumn.value();
+        #    wrkSheetNum = dlgWrkSheetNum.value();
+        #    startRow    = dlgstartRow.value();
+        #    lastCol     = dlgLastCol.value();
+        #    inboundFile = dlgInboundFile.value();
+        #
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList ];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    SysExcelWorkbooks       workbooks;
+        #    SysExcelCells           cells;
+        #    int                     row;
+        #    COMVariantType          type;
+        #    TableId                 tableId;
+        #
+        #    tableId = this.findPrimaryTableID();
+        #    row = 2;
+        #    workbooks = this.openExcel(inboundFile);
+        #    cells = this.getExcellCells(workbooks,wrkSheetNum);
+        #
+        #    this.initMap(tableId);
+        #    do
+        #    {
+        #        try
+        #        {
+        #            //this.mapExcelData(cells,row,tableId);
+        #            if (row == 2)
+        #            {
+        #                journalNum = this.createHeader(cells, row);
+        #            }
+        #            if (row == startrow)
+        #            {
+        #                this.CreateLine(cells,row,journalNum);
+        #            }
+        #
+        #        }
+        #        catch
+        #        {
+        #            this.writeErrorToExcel( this.getWorkSheet(workbooks, wrkSheetNum),row,lastcol+1,infolog.text());
+        #            continue;
+        #        }
+        #
+        #        row ++;
+        #    }
+        #    while (type != COMVariantType::VT_EMPTY);
+        #
+        #    this.closeExcel(workbooks);
+        #    this.cleanUp();
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common anyStageTable)
+        #{
+        #    //super(anyStageTable);
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Import Info</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345639</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">File Locations Settings</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345624</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Inbound File</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345625</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Location of file to be Processed</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345626</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Settings</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@SYS345629</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Row to start processing data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345631</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345632</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column of data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345633</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Key Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345634</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Column used to determine the end of rows</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345636</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">WorkSheet</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@SYS345635</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identifiy the wrksheet to process</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345637</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_AssetJournal unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triDM_ProcessStageData_AssetJournal
+    PROPERTIES
+      Name                #triDM_ProcessStageData_AssetJournal
+      Extends             #triDM_ProcessStageData
+      Origin              #{2968A2DD-41F0-4B46-9C10-AC2D2D304829}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #buildDimension
+        #public container buildDimension(SysExcelCells  cells, int row)
+        #{
+        #    container   con;
+        #    str         fullLedgerDim;
+        #    str         mainAccount;
+        #    int         numOfSeg ;
+        #    str         seg1;
+        #    str         seg2;
+        #    str         seg3;
+        #    str         seg4;
+        #    str         seg5;
+        #    str         seg6;
+        #    str         seg7;
+        #    int         intMainAcct;
+        #
+        #    mainAccount = this.Excelvalue(cells.item(row, #Account).value());
+        #    seg1 = this.Excelvalue(cells.item(row, #Dim_1).value());
+        #    seg2 = this.Excelvalue(cells.item(row, #Dim_2).value());
+        #    seg3 = this.Excelvalue(cells.item(row, #Dim_3).value());
+        #    seg4 = this.Excelvalue(cells.item(row, #Dim_4).value());
+        #    seg5 = this.Excelvalue(cells.item(row, #Dim_5).value());
+        #    seg6 = this.Excelvalue(cells.item(row, #Dim_6).value());
+        #    seg7 = this.Excelvalue(cells.item(row, #Dim_7).value());
+        #
+        #    intMainAcct = str2int(mainAccount);
+        #
+        #
+        #    if (intMainAcct > 8999 || intMainAcct < 5000   )
+        #    {
+        #        fullLedgerDim = strFmt('%1', mainAccount);
+        #        numOfSeg = 0;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg ];
+        #    }
+        #    if (intMainAcct > 4999 && intMainAcct < 8000)
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3-%4-%5-%6-%7', mainAccount, seg1, seg2,seg3,seg4,seg6,seg7);
+        #        numOfSeg = 6;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg2,seg3,seg4,seg6,seg7 ];
+        #    }
+        #    if (intMainAcct > 7999 && intMainAcct < 9000  )
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3', mainAccount, seg1,seg5);
+        #        numOfSeg = 2;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg5 ];
+        #    }
+        #
+        #    return con;
+        #}
+      ENDSOURCE
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "Import Excel Journal data";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_AssetJournal extends triDM_ProcessStageData
+        #{
+        #    Filename            inboundFile;
+        #    int                 startRow;
+        #    int                 lastCol;
+        #    int                 keyColumn;
+        #    int                 wrkSheetNum;
+        #    LedgerJournalId     journalNum;
+        #
+        #    DialogField     dlgInboundFile;
+        #    DialogField     dlgLastCol;
+        #    DialogField     dlgstartRow;
+        #    DialogField     dlgkeyColumn;
+        #    DialogField     dlgWrkSheetNum;
+        #
+        #
+        #    #define.CurrentVersion(1)
+        #    #define.Version1(1)
+        #    #localmacro.CurrentList
+        #        inboundFile,
+        #        startRow,
+        #        lastCol,
+        #        keyColumn,
+        #        wrkSheetNum
+        #
+        #    #endmacro
+        #
+        #      // trans
+        #    #define.TransDate(1)
+        #    #define.Description(2)
+        #    #define.Debit(3)
+        #    #define.Credit(4)
+        #    #define.Accounttype(5)
+        #    #define.Account(6)
+        #    #define.Dim_1(7)
+        #    #define.Dim_2(8)
+        #    #define.Dim_3(9)
+        #    #define.Dim_4(10)
+        #    #define.Dim_5(11)
+        #    #define.Dim_6(12)
+        #    #define.Dim_7(13)
+        #    #define.ReleaseDate(14)
+        #    #define.CompanyAccounts(15)
+        #    #define.OffsetCompanyAccounts(16)
+        #    #define.Offsettransactiontext(17)
+        #    #define.ReasonCode(18)
+        #    #define.reasonComment(19)
+        #    #define.Exchangerate(20)
+        #    #define.Valuemodel(21)
+        #    #define.Fixedassetnumber(22)
+        #    #define.Transactiontype(23)
+        #    #define.Depreciationbook(24)
+        #
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #    //super();
+        #}
+      ENDSOURCE
+      SOURCE #createHeader
+        #private LedgerJournalId createHeader(SysExcelCells  cells, int row)
+        #{
+        #    int                     i;
+        #    AxLedgerJournalTable    journalTable;
+        #    int                     endCol;
+        #
+        #    #define.Name(2);        // description
+        #    #define.JournalName(1)
+        #    #define.ReversingEntry(3)
+        #    #define.reversingDate(4)
+        #
+        #
+        #    journalTable = AxLedgerJournalTable::construct();
+        #
+        #
+        #    journalTable.parmName(this.excelValue(cells.item(row,#Name).value()));
+        #    journalTable.parmJournalName(this.Excelvalue( cells.item(row,#JournalName).value()));
+        #    journalTable.parmReverseEntry(this.Excelvalue( cells.item(row,#ReversingEntry).value()));
+        #    journalTable.parmReverseDate(this.Excelvalue( cells.item(row,#reversingDate).value()));
+        #
+        #   journalTable.save();
+        #
+        #    return journalTable.parmJournalNum() ;
+        #}
+      ENDSOURCE
+      SOURCE #createLine
+        #private boolean createLine(SysExcelCells  cells, int row,LedgerJournalId _journalNum )
+        #{
+        #    boolean                     ret;
+        #    AxLedgerJournalTrans        journalTrans;
+        #    container                   ledgerDimensions;
+        #    LedgerJournalTrans_Asset    asset;
+        #    /*
+        #    #define.ReasonCode(18)
+        #    #define.reasonComment(19)
+        #    */
+        #
+        #
+        #    journalTrans = AxLedgerJournalTrans::construct();
+        #    journalTrans.parmJournalNum(_journalNum);
+        #
+        #    ledgerDimensions = this.buildDimension(cells,row);
+        #
+        #    journalTrans.parmTxt(this.Excelvalue(cells.item(row,#Description).value()) );
+        #    journalTrans.parmTransDate(this.Excelvalue(cells.item(row,#transdate).value()));
+        #    journalTrans.parmAccountType(LedgerJournalAcType::FixedAssets);
+        #    journalTrans.parmLedgerDimension(this.Excelvalue(cells.item(row,#account).value()));
+        #    journalTrans.parmCompany(this.Excelvalue(cells.item(row,#CompanyAccounts).value()));
+        #
+        #
+        #    journalTrans.parmOffsetAccountType(this.Excelvalue(cells.item(row,#Accounttype).value()));
+        #    journalTrans.parmOffsetLedgerDimension(AxdDimensionUtil::getLedgerAccountId(ledgerDimensions));
+        #    journalTrans.parmOffsetTxt(this.Excelvalue(cells.item(row,#Offsettransactiontext).value()));
+        #    journalTrans.parmOffsetCompany(this.Excelvalue(cells.item(row,#OffsetCompanyAccounts).value()));
+        #
+        #    journalTrans.parmAmountCurCredit(this.Excelvalue(cells.item(row,#Credit).value()));
+        #    journalTrans.parmAmountCurDebit(this.Excelvalue(cells.item(row,#Debit).value()));
+        #    //journalTrans.parmCurrencyCode(this.Excelvalue(cells.item(row,#Currency).value()));
+        #    //journalTrans.parmTaxGroup(this.Excelvalue(cells.item(row,#Salestaxgroup).value()));
+        #    journalTrans.parmExchRate(this.Excelvalue(cells.item(row,#Exchangerate).value()));
+        #
+        #    journalTrans.parmReleaseDate(this.Excelvalue(cells.item(row,#ReleaseDate).value()));
+        #
+        #    journalTrans.save();
+        #
+        #
+        #    asset.initValue();
+        #    asset.AssetId = this.Excelvalue(cells.item(row,#Fixedassetnumber).value());
+        #    asset.BookId = this.Excelvalue(cells.item(row,#Depreciationbook).value());
+        #    asset.BudgetModel = this.Excelvalue(cells.item(row,#Valuemodel).value());
+        #    asset.TransType = this.Excelvalue(cells.item(row,#Transactiontype).value());
+        #    asset.RefRecId = journalTrans.parmRecId();
+        #    asset.insert();
+        #
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dialog.addTabPage("@SYS345639");
+        #
+        #
+        #    dialog.addGroup('@SYS345624');
+        #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
+        #
+        #    dialog.addGroup('@SYS345629');
+        #
+        #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,"Transactions Start on Row",'@SYS345631');
+        #    dlgLastCol      = dialog.addFieldValue(extendedtypestr(integer),lastCol,'@SYS345632','@SYS345633');
+        #    dlgkeyColumn    = dialog.addFieldValue(extendedtypestr(integer),keyColumn,'@SYS345634','@SYS345636');
+        #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #    keyColumn   = dlgkeyColumn.value();
+        #    wrkSheetNum = dlgWrkSheetNum.value();
+        #    startRow    = dlgstartRow.value();
+        #    lastCol     = dlgLastCol.value();
+        #    inboundFile = dlgInboundFile.value();
+        #
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList ];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    SysExcelWorkbooks       workbooks;
+        #    SysExcelCells           cells;
+        #    int                     row;
+        #    COMVariantType          type;
+        #    TableId                 tableId;
+        #
+        #    tableId = this.findPrimaryTableID();
+        #    row = 2;
+        #    workbooks = this.openExcel(inboundFile);
+        #    cells = this.getExcellCells(workbooks,wrkSheetNum);
+        #
+        #    this.initMap(tableId);
+        #    do
+        #    {
+        #        try
+        #        {
+        #            //this.mapExcelData(cells,row,tableId);
+        #            if (row == 2)
+        #            {
+        #                journalNum = this.createHeader(cells, row);
+        #            }
+        #            if (row == startrow)
+        #            {
+        #                this.CreateLine(cells,row,journalNum);
+        #            }
+        #
+        #        }
+        #        catch
+        #        {
+        #            this.writeErrorToExcel( this.getWorkSheet(workbooks, wrkSheetNum),row,lastcol+1,infolog.text());
+        #            continue;
+        #        }
+        #
+        #        row ++;
+        #    }
+        #    while (type != COMVariantType::VT_EMPTY);
+        #
+        #    this.closeExcel(workbooks);
+        #    this.cleanUp();
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common anyStageTable)
+        #{
+        #    //super(anyStageTable);
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Import Info</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345639</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">File Locations Settings</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345624</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Inbound File</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345625</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Location of file to be Processed</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345626</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Settings</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@SYS345629</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Row to start processing data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345631</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345632</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Last Column of data</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345633</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Key Column</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345634</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Column used to determine the end of rows</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345636</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">WorkSheet</Table:Field>
+    <Table:Field name="Description">tribridge</Table:Field>
+    <Table:Field name="LabelId">@SYS345635</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">Identifiy the wrksheet to process</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@SYS345637</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+
+***Element: CLS
+
 ; Microsoft Dynamics AX Class: triDM_ProcessStageData unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
@@ -39013,10 +39830,16 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #finalize
-        #void finalize()
+      SOURCE #BuildSegementContainer
+        #protected container BuildSegementContainer(str mainAccount)
         #{
-        #    info(strFmt('records processed:%1 records with errors:%2 records skipped:%3',recfound, recErrors,recSkipped));
+        #    // incomplete needs desugn work
+        #    container    con;
+        #
+        #
+        #
+        #    return con;
+        #
         #}
       ENDSOURCE
       SOURCE #addAddress
@@ -39248,6 +40071,49 @@ Formatversion: 1
         #
         #    }
         #    return '';
+        #}
+      ENDSOURCE
+      SOURCE #finalize
+        #void finalize()
+        #{
+        #    info(strFmt('records processed:%1 records with errors:%2 records skipped:%3',recfound, recErrors,recSkipped));
+        #}
+      ENDSOURCE
+      SOURCE #FindDimension
+        #private container FindDimension(MainAccount mainAccount,
+        #                                 container  segments,
+        #                                 int        numOfSeg)
+        #{
+        #
+        #    container   con;
+        #    str         fullLedgerDim;
+        #    int         i ;
+        #    int         offset = 3;
+        #
+        #    fullLedgerDim = strFmt('%1', mainAccount);
+        #
+        #
+        #    for (i=1; i <= numOfSeg ; i++ )
+        #    {
+        #
+        #        fullLedgerDim = strFmt('-%1', conPeek(segments, i));
+        #
+        #    }
+        #
+        #    con = conPoke(con,1,fullLedgerDim);
+        #    con = conPoke(con,2,numOfSeg);
+        #
+        #    for (i=1; i <= numOfSeg ; i++ )
+        #    {
+        #        offset = offset + i;
+        #
+        #        con = conPoke(con,offset,strFmt('-%1', conPeek(segments, i)));
+        #
+        #
+        #    }
+        #    return con;
+        #
+        #
         #}
       ENDSOURCE
       SOURCE #findPartyRecID
@@ -39487,6 +40353,8 @@ Formatversion: 1
         #        case triDMImportType::AssetBookTable    :
         #        case triDMImportType::assetDepProfile   :
         #        case triDMImportType::AssetTable        : triDM_ProcessStageData = new triDM_ProcessStageData_ExcelToPrimary();  break;
+        #
+        #        case triDMImportType::AssetJournal  : triDM_ProcessStageData = new triDM_ProcessStageData_AssetJournal(); break;
         #
         #    }
         #
@@ -40149,6 +41017,13 @@ FORM #triDMmapFields
       #{
       #}
     ENDSOURCE
+    SOURCE #init
+      #public void init()
+      #{
+      #    super();
+      #
+      #}
+    ENDSOURCE
   ENDMETHODS
   OBJECTBANK
     PROPERTIES
@@ -40536,6 +41411,8 @@ FORM #triDMDataMigration
           Name                #triDMmapFileds
           ElementPosition     #1431655764
           HierarchyParent     #ButtonGroup1
+          SaveRecord          #No
+          MultiSelect         #No
           DataSource          #triDMImport
           MenuItemName        #triDMmapFileds
         ENDPROPERTIES
@@ -40956,10 +41833,38 @@ ENDFORM
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::AssetTable;
+    #      import.ImportType       = triDMImportType::AssetBook;
+    #    import.ImportDesc       = 'Import Asset Book';
+    #    import.StageTableName   = '';
+    #    import.PrimaryTable     = 'AssetBook' ;
+    #    import.insert();
+    #    import.clear();
+    #
+    #    import.ImportType       = triDMImportType::AssetBookTable ;
+    #    import.ImportDesc       = 'Import Asset Book Table';
+    #    import.StageTableName   = '';
+    #    import.PrimaryTable     = 'AssetBookTable' ;
+    #    import.insert();
+    #    import.clear();
+    #
+    #    import.ImportType       = triDMImportType::AssetTable ;
     #    import.ImportDesc       = 'Import Asset Table';
     #    import.StageTableName   = '';
-    #    import.PrimaryTable     = 'Asset Table';
+    #    import.PrimaryTable     = 'AssetTable' ;
+    #    import.insert();
+    #    import.clear();
+    #
+    #    import.ImportType       = triDMImportType::assetDepProfile ;
+    #    import.ImportDesc       = 'Import Asset Depriciation file';
+    #    import.StageTableName   = '';
+    #    import.PrimaryTable     = 'AssetDepreciationProfile' ;
+    #    import.insert();
+    #    import.clear();
+    #
+    #    import.ImportType       = triDMImportType::AssetJournal ;
+    #    import.ImportDesc       = 'Import Asset Journal';
+    #    import.StageTableName   = '';
+    #    import.PrimaryTable     = '' ;
     #    import.insert();
     #    import.clear();
     #
@@ -40987,7 +41892,7 @@ ENDFORM
     
     METHODS
       SOURCE #buildDimension
-        #private container buildDimension(SysExcelCells  cells, int row)
+        #public container buildDimension(SysExcelCells  cells, int row)
         #{
         #    container   con;
         #    str         fullLedgerDim;
@@ -41000,6 +41905,7 @@ ENDFORM
         #    str         seg5;
         #    str         seg6;
         #    str         seg7;
+        #    int         intMainAcct;
         #
         #    mainAccount = this.value(cells.item(row, #Account).value());
         #    seg1 = this.value(cells.item(row, #Dim_1).value());
@@ -41011,13 +41917,37 @@ ENDFORM
         #    seg7 = this.value(cells.item(row, #Dim_7).value());
         #
         #
-        #    fullLedgerDim = strFmt('%1-%2-%3-%4-%5-%6-%7-%8', mainAccount, seg1, seg2,seg3,seg4,seg5,seg6,seg7);
         #
-        #    con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg2,seg3,seg4,seg5,seg6,seg7 ];
+        #    intMainAcct = str2int(mainAccount);
+        #
+        #
+        #    if (intMainAcct > 8999 || intMainAcct < 5000   )
+        #    {
+        #        fullLedgerDim = strFmt('%1', mainAccount);
+        #        numOfSeg = 0;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg ];
+        #    }
+        #    if (intMainAcct > 4999 && intMainAcct < 8000)
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3-%4-%5-%6-%7', mainAccount, seg1, seg2,seg3,seg4,seg6,seg7);
+        #        numOfSeg = 6;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg2,seg3,seg4,seg6,seg7 ];
+        #    }
+        #    if (intMainAcct > 7999 && intMainAcct < 9000  )
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3', mainAccount, seg1,seg5);
+        #        numOfSeg = 2;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg5 ];
+        #    }
+        #
+        #
         #
         #    return con;
         #
         #}
+        #
+        #
+        #
       ENDSOURCE
       SOURCE #canGoBatch
         #public boolean canGoBatch()
@@ -41060,6 +41990,7 @@ ENDFORM
         #    int         keyColumn;
         #    int         wrkSheetNum;
         #    Filename    inboundFile;
+        #    LedgerJournalId     journalNum;
         #
         #    StartDateTime processStart;
         #    StartDateTime processEnd;
@@ -41116,7 +42047,7 @@ ENDFORM
         #    processEnd = DateTimeUtil::getSystemDateTime();
         #    info(this.caption());
         #    info(strfmt('process started %1 || stopped at %2',processStart,processend));
-        #    Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
+        #    //Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
         #
         #}
       ENDSOURCE
@@ -41147,7 +42078,7 @@ ENDFORM
         #}
       ENDSOURCE
       SOURCE #createLine
-        #private boolean createLine(SysExcelCells  cells, int row,LedgerJournalId journalNum )
+        #private boolean createLine(SysExcelCells  cells, int row,LedgerJournalId _journalNum )
         #{
         #    boolean                 ret;
         #    AxLedgerJournalTrans    journalTrans;
@@ -41157,7 +42088,7 @@ ENDFORM
         #
         #
         #    journalTrans = AxLedgerJournalTrans::construct();
-        #    journalTrans.parmJournalNum(journalNum);
+        #    journalTrans.parmJournalNum(_journalNum);
         #
         #    ledgerDimensions = this.buildDimension(cells,row);
         #
@@ -41256,7 +42187,7 @@ ENDFORM
         #boolean processData(SysExcelCells  cells, int row)
         #{
         #    boolean             ret;
-        #    LedgerJournalId     journalNum;
+        #
         #
         #    if (row == 1 || row == 4)
         #    {
@@ -41268,7 +42199,7 @@ ENDFORM
         #        journalNum = this.createHeader(cells, row);
         #    }
         #
-        #    if (row > 5)
+        #    if (row > 4)
         #    {
         #        ret = this.CreateLine(cells,row,journalNum);
         #    }
@@ -41296,7 +42227,8 @@ ENDFORM
         #    SysExcelWorksheet       worksheet;
         #    SysExcelCells           cells;
         #    COMVariantType          type;
-        #    ExecutePermission         perm;
+        #    ExecutePermission       perm;
+        #    boolean                 isLast;
         #
         #    boolean                 isFirstRow = true;
         #    int                     row = 0 ;
@@ -41343,11 +42275,31 @@ ENDFORM
         #            this.writeError(cells,row,filename);
         #            errorRecs = errorRecs + 1;
         #        }
-        #        row++;
+        #
         #        // see if this is the last row
+        #
+        #
         #        type = cells.item(row, keyColumn).value().variantType();
+        #        if (row < 5)
+        #        {
+        #            isLast = true;
+        #        }
+        #        else
+        #        {
+        #            if (type != COMVariantType::VT_EMPTY)
+        #            {
+        #                isLast = false;
+        #            }
+        #            else
+        #            {
+        #                isLast = true;
+        #            }
+        #
+        #        }
+        #        row++;
         #    }
-        #    while (type != COMVariantType::VT_EMPTY);
+        #    while (isLast); //   type != COMVariantType::VT_EMPTY);
+        #
         #    application.quit();
         #    this.close();
         #}
@@ -41774,6 +42726,7 @@ ENDFORM
         #    str         seg5;
         #    str         seg6;
         #    str         seg7;
+        #    int         intMainAcct;
         #
         #    mainAccount = this.value(cells.item(row, #Account).value());
         #    seg1 = this.value(cells.item(row, #Dim_1).value());
@@ -41785,9 +42738,29 @@ ENDFORM
         #    seg7 = this.value(cells.item(row, #Dim_7).value());
         #
         #
-        #    fullLedgerDim = strFmt('%1-%2-%3-%4-%5-%6-%7-%8', mainAccount, seg1, seg2,seg3,seg4,seg5,seg6,seg7);
+        #    intMainAcct = str2int(mainAccount);
         #
-        #    con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg2,seg3,seg4,seg5,seg6,seg7 ];
+        #
+        #    if (intMainAcct > 8999 || intMainAcct < 5000   )
+        #    {
+        #        fullLedgerDim = strFmt('%1', mainAccount);
+        #        numOfSeg = 0;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg ];
+        #    }
+        #    if (intMainAcct > 4999 && intMainAcct < 8000)
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3-%4-%5-%6-%7', mainAccount, seg1, seg2,seg3,seg4,seg6,seg7);
+        #        numOfSeg = 6;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg2,seg3,seg4,seg6,seg7 ];
+        #    }
+        #    if (intMainAcct > 7999 && intMainAcct < 9000  )
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3', mainAccount, seg1,seg5);
+        #        numOfSeg = 2;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg5 ];
+        #    }
+        #
+        #
         #
         #    return con;
         #
@@ -41834,6 +42807,8 @@ ENDFORM
         #    int         keyColumn;
         #    int         wrkSheetNum;
         #    Filename    inboundFile;
+        #    LedgerJournalId     journalNum;
+        #
         #
         #    StartDateTime processStart;
         #    StartDateTime processEnd;
@@ -41896,7 +42871,7 @@ ENDFORM
         #    processEnd = DateTimeUtil::getSystemDateTime();
         #    info(this.caption());
         #    info(strfmt('process started %1 || stopped at %2',processStart,processend));
-        #    Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
+        #    //Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
         #
         #}
       ENDSOURCE
@@ -41927,14 +42902,14 @@ ENDFORM
         #}
       ENDSOURCE
       SOURCE #createLine
-        #private boolean createLine(SysExcelCells  cells, int row,LedgerJournalId journalNum )
+        #private boolean createLine(SysExcelCells  cells, int row,LedgerJournalId _journalNum )
         #{
         #    boolean                 ret;
         #    AxLedgerJournalTrans    journalTrans;
         #    container               ledgerDimensions;
         #
         #    journalTrans = AxLedgerJournalTrans::construct();
-        #    journalTrans.parmJournalNum(journalNum);
+        #    journalTrans.parmJournalNum(_journalNum);
         #
         #    ledgerDimensions = this.buildDimension(cells,row);
         #
@@ -42042,7 +43017,7 @@ ENDFORM
         #boolean processData(SysExcelCells  cells, int row)
         #{
         #    boolean             ret;
-        #    LedgerJournalId     journalNum;
+        #
         #
         #    if (row == 1 || row == 4)
         #    {
@@ -42054,7 +43029,7 @@ ENDFORM
         #        journalNum = this.createHeader(cells, row);
         #    }
         #
-        #    if (row > 5)
+        #    if (row > 4)
         #    {
         #        ret = this.CreateLine(cells,row,journalNum);
         #    }
@@ -42082,8 +43057,8 @@ ENDFORM
         #    SysExcelWorksheet       worksheet;
         #    SysExcelCells           cells;
         #    COMVariantType          type;
-        #    ExecutePermission         perm;
-        #
+        #    ExecutePermission       perm;
+        #    boolean                 isLast;
         #    boolean                 isFirstRow = true;
         #    int                     row = 0 ;
         #    ;
@@ -42131,11 +43106,29 @@ ENDFORM
         #            this.writeError(cells,row,filename);
         #            errorRecs = errorRecs + 1;
         #        }
-        #        row++;
-        #        // see if this is the last row
+        #           // see if this is the last row
+        #
+        #
         #        type = cells.item(row, keyColumn).value().variantType();
+        #        if (row < 5)
+        #        {
+        #            isLast = true;
+        #        }
+        #        else
+        #        {
+        #            if (type != COMVariantType::VT_EMPTY)
+        #            {
+        #                isLast = false;
+        #            }
+        #            else
+        #            {
+        #                isLast = true;
+        #            }
+        #
+        #        }
+        #        row++;
         #    }
-        #    while (type != COMVariantType::VT_EMPTY);
+        #    while (isLast); //   type != COMVariantType::VT_EMPTY);
         #    application.quit();
         #    this.close();
         #}
@@ -42560,6 +43553,7 @@ ENDFORM
         #    str         seg5;
         #    str         seg6;
         #    str         seg7;
+        #    int         intMainAcct;
         #
         #    mainAccount = this.value(cells.item(row, #Account).value());
         #    seg1 = this.value(cells.item(row, #Dim_1).value());
@@ -42571,9 +43565,29 @@ ENDFORM
         #    seg7 = this.value(cells.item(row, #Dim_7).value());
         #
         #
-        #    fullLedgerDim = strFmt('%1-%2-%3-%4-%5-%6-%7-%8', mainAccount, seg1, seg2,seg3,seg4,seg5,seg6,seg7);
+        #    intMainAcct = str2int(mainAccount);
         #
-        #    con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg2,seg3,seg4,seg5,seg6,seg7 ];
+        #
+        #    if (intMainAcct > 8999 || intMainAcct < 5000   )
+        #    {
+        #        fullLedgerDim = strFmt('%1', mainAccount);
+        #        numOfSeg = 0;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg ];
+        #    }
+        #    if (intMainAcct > 4999 && intMainAcct < 8000)
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3-%4-%5-%6-%7', mainAccount, seg1, seg2,seg3,seg4,seg6,seg7);
+        #        numOfSeg = 6;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg2,seg3,seg4,seg6,seg7 ];
+        #    }
+        #    if (intMainAcct > 7999 && intMainAcct < 9000  )
+        #    {
+        #        fullLedgerDim = strFmt('%1-%2-%3', mainAccount, seg1,seg5);
+        #        numOfSeg = 2;
+        #        con = [fullLedgerDim,mainAccount,numOfSeg, seg1, seg5 ];
+        #    }
+        #
+        #
         #
         #    return con;
         #
@@ -42620,6 +43634,8 @@ ENDFORM
         #    int         keyColumn;
         #    int         wrkSheetNum;
         #    Filename    inboundFile;
+        #    LedgerJournalId     journalNum;
+        #
         #
         #    StartDateTime processStart;
         #    StartDateTime processEnd;
@@ -42681,7 +43697,7 @@ ENDFORM
         #    processEnd = DateTimeUtil::getSystemDateTime();
         #    info(this.caption());
         #    info(strfmt('process started %1 || stopped at %2',processStart,processend));
-        #    Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
+        #   // Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
         #
         #}
       ENDSOURCE
@@ -42712,14 +43728,14 @@ ENDFORM
         #}
       ENDSOURCE
       SOURCE #createLine
-        #private boolean createLine(SysExcelCells  cells, int row,LedgerJournalId journalNum )
+        #private boolean createLine(SysExcelCells  cells, int row,LedgerJournalId _journalNum )
         #{
         #    boolean                 ret = true;
         #    AxLedgerJournalTrans    journalTrans;
         #    container               ledgerDimensions;
         #
         #    journalTrans = AxLedgerJournalTrans::construct();
-        #    journalTrans.parmJournalNum(journalNum);
+        #    journalTrans.parmJournalNum(_journalNum);
         #
         #    ledgerDimensions = this.buildDimension(cells,row);
         #
@@ -42822,7 +43838,7 @@ ENDFORM
         #boolean processData(SysExcelCells  cells, int row)
         #{
         #    boolean             ret;
-        #    LedgerJournalId     journalNum;
+        #
         #
         #    if (row == 1 || row == 4)
         #    {
@@ -42834,7 +43850,7 @@ ENDFORM
         #        journalNum = this.createHeader(cells, row);
         #    }
         #
-        #    if (row > 5)
+        #    if (row > 4)
         #    {
         #        ret = this.CreateLine(cells,row,journalNum);
         #    }
@@ -42863,13 +43879,12 @@ ENDFORM
         #    SysExcelCells           cells;
         #    COMVariantType          type;
         #    ExecutePermission         perm;
-        #
+        #    boolean                 isLast;
         #    boolean                 isFirstRow = true;
         #    int                     row = 0 ;
         #    ;
         #
-        #
-        #   // perm = new FileIoPermission(filename, #io_read);
+        #    // perm = new FileIoPermission(filename, #io_read);
         #    perm = new ExecutePermission();
         #    perm.assert();
         #
@@ -42911,11 +43926,30 @@ ENDFORM
         #            this.writeError(cells,row,filename);
         #            errorRecs = errorRecs + 1;
         #        }
-        #        row++;
-        #        // see if this is the last row
+        #         // see if this is the last row
+        #
+        #
         #        type = cells.item(row, keyColumn).value().variantType();
+        #        if (row < 5)
+        #        {
+        #            isLast = true;
+        #        }
+        #        else
+        #        {
+        #            if (type != COMVariantType::VT_EMPTY)
+        #            {
+        #                isLast = false;
+        #            }
+        #            else
+        #            {
+        #                isLast = true;
+        #            }
+        #
+        #        }
+        #        row++;
         #    }
-        #    while (type != COMVariantType::VT_EMPTY);
+        #    while (isLast); //   type != COMVariantType::VT_EMPTY);
+        #
         #    application.quit();
         #    this.close();
         #}
@@ -45994,6 +47028,20 @@ ENDFORM
         UTILOBJECTID 1024700
         NODETYPE 329
         NAME #triDM_ProcessStageData_ExcelToPrimary
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024702
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_ExcelToJournal
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024703
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_AssetJournal
       ENDNODE
       BEGINNODE
         FILETYPE 0
