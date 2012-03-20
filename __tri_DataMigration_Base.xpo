@@ -41807,6 +41807,24 @@ FORM #triDMDataMigration
         ENDFIELDLIST
       ENDOBJECTPOOL
       METHODS
+        SOURCE #active
+          #public int active()
+          #{
+          #    int ret;
+          #
+          #    btnStageData.enabled(true);
+          #
+          #    if (!triDMImport.StageTableName)
+          #    {
+          #        btnStageData.enabled(false);
+          #    }
+          #
+          #
+          #    ret = super();
+          #
+          #    return ret;
+          #}
+        ENDSOURCE
       ENDMETHODS
     ENDDATASOURCE
   ENDOBJECTBANK
@@ -41822,7 +41840,7 @@ FORM #triDMDataMigration
   
   DESIGN
     PROPERTIES
-      Caption             #Data MIgration Import
+      Caption             #Data Migration Import
       TitleDatasource     #triDMImport
       Columns             #2
       ArrangeGuide        
@@ -41900,7 +41918,8 @@ FORM #triDMDataMigration
       
       CONTROL MENUITEMBUTTON
         PROPERTIES
-          Name                #StageData
+          Name                #btnStageData
+          AutoDeclaration     #Yes
           ElementPosition     #1073741822
           HierarchyParent     #ButtonGroup
           Text                #Stage Data
@@ -42190,7 +42209,7 @@ ENDFORM
     #    static void utilScriptTableSpec(Args _args)
     #    {
     #        #define.NewLine('\n')
-    #        DictTable dictTable = new DictTable(tableNum(BudgetTransactionLine)); // change table name here
+    #        DictTable dictTable = new DictTable(tableNum(triDMVendTable)); // change table name here
     #
     #        SysDictField                sysDictField;
     #        SysDictType                 sysDictType;
@@ -42576,6 +42595,7 @@ ENDFORM
         #    processEnd = DateTimeUtil::getSystemDateTime();
         #    info(this.caption());
         #    info(strfmt('process started %1 || stopped at %2',processStart,processend));
+        #    info(strfmt('Created Journal %1',journalNum));
         #    //Info(strfmt('Total Records found:%1, errors:%2, Imported %3, skipped %4 ',allRecs,errorRecs,importedRecs,skippedRecs));
         #
         #}
@@ -42817,11 +42837,11 @@ ENDFORM
         #        {
         #            if (type != COMVariantType::VT_EMPTY)
         #            {
-        #                isLast = false;
+        #                isLast = true;
         #            }
         #            else
         #            {
-        #                isLast = true;
+        #                isLast = false;
         #            }
         #
         #        }
@@ -43647,11 +43667,11 @@ ENDFORM
         #        {
         #            if (type != COMVariantType::VT_EMPTY)
         #            {
-        #                isLast = false;
+        #                isLast = true;
         #            }
         #            else
         #            {
-        #                isLast = true;
+        #                isLast = false;
         #            }
         #
         #        }
@@ -44467,11 +44487,11 @@ ENDFORM
         #        {
         #            if (type != COMVariantType::VT_EMPTY)
         #            {
-        #                isLast = false;
+        #                isLast = true;
         #            }
         #            else
         #            {
-        #                isLast = true;
+        #                isLast = false;
         #            }
         #
         #        }
