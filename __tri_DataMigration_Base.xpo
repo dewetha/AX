@@ -33766,108 +33766,6 @@ Formatversion: 1
 
 ***Element: DBT
 
-; Microsoft Dynamics AX Table : triDMImport unloaded
-; --------------------------------------------------------------------------------
-  TABLEVERSION 1
-  
-  TABLE #triDMImport
-    EnforceFKRelation 1
-    PROPERTIES
-      Name                #triDMImport
-      Label               #Data Import
-      FormRef             #import process
-      TitleField1         #ImportType
-      TitleField2         #ImportDesc
-      CreateRecIdIndex    #Yes
-      SaveDataPerCompany  #No
-      PrimaryIndex        #SurrogateKey
-      ClusterIndex        #SurrogateKey
-      Origin              #{10D46851-06C7-42B7-83CE-69E6318A6587}
-    ENDPROPERTIES
-    
-    FIELDS
-      FIELD #ImportDesc
-        STRING
-        PROPERTIES
-          Name                #ImportDesc
-          Table               #triDMImport
-          Origin              #{F82F1E02-5AA1-40E7-A1AC-F6C4FED198D8}
-          ExtendedDataType    #triDMImportDesc
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #ImportType
-        ENUM
-        PROPERTIES
-          Name                #ImportType
-          Table               #triDMImport
-          Origin              #{55A2080E-E124-408E-ACB7-6EDB34D39080}
-          EnumType            #triDMImportType
-        ENDPROPERTIES
-        
-      FIELD #PrimaryTable
-        STRING
-        PROPERTIES
-          Name                #PrimaryTable
-          Label               #@TRI5
-          HelpText            #@TRI6
-          Table               #triDMImport
-          Origin              #{D00C8159-0A46-465C-9521-223086C5443E}
-          ExtendedDataType    #TableName
-          StringSize          #40
-        ENDPROPERTIES
-        
-      FIELD #StageTableName
-        STRING
-        PROPERTIES
-          Name                #StageTableName
-          AllowEdit           #No
-          Table               #triDMImport
-          Origin              #{64E03C2B-2787-4BE3-91B6-ECB064E2BFF0}
-          ExtendedDataType    #triDMStageTableName
-          StringSize          #60
-        ENDPROPERTIES
-        
-    ENDFIELDS
-    GROUPS
-      GROUP #AutoReport
-        PROPERTIES
-          Name                #AutoReport
-        ENDPROPERTIES
-        
-        GROUPFIELDS
-          #ImportDesc
-          #StageTableName
-        ENDGROUPFIELDS
-      ENDGROUP
-      GROUP #AutoBrowse
-        PROPERTIES
-          Name                #AutoBrowse
-        ENDPROPERTIES
-        
-        GROUPFIELDS
-          #ImportDesc
-        ENDGROUPFIELDS
-      ENDGROUP
-    ENDGROUPS
-    
-    INDICES
-    ENDINDICES
-    FULLTEXTINDICES
-    ENDFULLTEXTINDICES
-    REFERENCES
-    ENDREFERENCES
-    
-    DELETEACTIONS
-    ENDDELETEACTIONS
-    
-    METHODS
-    ENDMETHODS
-  ENDTABLE
-  
-
-***Element: DBT
-
 ; Microsoft Dynamics AX Table : triDMVendTable unloaded
 ; --------------------------------------------------------------------------------
   TABLEVERSION 1
@@ -36531,6 +36429,108 @@ Formatversion: 1
   ENDTABLE
   
 
+***Element: DBT
+
+; Microsoft Dynamics AX Table : triDMImport unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  TABLE #triDMImport
+    EnforceFKRelation 1
+    PROPERTIES
+      Name                #triDMImport
+      Label               #Data Import
+      FormRef             #import process
+      TitleField1         #ImportType
+      TitleField2         #ImportDesc
+      CreateRecIdIndex    #Yes
+      SaveDataPerCompany  #No
+      PrimaryIndex        #SurrogateKey
+      ClusterIndex        #SurrogateKey
+      Origin              #{10D46851-06C7-42B7-83CE-69E6318A6587}
+    ENDPROPERTIES
+    
+    FIELDS
+      FIELD #ImportDesc
+        STRING
+        PROPERTIES
+          Name                #ImportDesc
+          Table               #triDMImport
+          Origin              #{F82F1E02-5AA1-40E7-A1AC-F6C4FED198D8}
+          ExtendedDataType    #triDMImportDesc
+          StringSize          #60
+        ENDPROPERTIES
+        
+      FIELD #ImportType
+        ENUM
+        PROPERTIES
+          Name                #ImportType
+          Table               #triDMImport
+          Origin              #{55A2080E-E124-408E-ACB7-6EDB34D39080}
+          EnumType            #triDMImportType
+        ENDPROPERTIES
+        
+      FIELD #PrimaryTable
+        STRING
+        PROPERTIES
+          Name                #PrimaryTable
+          Label               #@TRI5
+          HelpText            #@TRI6
+          Table               #triDMImport
+          Origin              #{D00C8159-0A46-465C-9521-223086C5443E}
+          ExtendedDataType    #TableName
+          StringSize          #40
+        ENDPROPERTIES
+        
+      FIELD #StageTableName
+        STRING
+        PROPERTIES
+          Name                #StageTableName
+          AllowEdit           #No
+          Table               #triDMImport
+          Origin              #{64E03C2B-2787-4BE3-91B6-ECB064E2BFF0}
+          ExtendedDataType    #triDMStageTableName
+          StringSize          #60
+        ENDPROPERTIES
+        
+    ENDFIELDS
+    GROUPS
+      GROUP #AutoReport
+        PROPERTIES
+          Name                #AutoReport
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #ImportDesc
+          #StageTableName
+        ENDGROUPFIELDS
+      ENDGROUP
+      GROUP #AutoBrowse
+        PROPERTIES
+          Name                #AutoBrowse
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #ImportDesc
+        ENDGROUPFIELDS
+      ENDGROUP
+    ENDGROUPS
+    
+    INDICES
+    ENDINDICES
+    FULLTEXTINDICES
+    ENDFULLTEXTINDICES
+    REFERENCES
+    ENDREFERENCES
+    
+    DELETEACTIONS
+    ENDDELETEACTIONS
+    
+    METHODS
+    ENDMETHODS
+  ENDTABLE
+  
+
 ***Element: MAP
 
 ; Microsoft Dynamics AX Map : triStageAddress unloaded
@@ -36677,6 +36677,79 @@ Formatversion: 1
     ENDGROUPS
     
     MAPPINGS
+      MAPPING #triDMAddress
+      PROPERTIES
+        MappingTable        #triDMAddress
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #City
+          MapFieldTo          #City
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #CountryRegionId
+          MapFieldTo          #CountryRegionId
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Description
+          MapFieldTo          #Description
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrimary
+          MapFieldTo          #IsPrimary
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #IsPrivate
+          MapFieldTo          #IsPrivate
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Party
+          MapFieldTo          #Party
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Purpose
+          MapFieldTo          #Purpose
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #State
+          MapFieldTo          #State
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #Street
+          MapFieldTo          #Street
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #StreetNumber
+          MapFieldTo          #StreetNumber
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #TaxGroup
+          MapFieldTo          #TaxGroup
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #ZipCode
+          MapFieldTo          #ZipCode
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMlegacyID
+          MapFieldTo          #triDMlegacyID
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
       MAPPING #triDMContact
       PROPERTIES
         MappingTable        #triDMContact
@@ -38027,11 +38100,11 @@ Formatversion: 1
         #        recID = this.findPartyRecID(addrStage.triDMlegacyID);
         #        if(recID == 0 )
         #            continue;
+        #        this.setDefaultValues(addrStage);
         #
-        #        ttsBegin;
         #        try
         #        {
-        #
+        #            ttsBegin;
         #            address.CountryRegionId     = addrStage.CountryRegionId;
         #            address.State               = addrStage.State;
         #            address.ZipCode             = addrStage.ZipCode;
@@ -38071,9 +38144,9 @@ Formatversion: 1
         #            addrStage.triDMstatus = triDMstatus::Imported;
         #            addrStage.update();
         #            recfound++;
-        #
+        #            ttsCommit;
         #        }
-        #        catch (Exception::Error)
+        #        catch
         #        {
         #            ttsBegin;
         #            addrStage.triDMErrorMsg = infolog.text();
@@ -38085,23 +38158,87 @@ Formatversion: 1
         #            ttsAbort;
         #
         #        }
-        #        ttsCommit;
+        #
         #    }
         #
+        #}
+      ENDSOURCE
+      SOURCE #createAddress
+        #private void createAddress()
+        #{
+        #    triDMAddress                addrStage;
+        #    DirPartyRecId               recID;
+        #
+        #
+        #
+        #    while select forUpdate addrStage where addrStage.triDMstatus == triDMstatus::ready
+        #    {
+        #        recID = this.findPartyRecID(addrStage.triDMlegacyID);
+        #        if(recID == 0 )
+        #            continue;
+        #        this.setDefaultValues(addrStage);
+        #
+        #        try
+        #        {
+        #
+        #            ttsBegin;
+        #            this.addAddress(addrStage);
+        #            addrStage.triDMstatus = triDMstatus::Imported;
+        #            addrStage.update();
+        #            recfound++;
+        #            ttsCommit;
+        #        }
+        #        catch
+        #        {
+        #            ttsBegin;
+        #            addrStage.triDMErrorMsg = infolog.text();
+        #            addrStage.triDMstatus = triDMstatus::error;
+        #            addrStage.update();
+        #            infolog.clear(0);
+        #            ttsCommit;
+        #            recErrors++;
+        #            ttsAbort;
+        #
+        #        }
+        #
+        #    }
         #}
       ENDSOURCE
       SOURCE #run
         #public void run()
         #{
-        #    this.createAddr();
+        #
+        #    //this.createAddr();
+        #    this.createAddress();
         #    this.CleanUp();
         #
         #}
       ENDSOURCE
       SOURCE #setDefaultValues
-        #public void setDefaultValues(Common anyStageTable)
+        #public void setDefaultValues(common addrStage)
         #{
+        #    triDMAddress                tbl;
+        #    NumberSeq                   numberSeq;
+        #    NumberSequenceReference     numberSequenceReference;
         #
+        #
+        #    tbl.data(addrStage);
+        #
+        #
+        #    if (!tbl.Description )
+        #    {
+        #        switch (importType)
+        #        {
+        #            case triDMImportType::VendAddr :
+        #                tbl.Description = "Remit To";
+        #                break;
+        #
+        #
+        #
+        #       }
+        #
+        #    }
+        #     addrStage.data(tbl);
         #}
       ENDSOURCE
     ENDMETHODS
@@ -38563,6 +38700,7 @@ Formatversion: 1
       SOURCE #classDeclaration
         #class triDM_ProcessStageData_vendors extends triDM_ProcessStageData
         #{
+        #
         #}
       ENDSOURCE
       SOURCE #CleanUp
@@ -38591,6 +38729,7 @@ Formatversion: 1
         #                ttsBegin;
         #                vendor.selectForUpdate();
         #                this.setDefaultValues(tbl);
+        #                //
         #                vendor.initFromStagingTable(tbl);
         #                vendor.Party = this.addPartyInfo(tbl.PartyType,tbl.Name,tbl.NameAlias,tbl.LanguageId );
         #                vendor.insert();
@@ -38653,13 +38792,13 @@ Formatversion: 1
         #
         #    if(! tbl.AccountNum)
         #    {
-        #        ttsBegin;
+        #
         #        numberSequenceReference = VendParameters::numRefVendAccount();
         #        numberseq = NumberSeq::newGetNum(numberSequenceReference);
         #
         #        tbl.AccountNum = numberSeq.num();
         #
-        #        ttsCommit;
+        #
         #    }
         #
         #
@@ -40416,13 +40555,12 @@ Formatversion: 1
         #
         #        ttsCommit;
         #
-        #
         #    }
         #    catch
         #    {
-        #
+        #        recErrors++;
         #        ttsAbort;
-        #
+        #        throw error(  infolog.text());
         #    }
         #
         #
@@ -40604,7 +40742,7 @@ Formatversion: 1
       SOURCE #finalize
         #void finalize()
         #{
-        #    info(strFmt('records processed:%1 records with errors:%2 records skipped:%3',recfound, recErrors,recSkipped));
+        #
         #}
       ENDSOURCE
       SOURCE #FindDimension
@@ -40798,6 +40936,12 @@ Formatversion: 1
         #    return importType;
         #}
       ENDSOURCE
+      SOURCE #reportMetrics
+        #public void reportMetrics()
+        #{
+        #     info(strFmt('records processed:%1 records with errors:%2 records skipped:%3',recfound, recErrors,recSkipped));
+        #}
+      ENDSOURCE
       SOURCE #run
         #public void run()
         #{
@@ -40904,9 +41048,10 @@ Formatversion: 1
         #    triDM_ProcessStageData = triDM_ProcessStageData::construct(import.ImportType);
         #
         #    if(triDM_ProcessStageData.prompt() )
+        #    {
         #        triDM_ProcessStageData.run();
-        #
-        #
+        #        triDM_ProcessStageData.reportMetrics();
+        #    }
         #
         #
         #}
@@ -41598,6 +41743,8 @@ FORM #triDMmapFields
       CONTROL GRID
         PROPERTIES
           Name                #Grid
+          Width               #Column width
+          Height              #Column height
           ElementPosition     #1073741823
           DataSource          #triDMFieldMapping
           AlternateRowShading #Yes
@@ -42159,6 +42306,49 @@ ENDFORM
 
 ***Element: JOB
 
+; Microsoft Dynamics AX Job: Job7 unloaded
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #Job7
+    #static void Job7(Args _args)
+    #{
+    #
+    #        SysExcelApplication application;
+    #        SysExcelWorkbooks workbooks;
+    #        SysExcelWorkbook workbook;
+    #        SysExcelWorksheets worksheets;
+    #        SysExcelWorksheet worksheet;
+    #        SysExcelCells cells;
+    #        SysExcelCell cell;
+    #        int row;
+    #        ;
+    #        application = SysExcelApplication::construct();
+    #        workbooks = application.workbooks();
+    #        workbook = workbooks.add();
+    #        worksheets = workbook.worksheets();
+    #        worksheet = worksheets.itemFromNum(1);
+    #        cells = worksheet.cells();
+    #        cells.range('A:A').numberFormat('@');
+    #        while select custTable
+    #        {
+    #        row++;
+    #
+    #        cell = cells.item(row, 1);
+    #        cell.value(custTable.AccountNum);
+    #        cell = cells.item(row, 2);
+    #        cell.value(custTable.Name);
+    #        }
+    #        application.visible(true);
+    #}
+  ENDSOURCE
+  PROPERTIES
+    Origin              #{B973BE10-E0C8-4F87-BD6F-B59F86570C00}
+  ENDPROPERTIES
+  
+
+***Element: JOB
+
 ; Microsoft Dynamics AX Job: utilScriptFillDataMigrationTable unloaded
 ; --------------------------------------------------------------------------------
   JOBVERSION 1
@@ -42168,7 +42358,7 @@ ENDFORM
     #static void utilScriptFillDataMigrationTable(Args _args)
     #{
     #
-    #    DictTable dictTable = new DictTable(tableNum(triDMAddress)); // change table name here
+    #    DictTable dictTable = new DictTable(tableNum(triDMVendBankAcct)); // change table name here
     #
     #    SysDictField                sysDictField;
     #    SysDictType                 sysDictType;
@@ -42182,12 +42372,15 @@ ENDFORM
     #    for (i=1; i<=dictTable.fieldCnt(); i++)
     #    {
     #        sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
-    #        dmTable.clear();
-    #        dmTable.refTableNum     = dictTable.id();
-    #        dmTable.refTableName    = nameOfTable;
-    #        dmTable.refFieldID      = sysDictField.id(); // field id
-    #        dmTable.refFieldName    = sysDictField.name(); // table field name
-    #        dmTable.insert();
+    #        if(sysDictField.visible())
+    #        {
+    #            dmTable.clear();
+    #            dmTable.refTableNum     = dictTable.id();
+    #            dmTable.refTableName    = nameOfTable;
+    #            dmTable.refFieldID      = sysDictField.id(); // field id
+    #            dmTable.refFieldName    = sysDictField.name(); // table field name
+    #            dmTable.insert();
+    #        }
     #        //info(strFmt("table name %1 refFieldid %2", dmTable.refTableName,dmTable.refFieldID));
     #    }
     #
@@ -42196,6 +42389,142 @@ ENDFORM
   ENDSOURCE
   PROPERTIES
     Origin              #{4663500A-3282-4CF9-9A6B-CDC0A8D3BB78}
+  ENDPROPERTIES
+  
+
+***Element: JOB
+
+; Microsoft Dynamics AX Job: Demo_CustomerAddrImport unloaded
+; --------------------------------------------------------------------------------
+  JOBVERSION 1
+  
+  SOURCE #Demo_CustomerAddrImport
+    #static void Demo_CustomerAddrImport(Args _args)
+    #{
+    #    #WinAPI
+    #    CustTable                   custTable;
+    #    DirPartyTable               dirPartyTable;
+    #    LogisticsAddressZipCode     zipCode;
+    #    LogisticsLocation           logisticsLocation;
+    #    DirPartyLocation            partyLocation;
+    #    LogisticsPostalAddress      postalAddress;
+    #    LogisticsElectronicAddress  contactTable;
+    #    DirPartyLocationRole        partyLocationRole;
+    #    LogisticsLocationRole       locationRole = LogisticsLocationRole::findBytype(LogisticsLocationRoleType::Invoice);
+    #    container                   roleId = [locationRole.RecId];
+    #    LogisticsPostalAddressView  postalAddrView;
+    #
+    #
+    #    CommaIO        commaIO = new CommaIO(strfmt("%1%2", WinAPI::getFolderPath(#CSIDL_DESKTOPDIRECTORY), "\\Customer.csv"), "r");
+    #    Container      record;
+    #    Name           name;
+    #
+    #
+    #    void createPostalAddr(LogisticsLocationRecId _recId, LogisticsPostalAddressView _postalAddrView)
+    #    {
+    #        LogisticsPostalAddressEntity postalAddrEntity = LogisticsPostalAddressEntity::construct(_recId);
+    #        ;
+    #
+    #
+    #        postalAddrEntity.createPostalAddress(_postalAddrView);
+    #
+    #
+    #    }
+    #    ;
+    #
+    #    while (commaIO.status() == IO_Status::Ok)
+    #    {
+    #        record = commaIO.read();
+    #        name = conPeek(record, 2);
+    #
+    #
+    #        custTable = custTable::find(conPeek(record, 1));
+    #        if (custTable)
+    #        {
+    #
+    #
+    #            // Create postal address
+    #            logisticsLocation.clear();
+    #            logisticsLocation = LogisticsLocation::create("Legacy Postal Address", NoYes::Yes);
+    #
+    #
+    #            postalAddress.Location = logisticsLocation.RecId;
+    #            postalAddress.Address  = conPeek(record, 3);
+    #            postalAddress.ZipCode  = conPeek(record, 4);
+    #            postalAddress.State    = conPeek(record, 5);
+    #            postalAddress.County   = conPeek(record, 6);
+    #            postalAddress.CountryRegionId = "DNK";
+    #            postalAddress.ValidFrom = DateTimeUtil::newDateTime(01\01\2010, 01);
+    #            postalAddress.insert();
+    #
+    #
+    #            // Attach to party and sepecify address type like Delivery, Invoice
+    #            partyLocation.clear();
+    #            partyLocation.initValue();
+    #            partyLocation.Party = custTable.Party;
+    #            partyLocation.Location = logisticsLocation.RecId;
+    #            partyLocation.IsPostalAddress = NoYes::Yes;
+    #            partyLocation.insert();
+    #
+    #
+    #
+    #
+    #            DirPartyLocationRole::createPartyLocationRoles(partyLocation.RecId, roleId, false);
+    #
+    #
+    #            if (conPeek(record, 7) != "")
+    #            {
+    #                // Create postal address
+    #                logisticsLocation.clear();
+    #                logisticsLocation = LogisticsLocation::create("Email Contact", NoYes::Yes);
+    #
+    #
+    #                contactTable.clear();
+    #                contactTable.Location = logisticsLocation.RecId;
+    #                contactTable.Locator  = conPeek(record, 7);
+    #                contactTable.Type     = LogisticsElectronicAddressMethodType::Email;
+    #                contactTable.insert();
+    #
+    #
+    #                // Attach to party
+    #                partyLocation.clear();
+    #                partyLocation.initValue();
+    #                partyLocation.Party = custTable.Party;
+    #                partyLocation.Location = logisticsLocation.RecId;
+    #                partyLocation.insert();
+    #            }
+    #
+    #
+    #            if (conPeek(record, 8) != "")
+    #            {
+    #                // Create postal address
+    #                logisticsLocation.clear();
+    #                logisticsLocation = LogisticsLocation::create("Phone Contact", NoYes::Yes);
+    #
+    #
+    #                contactTable.clear();
+    #                contactTable.Location = logisticsLocation.RecId;
+    #                contactTable.Locator  = conPeek(record, 8);
+    #                contactTable.Type     = LogisticsElectronicAddressMethodType::Phone;
+    #                contactTable.insert();
+    #
+    #
+    #                // Attach to party
+    #                partyLocation.clear();
+    #                partyLocation.initValue();
+    #                partyLocation.Party = custTable.Party;
+    #                partyLocation.Location = logisticsLocation.RecId;
+    #                partyLocation.insert();
+    #            }
+    #
+    #        }
+    #    }
+    #}
+    #
+    #
+  ENDSOURCE
+  PROPERTIES
+    Origin              #{7A42E1D0-741A-4F0F-842E-CF959DA4D0C9}
   ENDPROPERTIES
   
 
@@ -47350,13 +47679,6 @@ ENDFORM
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
-          UTILOBJECTID 101036
-          NODETYPE 204
-          NAME #triDMImport
-        ENDNODE
-        BEGINNODE
-          FILETYPE 0
-          UTILTYPE 44
           UTILOBJECTID 101037
           NODETYPE 204
           NAME #triDMVendTable
@@ -47374,6 +47696,13 @@ ENDFORM
           UTILOBJECTID 101030
           NODETYPE 204
           NAME #triDMFieldMapping
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 44
+          UTILOBJECTID 101036
+          NODETYPE 204
+          NAME #triDMImport
         ENDNODE
         ENDGROUP
         
@@ -47710,7 +48039,21 @@ ENDFORM
         UTILTYPE 5
         UTILOBJECTID 0
         NODETYPE 215
+        NAME #Job7
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
         NAME #utilScriptFillDataMigrationTable
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 5
+        UTILOBJECTID 0
+        NODETYPE 215
+        NAME #Demo_CustomerAddrImport
       ENDNODE
       BEGINNODE
         FILETYPE 0
