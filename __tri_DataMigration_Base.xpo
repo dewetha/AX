@@ -38146,13 +38146,25 @@ Formatversion: 1
         #        try
         #        {
         #            recid = this.findPartyRecID(tbl.triDMlegacyID);
-        #
+        #            ttsBegin;
         #            tblAccount.initFromStageTable(tbl);
         #            tblAccount.VendAccount = VendTable::FindByLegacyID(tbl.triDMlegacyID).AccountNum;
-        #            tblAccount.insert();
+        #            this.validateField_CallTableMethod(tblAccount);
         #
-        #            this.addAddress(tbl);
-        #            this.updateStage(tbl);
+        #            if (tblAccount.validateWrite())
+        #            {
+        #                tblAccount.insert();
+        #                ttsCommit;
+        #
+        #
+        #                this.addAddress(tbl);
+        #                this.updateStage(tbl);
+        #            }
+        #            else
+        #            {
+        #                throw error(infolog.text());
+        #            }
+        #
         #        }
         #        catch
         #        {
@@ -38372,12 +38384,25 @@ Formatversion: 1
         #        {
         #
         #            recid = this.findPartyRecID(bank.triDMlegacyID);
-        #
+        #            ttsBegin;
         #            bankAccount.initFromStageTable(bank);
-        #            bankAccount.insert();
+        #            bankAccount.AccountID  =CustTable::FindByLegacyID(bank.triDMlegacyID).AccountNum;
+        #            this.validateField_CallTableMethod(bankAccount);
         #
-        #            //this.addAddress(bank);
-        #            this.updateStage(bank);
+        #            if (bankAccount.validateWrite())
+        #            {
+        #                bankAccount.insert();
+        #                ttsCommit;
+        #
+        #                this.addAddress(bank);
+        #                this.updateStage(bank);
+        #
+        #            }
+        #            else
+        #            {
+        #                throw error(infolog.text());
+        #            }
+        #
         #
         #        }
         #        catch
@@ -38444,82 +38469,6 @@ Formatversion: 1
         #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
         #}
       ENDSOURCE
-      SOURCE #del_createAddr
-        #private void del_createAddr()
-        #{
-        #    LogisticsPostalAddress      address;
-        #    DirPartyPostalAddressView   addressView;
-        #    triDMAddress                addrStage;
-        #    DirPartyRecId               recID;
-        #    DirParty                    dirParty;
-        #    LogisticsLocationExt        locationExt;
-        #    LogisticsLocation           location;
-        #    LogisticsLocationRole       locationRole;
-        #    container                   conRoles;
-        #
-        #
-        #    while select forUpdate addrStage where addrStage.triDMstatus == triDMstatus::ready
-        #    {
-        #        recID = this.findPartyRecID(addrStage.triDMlegacyID);
-        #        if(recID == 0 )
-        #            continue;
-        #        this.setDefaultValues(addrStage);
-        #
-        #        try
-        #        {
-        #            ttsBegin;
-        #            address.CountryRegionId     = addrStage.CountryRegionId;
-        #            address.State               = addrStage.State;
-        #            address.ZipCode             = addrStage.ZipCode;
-        #            address.Street              = this.strAddCRLF( addrStage.Street);
-        #            address.StreetNumber        = addrStage.StreetNumber;
-        #            address.City                = addrStage.City;
-        #
-        #            addressView.LocationName    = addrStage.Description;
-        #            addressView.IsPrimary       = addrStage.IsPrimary;
-        #            addressView.IsPrivate       = addrStage.IsPrivate;
-        #            addressView.Party           = recID;
-        #            addressview.initFromPostalAddress(address);
-        #
-        #            conRoles = conNull();
-        #
-        #            select locationRole where locationRole.Name == addrStage.Purpose;
-        #            if(locationRole.RecId != 0)
-        #            {
-        #                conRoles = conIns(conRoles,1,locationRole.RecId);
-        #            }
-        #
-        #            DirParty = DirParty::constructFromPartyRecId(addressView.Party);
-        #
-        #            DirParty.createOrUpdatePostalAddress(addressView,conRoles);
-        #
-        #            select forUpdate location where location.RecId == address.Location;
-        #            if(location.RecId != 0)
-        #            {
-        #                locationExt.Location = location.RecId;
-        #                locationExt.TaxGroup = addrStage.TaxGroup;
-        #                locationExt.insert();
-        #            }
-        #
-        #
-        #
-        #
-        #            addrStage.triDMstatus = triDMstatus::Imported;
-        #            addrStage.update();
-        #            recfound++;
-        #            ttsCommit;
-        #        }
-        #        catch
-        #        {
-        #            this.writeErrorToStageTbl(addrStage);
-        #            ttsAbort;
-        #
-        #        }
-        #
-        #    }
-        #
-        #}
-      ENDSOURCE
       SOURCE #createAddress
         #private void createAddress()
         #{
@@ -38556,7 +38505,7 @@ Formatversion: 1
         #public void run()
         #{
         #
-        #    //this.createAddr();
+        #
         #    this.createAddress();
         #    this.CleanUp();
         #
@@ -40597,32 +40546,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #validateField_CallTableMethod
-        #protected boolean validateField_CallTableMethod(Common _tableIN)
-        #{
-        #    int i;
-        #    Common          anyTable ;
-        #    DictTable       dictTable ;
-        #    SysDictField    sysDictField;
-        #    boolean         ret;
-        #
-        #    anyTable = _tableIN;
-        #    dictTable = new DictTable(anyTable.TableId );
-        #    for (i=1; i<=dictTable.fieldCnt(); i++)
-        #    {
-        #        sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
-        #        ret = anyTable.validateField(sysDictField.id());
-        #        if (!ret)
-        #        {
-        #            throw error(infolog.text());
-        #        }
-        #
-        #
-        #    }
-        #    ret = true;
-        #    return ret;
-        #}
-      ENDSOURCE
       SOURCE #addAddress
         #public void addAddress(common _tbl)
         #{
@@ -41133,6 +41056,31 @@ Formatversion: 1
         #    ttsCommit;
         #
         #
+        #}
+      ENDSOURCE
+      SOURCE #validateField_CallTableMethod
+        #protected boolean validateField_CallTableMethod(Common _tableIN)
+        #{
+        #    int i;
+        #    Common          anyTable ;
+        #    DictTable       dictTable ;
+        #    SysDictField    sysDictField;
+        #    boolean         ret;
+        #
+        #    anyTable = _tableIN;
+        #    dictTable = new DictTable(anyTable.TableId );
+        #    for (i=1; i<=dictTable.fieldCnt(); i++)
+        #    {
+        #        sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
+        #        ret = anyTable.validateField(sysDictField.id());
+        #        if (!ret)
+        #        {
+        #            throw error(infolog.text());
+        #        }
+        #
+        #    }
+        #    ret = true;
+        #    return ret;
         #}
       ENDSOURCE
       SOURCE #writeErrorToExcel
@@ -47917,7 +47865,7 @@ ENDFORM
     Origin              #{D26FE3A7-5D56-4A9C-ABAD-6C8D65AA3054}
   ENDPROPERTIES
   
-    PROJECTCLASS ProjectNode
+    PROJECTCLASS 
     GROUP #DataDictionary
       PROPERTIES
         Name                #DataDictionary
