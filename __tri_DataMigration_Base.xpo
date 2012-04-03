@@ -30169,7 +30169,6 @@ Formatversion: 1
         STRING
         PROPERTIES
           Name                #AccountNum
-          Mandatory           #Yes
           Table               #triDMCustTable
           Origin              #{4EB31481-3046-4721-89F5-B92763E1192E}
           StringSize          #20
@@ -31424,6 +31423,16 @@ Formatversion: 1
           CountryRegionCodes  #TH,SA,GB,IE
           Origin              #{C6A25CAB-A27F-4A70-85BE-114B67B1BFC3}
           ExtendedDataType    #TaxWithholdGroup
+        ENDPROPERTIES
+        
+      FIELD #Telex
+        STRING
+        PROPERTIES
+          Name                #Telex
+          Table               #triDMCustTable
+          Origin              #{D7457011-1A7D-4E79-9B67-E7D426DF05E4}
+          ExtendedDataType    #Telex
+          StringSize          #20
         ENDPROPERTIES
         
       FIELD #triDMErrorMsg
@@ -36533,6 +36542,158 @@ Formatversion: 1
 
 ***Element: MAP
 
+; Microsoft Dynamics AX Map : triStageError unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  MAP #triStageError
+    PROPERTIES
+      Name                #triStageError
+      Origin              #{6FB8985C-5D79-458B-AA04-A8E8C0838466}
+    ENDPROPERTIES
+    
+    FIELDS
+      FIELD #triDMErrorMsg
+        STRING
+        PROPERTIES
+          Name                #triDMErrorMsg
+          Table               #triStageError
+          Origin              #{44F3C85B-6401-4A74-855B-7F589A292CC4}
+          ExtendedDataType    #triDMErrorMsg
+          StringSize          #255
+        ENDPROPERTIES
+        
+      FIELD #triDMstatus
+        ENUM
+        PROPERTIES
+          Name                #triDMstatus
+          Table               #triStageError
+          Origin              #{E1AF2F1E-C727-42D9-93A9-A2466E22269D}
+          EnumType            #triDMstatus
+        ENDPROPERTIES
+        
+    ENDFIELDS
+    GROUPS
+    ENDGROUPS
+    
+    MAPPINGS
+      MAPPING #triDMAddress
+      PROPERTIES
+        MappingTable        #triDMAddress
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #triDMErrorMsg
+          MapFieldTo          #triDMErrorMsg
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMstatus
+          MapFieldTo          #triDMstatus
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMContact
+      PROPERTIES
+        MappingTable        #triDMContact
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #triDMErrorMsg
+          MapFieldTo          #triDMErrorMsg
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMstatus
+          MapFieldTo          #triDMstatus
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMCustBankAccount
+      PROPERTIES
+        MappingTable        #triDMCustBankAccount
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #triDMErrorMsg
+          MapFieldTo          #triDMErrorMsg
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMstatus
+          MapFieldTo          #triDMstatus
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMCustTable
+      PROPERTIES
+        MappingTable        #triDMCustTable
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #triDMErrorMsg
+          MapFieldTo          #triDMErrorMsg
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMstatus
+          MapFieldTo          #triDMstatus
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMVendBankAcct
+      PROPERTIES
+        MappingTable        #triDMVendBankAcct
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #triDMErrorMsg
+          MapFieldTo          #triDMErrorMsg
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMstatus
+          MapFieldTo          #triDMstatus
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+      MAPPING #triDMVendTable
+      PROPERTIES
+        MappingTable        #triDMVendTable
+      ENDPROPERTIES
+      
+      FIELDMAPPINGS
+        PROPERTIES
+          MapField            #triDMErrorMsg
+          MapFieldTo          #triDMErrorMsg
+        ENDPROPERTIES
+        
+        PROPERTIES
+          MapField            #triDMstatus
+          MapFieldTo          #triDMstatus
+        ENDPROPERTIES
+        
+      ENDFIELDMAPPINGS
+      ENDMAPPING
+    ENDMAPPINGS
+    
+    METHODS
+    ENDMETHODS
+  ENDMAP
+  
+
+***Element: MAP
+
 ; Microsoft Dynamics AX Map : triStageAddress unloaded
 ; --------------------------------------------------------------------------------
   TABLEVERSION 1
@@ -37721,6 +37882,148 @@ Formatversion: 1
 
 ***Element: CLS
 
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_vendors unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triDM_ProcessStageData_vendors
+    PROPERTIES
+      Name                #triDM_ProcessStageData_vendors
+      Extends             #triDM_ProcessStageData
+      Origin              #{89B56280-1DDF-41E8-BD10-935764905993}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "Vendor Import";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_vendors extends triDM_ProcessStageData
+        #{
+        #
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #
+        #   triDMVendTable  tbl;
+        #
+        #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
+        #}
+      ENDSOURCE
+      SOURCE #initVendors
+        #private void initVendors()
+        #{
+        #    triDMVendTable  tbl;
+        #    VendTable       vendor;
+        #
+        #
+        #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
+        #    {
+        #        if(this.ValidateVendor(tbl) == true)
+        #        {
+        #            try
+        #            {
+        #
+        #                ttsBegin;
+        #                vendor.selectForUpdate();
+        #                this.setDefaultValues(tbl);
+        #                //
+        #                vendor.initFromStagingTable(tbl);
+        #                vendor.Party = this.addPartyInfo(tbl.PartyType,tbl.Name,tbl.NameAlias,tbl.LanguageId );
+        #
+        #                this.validateField_CallTableMethod(vendor);
+        #
+        #                if(vendor.validateWrite() )
+        #                    vendor.insert();
+        #                ttsCommit;
+        #
+        #                this.addSimpleMainContactInfo(tbl,vendor.Party);
+        #                this.updateStage(tbl);
+        #            }
+        #            catch
+        #            {
+        #
+        #                this.writeErrorToStageTbl(tbl);
+        #                ttsAbort;
+        #            }
+        #
+        #
+        #
+        #        }
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    super();
+        #    this.initVendors();
+        #
+        #    this.cleanUp();
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common _tbl)
+        #{
+        #    triDMVendTable          tbl;
+        #    NumberSeq                   numberSeq;
+        #    NumberSequenceReference     numberSequenceReference;
+        #
+        #
+        #    tbl.data(_tbl);
+        #
+        #    if(! tbl.LanguageId)
+        #        tbl.LanguageId = 'EN-US';
+        #
+        #    if(! tbl.Currency)
+        #        tbl.Currency = 'USD';
+        #
+        #    if(! tbl.AccountNum)
+        #    {
+        #
+        #        numberSequenceReference = VendParameters::numRefVendAccount();
+        #        numberseq = NumberSeq::newGetNum(numberSequenceReference);
+        #
+        #        tbl.AccountNum = numberSeq.num();
+        #
+        #
+        #    }
+        #
+        #
+        #    _tbl.data(tbl);
+        #
+        #}
+      ENDSOURCE
+      SOURCE #ValidateVendor
+        #private boolean ValidateVendor(triDMVendTable _tbl)
+        #{
+        #    VendTable   vendTable;
+        #    boolean     ret;
+        #
+        #    vendTable = VendTable::FindByLegacyID(_tbl.triDMlegacyID);
+        #
+        #    if (vendTable.RecId ==0)
+        #        ret = true ; // vendor exists
+        #
+        #
+        #    return ret;
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
 ; Microsoft Dynamics AX Class: triDM_ProcessStageData_VendContacts unloaded
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
@@ -37764,30 +38067,15 @@ Formatversion: 1
         #            this.addAddress(tbl);
         #            this.addSimpleMainContactInfo(tbl,Contact.Party);
         #            ttsCommit;
-        #
-        #
-        #
+        #            this.updateStage(tbl);
         #        }
         #        catch
         #        {
         #
-        #
-        #            ttsBegin;
-        #            tbl.triDMErrorMsg = infolog.text();
-        #            tbl.triDMstatus = triDMstatus::error;
-        #            tbl.update();
-        #            infolog.clear(0);
-        #            ttsCommit;
-        #            recErrors++;
+        #            this.writeErrorToStageTbl(tbl);
         #            ttsAbort;
-        #
-        #
         #        }
-        #        ttsBegin;
-        #        tbl.triDMstatus = triDMstatus::Imported;
-        #        tbl.update();
-        #        ttsCommit;
-        #        recfound++;
+        #
         #    }
         #}
       ENDSOURCE
@@ -37803,6 +38091,231 @@ Formatversion: 1
       SOURCE #setDefaultValues
         #public void setDefaultValues(Common anyStageTable)
         #{
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_VendBank unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triDM_ProcessStageData_VendBank
+    PROPERTIES
+      Name                #triDM_ProcessStageData_VendBank
+      Extends             #triDM_ProcessStageData
+      Origin              #{F8C40C31-8CF8-489E-A921-3D47E604EA2B}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = 'Vendor Bank';
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_VendBank extends triDM_ProcessStageData
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #    triDMAddress  tbl;
+        #
+        #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
+        #}
+      ENDSOURCE
+      SOURCE #createBank
+        #private void createBank()
+        #{
+        #    triDMVendBankAcct   tbl;
+        #    VendBankAccount     tblAccount;
+        #    RecId               recid;
+        #
+        #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
+        #    {
+        #        try
+        #        {
+        #            recid = this.findPartyRecID(tbl.triDMlegacyID);
+        #
+        #            tblAccount.initFromStageTable(tbl);
+        #            tblAccount.VendAccount = VendTable::FindByLegacyID(tbl.triDMlegacyID).AccountNum;
+        #            tblAccount.insert();
+        #
+        #            this.addAddress(tbl);
+        #            this.updateStage(tbl);
+        #        }
+        #        catch
+        #        {
+        #            this.writeErrorToStageTbl(tbl);
+        #            ttsAbort;
+        #        }
+        #
+        #
+        #    }
+        #
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    this.createBank();
+        #    this.CleanUp();
+        #
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common anyStageTable)
+        #{
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_Customers unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triDM_ProcessStageData_Customers
+    PROPERTIES
+      Name                #triDM_ProcessStageData_Customers
+      Extends             #triDM_ProcessStageData
+      Origin              #{DB3A5CDF-9DFE-4835-B32D-4F3E39DE3B33}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "Customer Import";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_Customers extends triDM_ProcessStageData
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #
+        #   triDMCustTable  tbl;
+        #
+        #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
+        #}
+      ENDSOURCE
+      SOURCE #initCustomers
+        #private void initCustomers()
+        #{
+        #    triDMCustTable  tbl;
+        #    CustTable       customer;
+        #
+        #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
+        #    {
+        #        if (this.ValidateCustomer(tbl))
+        #        {
+        #          try
+        #            {
+        #                ttsBegin;
+        #                customer.selectForUpdate();
+        #                this.setDefaultValues(tbl);
+        #
+        #                customer.initFromStagingTable(tbl);
+        #                customer.Party = this.addPartyInfo(tbl.PartyType,tbl.Name,tbl.NameAlias,tbl.LanguageId );
+        #
+        #                this.validateField_CallTableMethod(customer);
+        #
+        #                if (customer.validateWrite())
+        #                {
+        #                    customer.insert();
+        #                }
+        #
+        #                ttsCommit;
+        #                this.addSimpleMainContactInfo(tbl, customer.Party);
+        #                this.updateStage(tbl);
+        #            }
+        #            catch
+        #            {
+        #                this.writeErrorToStageTbl(tbl);
+        #                ttsAbort;
+        #            }
+        #
+        #        }
+        #
+        #    }
+        #
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #
+        #    super();
+        #    this.initCustomers();
+        #
+        #    this.cleanUp();
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common _tbl)
+        #{
+        #    triDMCustTable              tbl;
+        #    NumberSeq                   numberSeq;
+        #    NumberSequenceReference     numberSequenceReference;
+        #
+        #
+        #    tbl.data(_tbl);
+        #
+        #    if(! tbl.LanguageId)
+        #        tbl.LanguageId = 'EN-US';
+        #
+        #    if(! tbl.Currency)
+        #        tbl.Currency = 'USD';
+        #
+        #    if(! tbl.AccountNum)
+        #    {
+        #
+        #        numberSequenceReference = CustParameters::numRefCustAccount();
+        #        numberseq = NumberSeq::newGetNum(numberSequenceReference);
+        #
+        #        tbl.AccountNum = numberSeq.num();
+        #
+        #
+        #    }
+        #
+        #
+        #    _tbl.data(tbl);
+        #
+        #}
+      ENDSOURCE
+      SOURCE #ValidateCustomer
+        #private boolean ValidateCustomer(triDMCustTable _tbl)
+        #{
+        #    CustTable   custTable;
+        #    boolean     ret = true;
+        #
+        #    custTable = custTable::FindByLegacyID(_tbl.triDMlegacyID);
+        #
+        #    if (custTable.RecId !=0)
+        #        ret = false;
+        #
+        #    return ret;
         #
         #}
       ENDSOURCE
@@ -37864,25 +38377,15 @@ Formatversion: 1
         #            bankAccount.insert();
         #
         #            //this.addAddress(bank);
-        #
+        #            this.updateStage(bank);
         #
         #        }
         #        catch
         #        {
-        #            ttsBegin;
-        #            bank.triDMErrorMsg = infolog.text();
-        #            bank.triDMstatus = triDMstatus::error;
-        #            infolog.clear(0);
-        #            bank.update();
-        #            ttsCommit;
-        #            recErrors++;
+        #            this.writeErrorToStageTbl(bank);
         #            ttsAbort;
         #        }
-        #        ttsBegin;
-        #        bank.triDMstatus = triDMstatus::Imported;
-        #        bank.update();
-        #        ttsCommit;
-        #        recfound++;
+        #
         #
         #
         #    }
@@ -37898,146 +38401,6 @@ Formatversion: 1
       SOURCE #setDefaultValues
         #public void setDefaultValues(Common anyStageTable)
         #{
-        #
-        #}
-      ENDSOURCE
-    ENDMETHODS
-  ENDCLASS
-
-***Element: CLS
-
-; Microsoft Dynamics AX Class: triDM_ProcessStageData_Customers unloaded
-; --------------------------------------------------------------------------------
-  CLSVERSION 1
-  
-  CLASS #triDM_ProcessStageData_Customers
-    PROPERTIES
-      Name                #triDM_ProcessStageData_Customers
-      Extends             #triDM_ProcessStageData
-      Origin              #{DB3A5CDF-9DFE-4835-B32D-4F3E39DE3B33}
-    ENDPROPERTIES
-    
-    METHODS
-      SOURCE #caption
-        #public ClassDescription caption()
-        #{
-        #    ClassDescription ret;
-        #
-        #    ret = "Customer Import";
-        #
-        #    return ret;
-        #}
-      ENDSOURCE
-      SOURCE #classDeclaration
-        #class triDM_ProcessStageData_Customers extends triDM_ProcessStageData
-        #{
-        #}
-      ENDSOURCE
-      SOURCE #CleanUp
-        #public void CleanUp()
-        #{
-        #
-        #   triDMCustTable  tbl;
-        #
-        #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
-        #}
-      ENDSOURCE
-      SOURCE #initCustomers
-        #private void initCustomers()
-        #{
-        #    triDMCustTable  tbl;
-        #    CustTable       customer;
-        #
-        #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
-        #    {
-        #        try
-        #        {
-        #            ttsBegin;
-        #            customer.selectForUpdate();
-        #            this.setDefaultValues(tbl);
-        #            customer.initFromStagingTable(tbl);
-        #            customer.Party = this.addPartyInfo(tbl.PartyType,tbl.Name,tbl.NameAlias,tbl.LanguageId );
-        #            customer.insert();
-        #            ttsCommit;
-        #
-        #
-        #
-        #            this.addSimpleMainContactInfo(tbl, customer.Party);
-        #        }
-        #        catch
-        #        {
-        #            ttsBegin;
-        #            tbl.triDMErrorMsg = infolog.text();
-        #            tbl.triDMstatus = triDMstatus::error;
-        #            infolog.clear(0);
-        #            tbl.update();
-        #            ttsCommit;
-        #            recErrors++;
-        #            ttsAbort;
-        #        }
-        #        ttsBegin;
-        #        tbl.triDMstatus = triDMstatus::Imported;
-        #        tbl.update();
-        #        ttsCommit;
-        #        recfound++;
-        #    }
-        #
-        #}
-      ENDSOURCE
-      SOURCE #run
-        #public void run()
-        #{
-        #
-        #    super();
-        #    this.initCustomers();
-        #
-        #    this.cleanUp();
-        #}
-      ENDSOURCE
-      SOURCE #setDefaultValues
-        #public void setDefaultValues(Common _tbl)
-        #{
-        #    triDMCustTable              tbl;
-        #    NumberSeq                   numberSeq;
-        #    NumberSequenceReference     numberSequenceReference;
-        #
-        #
-        #    tbl.data(_tbl);
-        #
-        #    if(! tbl.LanguageId)
-        #        tbl.LanguageId = 'EN-US';
-        #
-        #    if(! tbl.Currency)
-        #        tbl.Currency = 'USD';
-        #
-        #    if(! tbl.AccountNum)
-        #    {
-        #        ttsBegin;
-        #        numberSequenceReference = CustParameters::numRefCustAccount();
-        #        numberseq = NumberSeq::newGetNum(numberSequenceReference);
-        #
-        #        tbl.AccountNum = numberSeq.num();
-        #
-        #        ttsCommit;
-        #    }
-        #
-        #
-        #    _tbl.data(tbl);
-        #
-        #}
-      ENDSOURCE
-      SOURCE #ValidateCustomer
-        #private boolean ValidateCustomer(triDMCustTable _tbl)
-        #{
-        #    CustTable   custTable;
-        #    boolean     ret;
-        #
-        #    custTable = custTable::FindByLegacyID(_tbl.triDMlegacyID);
-        #
-        #    if (custTable.RecId !=0)
-        #        ret = true;
-        #
-        #    return ret;
         #
         #}
       ENDSOURCE
@@ -38081,8 +38444,8 @@ Formatversion: 1
         #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
         #}
       ENDSOURCE
-      SOURCE #createAddr
-        #private void createAddr()
+      SOURCE #del_createAddr
+        #private void del_createAddr()
         #{
         #    LogisticsPostalAddress      address;
         #    DirPartyPostalAddressView   addressView;
@@ -38148,13 +38511,7 @@ Formatversion: 1
         #        }
         #        catch
         #        {
-        #            ttsBegin;
-        #            addrStage.triDMErrorMsg = infolog.text();
-        #            addrStage.triDMstatus = triDMstatus::error;
-        #            addrStage.update();
-        #            infolog.clear(0);
-        #            ttsCommit;
-        #            recErrors++;
+        #            this.writeErrorToStageTbl(addrStage);
         #            ttsAbort;
         #
         #        }
@@ -38169,8 +38526,6 @@ Formatversion: 1
         #    triDMAddress                addrStage;
         #    DirPartyRecId               recID;
         #
-        #
-        #
         #    while select forUpdate addrStage where addrStage.triDMstatus == triDMstatus::ready
         #    {
         #        recID = this.findPartyRecID(addrStage.triDMlegacyID);
@@ -38183,20 +38538,13 @@ Formatversion: 1
         #
         #            ttsBegin;
         #            this.addAddress(addrStage);
-        #            addrStage.triDMstatus = triDMstatus::Imported;
-        #            addrStage.update();
-        #            recfound++;
         #            ttsCommit;
+        #
+        #            this.updateStage(addrStage);
         #        }
         #        catch
         #        {
-        #            ttsBegin;
-        #            addrStage.triDMErrorMsg = infolog.text();
-        #            addrStage.triDMstatus = triDMstatus::error;
-        #            addrStage.update();
-        #            infolog.clear(0);
-        #            ttsCommit;
-        #            recErrors++;
+        #            this.writeErrorToStageTbl(addrStage);
         #            ttsAbort;
         #
         #        }
@@ -38230,114 +38578,18 @@ Formatversion: 1
         #        switch (importType)
         #        {
         #            case triDMImportType::VendAddr :
-        #                tbl.Description = "Remit To";
+        #                tbl.Description = "Remit-To";
+        #                tbl.Purpose = 'Remit To';
         #                break;
-        #
-        #
+        #             case triDMImportType::VendContact :
+        #                 tbl.Description = "Buisness";
+        #                tbl.Purpose = 'Buisness';
+        #                break;
         #
         #       }
         #
         #    }
         #     addrStage.data(tbl);
-        #}
-      ENDSOURCE
-    ENDMETHODS
-  ENDCLASS
-
-***Element: CLS
-
-; Microsoft Dynamics AX Class: triDM_ProcessStageData_VendBank unloaded
-; --------------------------------------------------------------------------------
-  CLSVERSION 1
-  
-  CLASS #triDM_ProcessStageData_VendBank
-    PROPERTIES
-      Name                #triDM_ProcessStageData_VendBank
-      Extends             #triDM_ProcessStageData
-      Origin              #{F8C40C31-8CF8-489E-A921-3D47E604EA2B}
-    ENDPROPERTIES
-    
-    METHODS
-      SOURCE #caption
-        #public ClassDescription caption()
-        #{
-        #    ClassDescription ret;
-        #
-        #    ret = 'Vendor Bank';
-        #
-        #    return ret;
-        #}
-      ENDSOURCE
-      SOURCE #classDeclaration
-        #class triDM_ProcessStageData_VendBank extends triDM_ProcessStageData
-        #{
-        #}
-      ENDSOURCE
-      SOURCE #CleanUp
-        #public void CleanUp()
-        #{
-        #    triDMAddress  tbl;
-        #
-        #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
-        #}
-      ENDSOURCE
-      SOURCE #createBank
-        #private void createBank()
-        #{
-        #    triDMVendBankAcct   bank;
-        #    VendBankAccount     bankAccount;
-        #    RecId               recid;
-        #
-        #    while select forUpdate bank where bank.triDMstatus == triDMstatus::ready
-        #    {
-        #        try
-        #        {
-        #
-        #            recid = this.findPartyRecID(bank.triDMlegacyID);
-        #
-        #            bankAccount.initFromStageTable(bank);
-        #            bankAccount.VendAccount = VendTable::FindByLegacyID(bank.triDMlegacyID).AccountNum;
-        #            bankAccount.insert();
-        #
-        #            this.addAddress(bank);
-        #
-        #
-        #        }
-        #        catch
-        #        {
-        #            ttsBegin;
-        #            bank.triDMErrorMsg = infolog.text();
-        #            bank.triDMstatus = triDMstatus::error;
-        #            bank.update();
-        #            infolog.clear(0);
-        #            ttsCommit;
-        #            recErrors++;
-        #            ttsAbort;
-        #
-        #        }
-        #        ttsBegin;
-        #
-        #        bank.triDMstatus = triDMstatus::Imported;
-        #        bank.update();
-        #        ttsCommit;
-        #        recFound++;
-        #
-        #    }
-        #
-        #}
-      ENDSOURCE
-      SOURCE #run
-        #public void run()
-        #{
-        #    this.createBank();
-        #    this.CleanUp();
-        #
-        #}
-      ENDSOURCE
-      SOURCE #setDefaultValues
-        #public void setDefaultValues(Common anyStageTable)
-        #{
-        #
         #}
       ENDSOURCE
     ENDMETHODS
@@ -38397,6 +38649,72 @@ Formatversion: 1
         #    ;
         #    args = new Args();
         #    mf = new MenuFunction(menuitemactionstr(triTextFileImport_ZipCode_US),MenuItemType::Action);
+        #    mf.run(args);
+        #}
+      ENDSOURCE
+      SOURCE #setDefaultValues
+        #public void setDefaultValues(Common anyStageTable)
+        #{
+        #    //super(anyStageTable);
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: triDM_ProcessStageData_CANZip unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #triDM_ProcessStageData_CANZip
+    PROPERTIES
+      Name                #triDM_ProcessStageData_CANZip
+      Extends             #triDM_ProcessStageData
+      Origin              #{42607F0C-C4FD-4501-8207-EF618C221AFF}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #canGoBatch
+        #public boolean canGoBatch()
+        #{
+        #    boolean ret;
+        #
+        #    ret = false;
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_CANZip extends triDM_ProcessStageData
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #    //super();
+        #}
+      ENDSOURCE
+      SOURCE #prompt
+        #public boolean prompt()
+        #{
+        #    boolean ret;
+        #
+        #    ret = true;
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    Args            args;
+        #    MenuFunction    mf;
+        #
+        #
+        #    args = new Args();
+        #    mf = new MenuFunction(menuitemactionstr(triTextFileImport_ZipCode_CAN),MenuItemType::Action);
         #    mf.run(args);
         #}
       ENDSOURCE
@@ -38602,224 +38920,6 @@ Formatversion: 1
         #public void setDefaultValues(Common anyStageTable)
         #{
         #    //super(anyStageTable);
-        #}
-      ENDSOURCE
-    ENDMETHODS
-  ENDCLASS
-
-***Element: CLS
-
-; Microsoft Dynamics AX Class: triDM_ProcessStageData_CANZip unloaded
-; --------------------------------------------------------------------------------
-  CLSVERSION 1
-  
-  CLASS #triDM_ProcessStageData_CANZip
-    PROPERTIES
-      Name                #triDM_ProcessStageData_CANZip
-      Extends             #triDM_ProcessStageData
-      Origin              #{42607F0C-C4FD-4501-8207-EF618C221AFF}
-    ENDPROPERTIES
-    
-    METHODS
-      SOURCE #canGoBatch
-        #public boolean canGoBatch()
-        #{
-        #    boolean ret;
-        #
-        #    ret = false;
-        #
-        #    return ret;
-        #}
-      ENDSOURCE
-      SOURCE #classDeclaration
-        #class triDM_ProcessStageData_CANZip extends triDM_ProcessStageData
-        #{
-        #}
-      ENDSOURCE
-      SOURCE #CleanUp
-        #public void CleanUp()
-        #{
-        #    //super();
-        #}
-      ENDSOURCE
-      SOURCE #prompt
-        #public boolean prompt()
-        #{
-        #    boolean ret;
-        #
-        #    ret = true;
-        #
-        #    return ret;
-        #}
-      ENDSOURCE
-      SOURCE #run
-        #public void run()
-        #{
-        #    Args            args;
-        #    MenuFunction    mf;
-        #
-        #
-        #    args = new Args();
-        #    mf = new MenuFunction(menuitemactionstr(triTextFileImport_ZipCode_CAN),MenuItemType::Action);
-        #    mf.run(args);
-        #}
-      ENDSOURCE
-      SOURCE #setDefaultValues
-        #public void setDefaultValues(Common anyStageTable)
-        #{
-        #    //super(anyStageTable);
-        #}
-      ENDSOURCE
-    ENDMETHODS
-  ENDCLASS
-
-***Element: CLS
-
-; Microsoft Dynamics AX Class: triDM_ProcessStageData_vendors unloaded
-; --------------------------------------------------------------------------------
-  CLSVERSION 1
-  
-  CLASS #triDM_ProcessStageData_vendors
-    PROPERTIES
-      Name                #triDM_ProcessStageData_vendors
-      Extends             #triDM_ProcessStageData
-      Origin              #{89B56280-1DDF-41E8-BD10-935764905993}
-    ENDPROPERTIES
-    
-    METHODS
-      SOURCE #caption
-        #public ClassDescription caption()
-        #{
-        #    ClassDescription ret;
-        #
-        #    ret = "Vendor Import";
-        #
-        #    return ret;
-        #}
-      ENDSOURCE
-      SOURCE #classDeclaration
-        #class triDM_ProcessStageData_vendors extends triDM_ProcessStageData
-        #{
-        #
-        #}
-      ENDSOURCE
-      SOURCE #CleanUp
-        #public void CleanUp()
-        #{
-        #
-        #   triDMVendTable  tbl;
-        #
-        #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
-        #}
-      ENDSOURCE
-      SOURCE #initVendors
-        #private void initVendors()
-        #{
-        #    triDMVendTable  tbl;
-        #    VendTable       vendor;
-        #
-        #
-        #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
-        #    {
-        #        if(this.ValidateVendor(tbl) == true)
-        #        {
-        #            try
-        #            {
-        #
-        #                ttsBegin;
-        #                vendor.selectForUpdate();
-        #                this.setDefaultValues(tbl);
-        #                //
-        #                vendor.initFromStagingTable(tbl);
-        #                vendor.Party = this.addPartyInfo(tbl.PartyType,tbl.Name,tbl.NameAlias,tbl.LanguageId );
-        #                vendor.insert();
-        #                ttsCommit;
-        #
-        #
-        #
-        #                this.addSimpleMainContactInfo(tbl,vendor.Party);
-        #            }
-        #            catch
-        #            {
-        #                ttsBegin;
-        #                tbl.triDMErrorMsg = infolog.text();
-        #                tbl.triDMstatus = triDMstatus::error;
-        #                tbl.update();
-        #                infolog.clear(0);
-        #                ttsCommit;
-        #                recErrors++;
-        #                ttsAbort;
-        #            }
-        #
-        #            ttsBegin;
-        #            tbl.triDMstatus = triDMstatus::Imported;
-        #            tbl.update();
-        #            ttsCommit;
-        #            recFound++;
-        #
-        #
-        #        }
-        #
-        #
-        #    }
-        #
-        #}
-      ENDSOURCE
-      SOURCE #run
-        #public void run()
-        #{
-        #    super();
-        #    this.initVendors();
-        #
-        #    this.cleanUp();
-        #}
-      ENDSOURCE
-      SOURCE #setDefaultValues
-        #public void setDefaultValues(Common _tbl)
-        #{
-        #    triDMVendTable          tbl;
-        #    NumberSeq                   numberSeq;
-        #    NumberSequenceReference     numberSequenceReference;
-        #
-        #
-        #    tbl.data(_tbl);
-        #
-        #    if(! tbl.LanguageId)
-        #        tbl.LanguageId = 'EN-US';
-        #
-        #    if(! tbl.Currency)
-        #        tbl.Currency = 'USD';
-        #
-        #    if(! tbl.AccountNum)
-        #    {
-        #
-        #        numberSequenceReference = VendParameters::numRefVendAccount();
-        #        numberseq = NumberSeq::newGetNum(numberSequenceReference);
-        #
-        #        tbl.AccountNum = numberSeq.num();
-        #
-        #
-        #    }
-        #
-        #
-        #    _tbl.data(tbl);
-        #
-        #}
-      ENDSOURCE
-      SOURCE #ValidateVendor
-        #private boolean ValidateVendor(triDMVendTable _tbl)
-        #{
-        #    VendTable   vendTable;
-        #    boolean     ret;
-        #
-        #    vendTable = VendTable::FindByLegacyID(_tbl.triDMlegacyID);
-        #
-        #    if (vendTable.RecId ==0)
-        #        ret = true ; // vendor exists
-        #
-        #
-        #    return ret;
-        #
         #}
       ENDSOURCE
     ENDMETHODS
@@ -39670,7 +39770,7 @@ Formatversion: 1
         #    journalTable.parmReverseEntry(this.Excelvalue( cells.item(row,#ReversingEntry).value()));
         #    journalTable.parmReverseDate(this.Excelvalue( cells.item(row,#reversingDate).value()));
         #
-        #   journalTable.save();
+        #    journalTable.save();
         #
         #    return journalTable.parmJournalNum() ;
         #}
@@ -40497,6 +40597,32 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
+      SOURCE #validateField_CallTableMethod
+        #protected boolean validateField_CallTableMethod(Common _tableIN)
+        #{
+        #    int i;
+        #    Common          anyTable ;
+        #    DictTable       dictTable ;
+        #    SysDictField    sysDictField;
+        #    boolean         ret;
+        #
+        #    anyTable = _tableIN;
+        #    dictTable = new DictTable(anyTable.TableId );
+        #    for (i=1; i<=dictTable.fieldCnt(); i++)
+        #    {
+        #        sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
+        #        ret = anyTable.validateField(sysDictField.id());
+        #        if (!ret)
+        #        {
+        #            throw error(infolog.text());
+        #        }
+        #
+        #
+        #    }
+        #    ret = true;
+        #    return ret;
+        #}
+      ENDSOURCE
       SOURCE #addAddress
         #public void addAddress(common _tbl)
         #{
@@ -40520,12 +40646,12 @@ Formatversion: 1
         #    try
         #    {
         #        ttsBegin;
-        #        address.CountryRegionId     = addrStage.CountryRegionId;
-        #        address.State               = addrStage.State;
-        #        address.ZipCode             = addrStage.ZipCode;
-        #        address.Street              = addrStage.Street;
+        #        address.CountryRegionId     = addrStage.CountryRegionId; //validate
+        #        address.State               = addrStage.State; // validate
+        #        address.ZipCode             = addrStage.ZipCode; //validate
+        #        address.Street              = this.strAddCRLF( addrStage.Street);
         #        address.StreetNumber        = addrStage.StreetNumber;
-        #        address.City                = addrStage.City;
+        #        address.City                = addrStage.City; //validate
         #
         #        addressView.LocationName    = addrStage.Description;
         #        addressView.IsPrimary       = addrStage.IsPrimary;
@@ -40534,7 +40660,7 @@ Formatversion: 1
         #        addressview.initFromPostalAddress(address);
         #
         #        conRoles = conNull();
-        #
+        #        // todo handle multiple purpose in one field. pipe char sepaerator
         #        select locationRole where locationRole.Name == addrStage.Purpose;
         #        if(locationRole.RecId != 0)
         #        {
@@ -40549,7 +40675,7 @@ Formatversion: 1
         #        if(location.RecId != 0)
         #        {
         #            locationExt.Location = location.RecId;
-        #            locationExt.TaxGroup = addrStage.TaxGroup;
+        #            locationExt.TaxGroup = addrStage.TaxGroup;// validate
         #            locationExt.insert();
         #        }
         #
@@ -40602,7 +40728,9 @@ Formatversion: 1
         #        contactView.IsPrimary    = tbl.isPrimary ;
         #        contactView.IsPrivate    = tbl.isPrivate;
         #        contactView.LocatorExtension = tbl.Extention;
+        #        contactView.Locator     = tbl.Phone;
         #        dirParty.createOrUpdateContactInfo(contactView);
+        #
         #    }
         #
         #    if(tbl.Fax)
@@ -40612,6 +40740,7 @@ Formatversion: 1
         #        contactView.Party        = _Party;
         #        contactView.IsPrimary    = tbl.isPrimary ;
         #        contactView.IsPrivate    = tbl.isPrivate;
+        #        contactView.Locator      = tbl.Fax;
         #        dirParty.createOrUpdateContactInfo(contactView);
         #    }
         #
@@ -40623,6 +40752,7 @@ Formatversion: 1
         #        contactView.Party        = _Party;
         #        contactView.IsPrimary    = tbl.isPrimary ;
         #        contactView.IsPrivate    = tbl.isPrivate;
+        #        contactView.Locator      = tbl.Email;
         #        dirParty.createOrUpdateContactInfo(contactView);
         #    }
         #
@@ -40634,6 +40764,7 @@ Formatversion: 1
         #        contactView.Party        = _Party;
         #        contactView.IsPrimary    = tbl.isPrimary ;
         #        contactView.IsPrivate    = tbl.isPrivate;
+        #        contactView.Locator      = tbl.url;
         #        dirParty.createOrUpdateContactInfo(contactView);
         #    }
         #
@@ -40986,11 +41117,48 @@ Formatversion: 1
         #}
         #
       ENDSOURCE
+      SOURCE #updateStage
+        #protected void updateStage(Common stageTable)
+        #{
+        #    triStageError   stage;
+        #
+        #    recFound++;
+        #
+        #    stage = stageTable;
+        #
+        #    ttsBegin;
+        #    stage.selectForUpdate();
+        #    stage.triDMstatus = triDMstatus::Imported;
+        #    stage.update();
+        #    ttsCommit;
+        #
+        #
+        #}
+      ENDSOURCE
       SOURCE #writeErrorToExcel
         #protected void writeErrorToExcel( SysExcelWorkSheet excelWorkSheet, int _row, int _col, str _err)
         #{
         #    recErrors++;
         #    excelWorkSheet.cells().item(_row,_col).value(_err);
+        #    infolog.clear(0);
+        #
+        #}
+      ENDSOURCE
+      SOURCE #writeErrorToStageTbl
+        #protected void writeErrorToStageTbl(Common stageTable)
+        #{
+        #    triStageError   stage;
+        #
+        #    recErrors++;
+        #    stage = stageTable;
+        #
+        #    ttsBegin;
+        #    stage.selectForUpdate();
+        #    stage.triDMstatus = triDMstatus::error;
+        #    stage.triDMErrorMsg = infolog.text();
+        #    stage.update();
+        #    ttsCommit;
+        #
         #    infolog.clear(0);
         #
         #}
@@ -41935,6 +42103,124 @@ FORM #triDMDataMigration
       #{
       #}
     ENDSOURCE
+    SOURCE #exportMappings
+      #public void exportMappings()
+      #{
+      #    CommaIo             file;
+      #    Dialog              dialog = new Dialog("Export Data migration Field Mapping to CSV file");
+      #    FileName            filename ;
+      #    DialogField         df;
+      #
+      #
+      #    container           con;
+      #    FileIoPermission    permission;
+      #    triDMFieldMapping   tbl;
+      #
+      #    #File
+      #
+      #    df = dialog.addField(extendedtypestr(FilenameSave));
+      #    if (dialog.run())
+      #    {
+      #        fileName = df.value();
+      #        fileName = fileName + '.csv';
+      #
+      #        if (fileName)
+      #        {
+      #            permission = new FileIoPermission(fileName,#io_write);
+      #            permission.assert();
+      #
+      #            file = new CommaIO(fileName ,#io_write);
+      #            if (!file)
+      #                throw Exception::Error;
+      #
+      #            // Specify the delimiters
+      #            file.outRecordDelimiter(#delimiterCRLF);
+      #            file.outFieldDelimiter(",");
+      #
+      #
+      #            try
+      #            {
+      #
+      #                // Create the permission class
+      #
+      #                file = new TextIo(filename, #io_write);
+      #
+      #                // Loop through the data source
+      #                while select tbl
+      #                {
+      #                    // Empty the container
+      #                    con = connull();
+      #                    // Set the data into the container
+      #                    con = conins(con, 1, tbl.FileCol );
+      #                    con = conins(con, 2, tbl.refFieldID);
+      #                    con = conins(con, 3, tbl.refFieldName);
+      #                    con = conins(con, 4, tbl.refTableName);
+      #                    con = conins(con, 5, tbl.refTableNum);
+      #                    con = conins(con, 6, tbl.triDMImportType);
+      #                    // Write the container to the file
+      #                    file.writeExp(con);
+      #                }
+      #            }
+      #        catch(Exception::Error)
+      #        {
+      #            error("You do not have access to write the file to the selected folder");
+      #        }
+      #        // Revert the access privileges
+      #        CodeAccessPermission::revertAssert();
+      #        }
+      #    }
+      #}
+    ENDSOURCE
+    SOURCE #importmappings
+      #public void importmappings()
+      #{
+      #    Dialog              dialog = new Dialog("Import Data migration Field Mapping from CSV file");
+      #    FileIoPermission    perm;
+      #    DialogField         df;
+      #    FileNameOpen        fileName;
+      #    CommaIO             file;
+      #    Container           con;
+      #    int                 i;
+      #    triDMFieldMapping   tbl;
+      #    ;
+      #
+      #    df = dialog.addField(extendedtypestr(FileNameOpen));
+      #
+      #    if (dialog.run())
+      #    {
+      #        fileName = df.value();
+      #
+      #        if (fileName)
+      #        {
+      #            perm = new FileIoPermission(fileName,'R');
+      #            perm.assert();
+      #
+      #            file = new CommaIO(fileName,'R');
+      #
+      #            if (file)
+      #            {
+      #                ttsbegin;
+      #                i++;
+      #                while (file.status() == IO_Status::OK)
+      #                {
+      #                    i++; con = file.read();
+      #
+      #                    // map to table
+      #                    tbl.FileCol         = conPeek(con,1);
+      #                    tbl.refFieldID      = conPeek(con,2);
+      #                    tbl.refFieldName    = conPeek(con,3);
+      #                    tbl.refTableName    = conPeek(con,4);
+      #                    tbl.refTableNum     = conPeek(con,5);
+      #                    tbl.triDMImportType = conPeek(con,6);
+      #                    tbl.insert();
+      #
+      #                }
+      #                ttscommit;
+      #            }
+      #        }
+      #    }
+      #}
+    ENDSOURCE
   ENDMETHODS
   OBJECTBANK
     PROPERTIES
@@ -42015,7 +42301,7 @@ FORM #triDMDataMigration
         PROPERTIES
           Name                #ButtonGroup1
           Top                 #Top edge
-          ElementPosition     #1207959549
+          ElementPosition     #1241513981
           HierarchyParent     #Group
         ENDPROPERTIES
         
@@ -42047,6 +42333,57 @@ FORM #triDMDataMigration
         ENDPROPERTIES
         
         METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL MENUBUTTON
+        PROPERTIES
+          Name                #functions
+          ElementPosition     #715827880
+          HierarchyParent     #ButtonGroup
+          Text                #Functions
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL BUTTON
+        PROPERTIES
+          Name                #export
+          ElementPosition     #1610612733
+          HierarchyParent     #functions
+          Text                #Export field mappings
+        ENDPROPERTIES
+        
+        METHODS
+          SOURCE #clicked
+            #void clicked()
+            #{
+            #    super();
+            #    element.exportMappings();
+            #}
+          ENDSOURCE
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL BUTTON
+        PROPERTIES
+          Name                #Import
+          ElementPosition     #1073741822
+          HierarchyParent     #functions
+          Text                #Import field mappings
+        ENDPROPERTIES
+        
+        METHODS
+          SOURCE #clicked
+            #void clicked()
+            #{
+            #    super();
+            #    element.importmappings();
+            #
+            #}
+          ENDSOURCE
         ENDMETHODS
       ENDCONTROL 
       
@@ -42313,7 +42650,7 @@ ENDFORM
   SOURCE #Job7
     #static void Job7(Args _args)
     #{
-    #
+    #/*
     #        SysExcelApplication application;
     #        SysExcelWorkbooks workbooks;
     #        SysExcelWorkbook workbook;
@@ -42340,6 +42677,7 @@ ENDFORM
     #        cell.value(custTable.Name);
     #        }
     #        application.visible(true);
+    #*/
     #}
   ENDSOURCE
   PROPERTIES
@@ -42358,7 +42696,7 @@ ENDFORM
     #static void utilScriptFillDataMigrationTable(Args _args)
     #{
     #
-    #    DictTable dictTable = new DictTable(tableNum(triDMVendBankAcct)); // change table name here
+    #    DictTable dictTable = new DictTable(tableNum(triDMCustTable)); // change table name here
     #
     #    SysDictField                sysDictField;
     #    SysDictType                 sysDictType;
@@ -43606,10 +43944,10 @@ ENDFORM
         #    str         seg7;
         #    int         intMainAcct;
         #
-        #    mainAccount = this.value(cells.item(row, #Account).value());
+        #    mainAccount = CustTable::FindByLegacyID(this.value(cells.item(row, #Account).value())).AccountNum ;
         #    seg1 = this.value(cells.item(row, #Dim_1).value());
         #    seg2 = this.value(cells.item(row, #Dim_2).value());
-        #    seg3 = this.value(cells.item(row, #Dim_3).value());
+        #    seg3 = CustTable::FindByLegacyID(this.value(cells.item(row, #Dim_3).value())).AccountNum;
         #    seg4 = this.value(cells.item(row, #Dim_4).value());
         #    seg5 = this.value(cells.item(row, #Dim_5).value());
         #    seg6 = this.value(cells.item(row, #Dim_6).value());
@@ -44433,7 +44771,7 @@ ENDFORM
         #    str         seg7;
         #    int         intMainAcct;
         #
-        #    mainAccount = this.value(cells.item(row, #Account).value());
+        #    mainAccount = VendTable::FindByLegacyID( this.value(cells.item(row, #Account).value())).AccountNum;
         #    seg1 = this.value(cells.item(row, #Dim_1).value());
         #    seg2 = this.value(cells.item(row, #Dim_2).value());
         #    seg3 = this.value(cells.item(row, #Dim_3).value());
@@ -47717,6 +48055,13 @@ ENDFORM
         BEGINNODE
           FILETYPE 0
           UTILTYPE 44
+          UTILOBJECTID 101055
+          NODETYPE 236
+          NAME #triStageError
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 44
           UTILOBJECTID 101052
           NODETYPE 236
           NAME #triStageAddress
@@ -47826,30 +48171,16 @@ ENDFORM
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
+        UTILOBJECTID 1024670
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_vendors
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
         UTILOBJECTID 1024689
         NODETYPE 329
         NAME #triDM_ProcessStageData_VendContacts
-      ENDNODE
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 45
-        UTILOBJECTID 1024692
-        NODETYPE 329
-        NAME #triDM_ProcessStageData_CustBank
-      ENDNODE
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 45
-        UTILOBJECTID 1024693
-        NODETYPE 329
-        NAME #triDM_ProcessStageData_Customers
-      ENDNODE
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 45
-        UTILOBJECTID 1024687
-        NODETYPE 329
-        NAME #triDM_ProcessStageData_Address
       ENDNODE
       BEGINNODE
         FILETYPE 0
@@ -47861,9 +48192,37 @@ ENDFORM
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
+        UTILOBJECTID 1024693
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_Customers
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024692
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_CustBank
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024687
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_Address
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
         UTILOBJECTID 1024671
         NODETYPE 329
         NAME #triDM_ProcessStageData_USZip
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024673
+        NODETYPE 329
+        NAME #triDM_ProcessStageData_CANZip
       ENDNODE
       BEGINNODE
         FILETYPE 0
@@ -47885,20 +48244,6 @@ ENDFORM
         UTILOBJECTID 1024699
         NODETYPE 329
         NAME #triDM_ProcessStageData_openAP
-      ENDNODE
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 45
-        UTILOBJECTID 1024673
-        NODETYPE 329
-        NAME #triDM_ProcessStageData_CANZip
-      ENDNODE
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 45
-        UTILOBJECTID 1024670
-        NODETYPE 329
-        NAME #triDM_ProcessStageData_vendors
       ENDNODE
       BEGINNODE
         FILETYPE 0
