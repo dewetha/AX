@@ -30123,6 +30123,16 @@ Formatversion: 1
 <Table:Record name="TmpSysLabel"
        xmlns:Table='urn:www.microsoft.com/Formats/Table'>
     <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">"%1 is invalid, unable to import %2</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI9</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
     <Table:Field name="Label">Account %1 does not exist.</Table:Field>
     <Table:Field name="Description"></Table:Field>
     <Table:Field name="LabelId">@SYS9779</Table:Field>
@@ -31833,6 +31843,16 @@ Formatversion: 1
           Table               #triDMCustTable
           Origin              #{B9CD534D-6B48-480B-AF44-0BA2E741EE03}
           StringSize          #30
+        ENDPROPERTIES
+        
+      FIELD #triDimensionString
+        STRING
+        PROPERTIES
+          Name                #triDimensionString
+          Table               #triDMCustTable
+          Origin              #{6B2E374C-32A8-434C-BF16-6E078C8772FA}
+          ExtendedDataType    #triDimensionString
+          StringSize          #250
         ENDPROPERTIES
         
       FIELD #triDMErrorMsg
@@ -35881,6 +35901,16 @@ Formatversion: 1
           StringSize          #30
         ENDPROPERTIES
         
+      FIELD #triDimensionString
+        STRING
+        PROPERTIES
+          Name                #triDimensionString
+          Table               #triDMVendTable
+          Origin              #{B72EF672-043D-43FB-B644-0F1427124880}
+          ExtendedDataType    #triDimensionString
+          StringSize          #250
+        ENDPROPERTIES
+        
       FIELD #triDMErrorMsg
         STRING
         PROPERTIES
@@ -38677,6 +38707,34 @@ Formatversion: 1
 
 ***Element: UTS
 
+; Microsoft Dynamics AX String: triDimensionString unloaded
+; --------------------------------------------------------------------------------
+  USERTYPEVERSION 6
+  
+  USERTYPE #triDimensionString
+  STRING
+    PROPERTIES
+      Name                #triDimensionString
+      Label               #dimensions
+      HelpText            #the dimensions associated with the account
+      Origin              #{3D7C7B67-A135-45C6-8639-A5F64F5BEFDA}
+      StringSize          #250
+    ENDPROPERTIES
+    
+    TYPEELEMENTS
+    ENDTYPEELEMENTS
+    
+    TYPEREFERENCES
+    ENDTYPEREFERENCES
+    
+    TYPELOOKUPS
+    ENDTYPELOOKUPS
+    
+  ENDUSERTYPE
+  
+
+***Element: UTS
+
 ; Microsoft Dynamics AX String: triDMErrorMsg unloaded
 ; --------------------------------------------------------------------------------
   USERTYPEVERSION 6
@@ -39083,20 +39141,33 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #createPartyType
-        #private void createPartyType(triDMVendTable  tbl)
+      SOURCE #caption
+        #public ClassDescription caption()
         #{
-        #    switch (tbl.PartyType)
-        #    {
-        #        case DirPartyType::Person :
-        #            this.createDirPerson(tbl);
-        #            break;
+        #    ClassDescription ret;
         #
-        #        case DirPartyType::Organization :
-        #            this.createDirOrganization(tbl);
-        #            break;
+        #    ret = "Vendor Import";
         #
-        #    }
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class triDM_ProcessStageData_vendors extends triDM_ProcessStageData
+        #{
+        #    boolean CreateDependedRecordAccountNum;
+        #    boolean CreateDependedRecordParty;
+        #    boolean CreateDependendVendGroup;
+        #    boolean CreateDependendRecordPerson;
+        #    boolean CreateDependendRecordOrganizationBase;
+        #}
+      ENDSOURCE
+      SOURCE #CleanUp
+        #public void CleanUp()
+        #{
+        #    //triDMVendTable tbl;
+        #
+        #
+        #   // delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
         #}
       ENDSOURCE
       SOURCE #createAccountNum
@@ -39143,33 +39214,69 @@ Formatversion: 1
         #    tbldirPersonName.insert();
         #}
       ENDSOURCE
-      SOURCE #caption
-        #public ClassDescription caption()
+      SOURCE #createPartyType
+        #private void createPartyType(triDMVendTable  tbl)
         #{
-        #    ClassDescription ret;
+        #    switch (tbl.PartyType)
+        #    {
+        #        case DirPartyType::Person :
+        #            this.createDirPerson(tbl);
+        #            break;
         #
-        #    ret = "Vendor Import";
+        #        case DirPartyType::Organization :
+        #            this.createDirOrganization(tbl);
+        #            break;
         #
-        #    return ret;
+        #    }
         #}
       ENDSOURCE
-      SOURCE #classDeclaration
-        #class triDM_ProcessStageData_vendors extends triDM_ProcessStageData
+      SOURCE #createVendors
+        #private void createVendors()
         #{
-        #    boolean CreateDependedRecordAccountNum;
-        #    boolean CreateDependedRecordParty;
-        #    boolean CreateDependendVendGroup;
-        #    boolean CreateDependendRecordPerson;
-        #    boolean CreateDependendRecordOrganizationBase;
-        #}
-      ENDSOURCE
-      SOURCE #CleanUp
-        #public void CleanUp()
-        #{
-        #    //triDMVendTable tbl;
+        #    triDMVendTable              tbl;
+        #    VendTable                   vendor;
         #
         #
-        #   // delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
+        #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
+        #    {
+        #        try
+        #        {
+        #            infolog.clear(0);
+        #            this.setDefaultValues(tbl);
+        #            vendor.clear();
+        #            vendor.selectForUpdate();
+        #
+        #            if( this.ValidateVendor(tbl) && this.ValidateVendTable(tbl) == true)
+        #            {
+        #
+        #                ttsBegin;
+        #                if(! tbl.AccountNum)
+        #                {
+        #                    tbl.AccountNum = this.createAccountNum();
+        #                }
+        #
+        #                this.createPartyType(tbl);
+        #                this.initFromStagingVendTable(tbl,vendor);
+        #                if (infolog.text())
+        #                {
+        #                    throw Exception::Error;
+        #                }
+        #                vendor.insert();
+        #
+        #                this.addSimpleMainContactInfo(tbl,vendor.Party);
+        #                ttsCommit;
+        #                this.updateStage(tbl);
+        #            }
+        #
+        #        }
+        #        catch
+        #        {
+        #            this.writeErrorToStageTbl(tbl);
+        #            ttsAbort;
+        #        }
+        #
+        #    }
+        #
         #}
       ENDSOURCE
       SOURCE #initFromStagingDirOrganization
@@ -39362,55 +39469,6 @@ Formatversion: 1
         #
         #}
       ENDSOURCE
-      SOURCE #createVendors
-        #private void createVendors()
-        #{
-        #    triDMVendTable              tbl;
-        #    VendTable                   vendor;
-        #
-        #
-        #    while select forUpdate tbl where tbl.triDMstatus == triDMstatus::ready
-        #    {
-        #        try
-        #        {
-        #            infolog.clear(0);
-        #            this.setDefaultValues(tbl);
-        #            vendor.clear();
-        #            vendor.selectForUpdate();
-        #
-        #            if( this.ValidateVendor(tbl) && this.ValidateVendTable(tbl) == true)
-        #            {
-        #
-        #                ttsBegin;
-        #                if(! tbl.AccountNum)
-        #                {
-        #                    tbl.AccountNum = this.createAccountNum();
-        #                }
-        #
-        #                this.createPartyType(tbl);
-        #                this.initFromStagingVendTable(tbl,vendor);
-        #                if (infolog.text())
-        #                {
-        #                    throw Exception::Error;
-        #                }
-        #                vendor.insert();
-        #
-        #                this.addSimpleMainContactInfo(tbl,vendor.Party);
-        #                ttsCommit;
-        #                this.updateStage(tbl);
-        #            }
-        #
-        #        }
-        #        catch
-        #        {
-        #            this.writeErrorToStageTbl(tbl);
-        #            ttsAbort;
-        #        }
-        #
-        #    }
-        #
-        #}
-      ENDSOURCE
       SOURCE #initVendors_old
         #private void initVendors_old()
         #{
@@ -39527,7 +39585,7 @@ Formatversion: 1
         #    {
         #        fieldID= fieldNum( triDMVendTable, DunsNumber);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Vendor'));
         #    }
         #}
         #
@@ -39539,7 +39597,7 @@ Formatversion: 1
         #    {
         #        fieldID= fieldNum( triDMVendTable, DunsNumberRecId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Vendor'));
         #
         #    }
         #
@@ -39567,7 +39625,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, Name);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #}
         #
         #
@@ -39581,7 +39639,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, LanguageId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -39616,7 +39674,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, DisplayAs);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #}
         #
@@ -39628,7 +39686,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, AffixPersonalTitle);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #}
         #
@@ -39640,7 +39698,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PersonalSuffix);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -39679,7 +39737,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PersonalSuffix);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -39698,7 +39756,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PersonalTitle);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -39717,7 +39775,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, NameSequence);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -39727,7 +39785,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, NameSequence);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #}
         #//------End RelationGroup : DirNameSequence_FK ----------------
         #
@@ -39743,7 +39801,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, CommunicatorSignIn);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -39777,7 +39835,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, triDMlegacyID);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #}
         #
@@ -39801,7 +39859,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, FirstName);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #}
         #
         #if(! _tbl.MiddleName) //Middle name
@@ -39809,7 +39867,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, MiddleName);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #}
         #
         #if(! _tbl.LastName) //Last name
@@ -39817,7 +39875,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, LastName);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #}
         #
         #
@@ -39832,7 +39890,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, Person);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -39885,7 +39943,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, VendExceptionGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Vendor'));
         #    }
         #}
         #
@@ -39898,7 +39956,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, triDMlegacyID);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Vendor'));
         #    }
         #}
         #
@@ -39927,7 +39985,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, CompanyIdNAF);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Vendor'));
         #    }
         #}
         #
@@ -39941,7 +39999,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, InvoiceDeclarationId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Vendor'));
         #    }
         #}
         #
@@ -39953,7 +40011,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, Tax1099Box);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" ,'Tax1099Type and '+ sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" ,'Tax1099Type and '+ sysDictField.label() ,'Vendor'));
         #    }
         #}
         #
@@ -39966,7 +40024,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, MainContactWorker);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40014,7 +40072,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, BankCentralBankPurposeCode);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #
         #    }
         #
@@ -40034,7 +40092,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, BirthCountyCode_IT);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40053,7 +40111,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, CashDisc);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40072,7 +40130,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, CompanyNAFCode);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40091,7 +40149,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, ContactPersonId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40110,7 +40168,7 @@ Formatversion: 1
         #     //Throw Error
         #        fieldID= fieldNum( triDMVendTable, Currency);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40120,7 +40178,7 @@ Formatversion: 1
         #      //Throw Error
         #        fieldID= fieldNum( triDMVendTable, Currency);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #
         #}
         #//------End RelationGroup : Currency ----------------
@@ -40137,7 +40195,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, VendItemGroupId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #
         #    }
         #
@@ -40157,7 +40215,7 @@ Formatversion: 1
         #       //Throw Error
         #        fieldID= fieldNum( triDMVendTable, DefaultDimension);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40176,7 +40234,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, DestinationCodeId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40195,7 +40253,7 @@ Formatversion: 1
         #       //Throw Error
         #        fieldID= fieldNum( triDMVendTable, DlvMode);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40214,7 +40272,7 @@ Formatversion: 1
         #       //Throw Error
         #        fieldID= fieldNum( triDMVendTable, DlvTerm);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40233,7 +40291,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, FactoringAccount);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40252,7 +40310,7 @@ Formatversion: 1
         #       //Throw Error
         #        fieldID= fieldNum( triDMVendTable, EthnicOriginId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40271,7 +40329,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, ItemBuyerGroupId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40290,7 +40348,7 @@ Formatversion: 1
         #           //Throw Error
         #        fieldID= fieldNum( triDMVendTable, InventLocation);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40309,7 +40367,7 @@ Formatversion: 1
         #       //Throw Error
         #        fieldID= fieldNum( triDMVendTable, InventSiteId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40328,7 +40386,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, InvoiceAccount);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40347,7 +40405,7 @@ Formatversion: 1
         #     //Throw Error
         #        fieldID= fieldNum( triDMVendTable, VendInvoiceDeclaration_IS);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40366,7 +40424,7 @@ Formatversion: 1
         #      //Throw Error
         #        fieldID= fieldNum( triDMVendTable, LineOfBusinessId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40385,7 +40443,7 @@ Formatversion: 1
         #       //Throw Error
         #        fieldID= fieldNum( triDMVendTable, DiotCountryCode_MX);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40404,7 +40462,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, MainContactWorker);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40423,7 +40481,7 @@ Formatversion: 1
         #      //Throw Error
         #        fieldID= fieldNum( triDMVendTable, MarkupGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40442,7 +40500,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, numberSequenceGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40461,7 +40519,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, OffsetLedgerDimension);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40480,7 +40538,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, Party);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         # // Check for Cardinality Validation
@@ -40489,7 +40547,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, Party);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #}
         #
@@ -40507,7 +40565,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PaymDayId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40526,7 +40584,7 @@ Formatversion: 1
         #   //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PaymSched);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40545,7 +40603,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PaymTermId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40564,7 +40622,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, ClearingPeriod);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40583,7 +40641,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, EndDisc);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #
         #    }
         #
@@ -40603,7 +40661,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, LineDisc);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40622,7 +40680,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, MultiLineDisc);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40641,7 +40699,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PriceGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40660,7 +40718,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PurchPoolId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40679,7 +40737,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, ResidenceForeignCountryRegionId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40698,7 +40756,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, CompanyChainId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40717,7 +40775,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, CompanyChainId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40736,7 +40794,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, SegmentId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40755,7 +40813,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, SuppItemGroupId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40774,7 +40832,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, Tax1099Fields);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40793,7 +40851,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, TaxGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40812,7 +40870,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, TaxWithholdGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40831,7 +40889,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, BankAccount);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40850,7 +40908,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, VendExceptionGroupRecId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40869,7 +40927,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, VendGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #
         #    }
         #
@@ -40880,7 +40938,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, VendGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #}
         #//------End RelationGroup : VendGroup ----------------
         #
@@ -40896,7 +40954,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PaymSpec);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40915,7 +40973,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PaymMode);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40934,7 +40992,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, VendPriceToleranceGroupId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40953,7 +41011,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMVendTable, PurchCalendarId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Vendor'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Vendor'));
         #    }
         #
         #}
@@ -40968,6 +41026,16 @@ Formatversion: 1
       ENDSOURCE
     ENDMETHODS
   ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">"%1 is invalid, unable to import %2</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI9</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: CLS
 
@@ -41155,66 +41223,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #createDirPerson
-        #private void createDirPerson(triDMCustTable              tbl)
-        #{
-        #    DirPerson                   tbldirPerson;
-        #    DirPersonName               tbldirPersonName;
-        #
-        #
-        #    tbldirPerson = this.createNewParty(tbl.PartyType,tbl.Name);
-        #    tbldirPerson.selectForUpdate();
-        #    tbl.Party = tbldirPerson.RecId;
-        #    this.initFromStagingDirPerson(tbl,tbldirPerson);
-        #    tbldirPerson.insert();
-        #
-        #    tbldirPersonName.selectForUpdate();
-        #    tbl.Person = tbl.Party;
-        #    this.initFromStagingDirPersonName(tbl , tbldirPersonName);
-        #    tbldirPersonName.insert();
-        #}
-      ENDSOURCE
-      SOURCE #createDirOrganization
-        #private void createDirOrganization(triDMCustTable              tbl)
-        #{
-        #    DirOrganization             tbldirOrganization;
-        #
-        #
-        #    tbldirOrganization = this.createNewParty(tbl.PartyType,tbl.Name);
-        #    tbldirOrganization.selectForUpdate();
-        #    tbl.Party = tbldirOrganization.RecId;
-        #    this.initFromStagingDirOrganization(tbl,tbldirOrganization);
-        #    tbldirOrganization.insert();
-        #}
-      ENDSOURCE
-      SOURCE #createPartyType
-        #private void createPartyType(triDMCustTable  tbl)
-        #{
-        #    switch (tbl.PartyType)
-        #    {
-        #        case DirPartyType::Person :
-        #            this.createDirPerson(tbl);
-        #            break;
-        #
-        #        case DirPartyType::Organization :
-        #            this.createDirOrganization(tbl);
-        #            break;
-        #
-        #    }
-        #}
-      ENDSOURCE
-      SOURCE #createAccountNum
-        #private AccountNum createAccountNum()
-        #{
-        #    NumberSeq                   numberSeq;
-        #    NumberSequenceReference     numberSequenceReference;
-        #
-        #    numberSequenceReference = CustParameters::numRefCustAccount();
-        #    numberseq = NumberSeq::newGetNum(numberSequenceReference);
-        #
-        #    return numberSeq.num();
-        #}
-      ENDSOURCE
       SOURCE #caption
         #public ClassDescription caption()
         #{
@@ -41237,6 +41245,18 @@ Formatversion: 1
         #   triDMCustTable  tbl;
         #
         #    delete_from tbl where tbl.triDMstatus == triDMstatus::Imported;
+        #}
+      ENDSOURCE
+      SOURCE #createAccountNum
+        #private AccountNum createAccountNum()
+        #{
+        #    NumberSeq                   numberSeq;
+        #    NumberSequenceReference     numberSequenceReference;
+        #
+        #    numberSequenceReference = CustParameters::numRefCustAccount();
+        #    numberseq = NumberSeq::newGetNum(numberSequenceReference);
+        #
+        #    return numberSeq.num();
         #}
       ENDSOURCE
       SOURCE #createCustomers
@@ -41285,6 +41305,54 @@ Formatversion: 1
         #
         #    }
         #
+        #}
+      ENDSOURCE
+      SOURCE #createDirOrganization
+        #private void createDirOrganization(triDMCustTable              tbl)
+        #{
+        #    DirOrganization             tbldirOrganization;
+        #
+        #
+        #    tbldirOrganization = this.createNewParty(tbl.PartyType,tbl.Name);
+        #    tbldirOrganization.selectForUpdate();
+        #    tbl.Party = tbldirOrganization.RecId;
+        #    this.initFromStagingDirOrganization(tbl,tbldirOrganization);
+        #    tbldirOrganization.insert();
+        #}
+      ENDSOURCE
+      SOURCE #createDirPerson
+        #private void createDirPerson(triDMCustTable              tbl)
+        #{
+        #    DirPerson                   tbldirPerson;
+        #    DirPersonName               tbldirPersonName;
+        #
+        #
+        #    tbldirPerson = this.createNewParty(tbl.PartyType,tbl.Name);
+        #    tbldirPerson.selectForUpdate();
+        #    tbl.Party = tbldirPerson.RecId;
+        #    this.initFromStagingDirPerson(tbl,tbldirPerson);
+        #    tbldirPerson.insert();
+        #
+        #    tbldirPersonName.selectForUpdate();
+        #    tbl.Person = tbl.Party;
+        #    this.initFromStagingDirPersonName(tbl , tbldirPersonName);
+        #    tbldirPersonName.insert();
+        #}
+      ENDSOURCE
+      SOURCE #createPartyType
+        #private void createPartyType(triDMCustTable  tbl)
+        #{
+        #    switch (tbl.PartyType)
+        #    {
+        #        case DirPartyType::Person :
+        #            this.createDirPerson(tbl);
+        #            break;
+        #
+        #        case DirPartyType::Organization :
+        #            this.createDirOrganization(tbl);
+        #            break;
+        #
+        #    }
         #}
       ENDSOURCE
       SOURCE #initCustomers_old
@@ -41611,7 +41679,7 @@ Formatversion: 1
         #            //Throw Error
         #            fieldID= fieldNum( triDMCustTable, triDMlegacyID);
         #            sysDictField = new SysDictField(stagetblID , fieldID );
-        #            throw error(strFmt("@TRL13" , sysDictField.label(),'Customer'));
+        #            throw error(strFmt("@TRI9" , sysDictField.label(),'Customer'));
         #        }
         #    }
         #
@@ -41634,7 +41702,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable, CompanyIdNAF);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Customer'));
         #    }
         #}
         #
@@ -41647,7 +41715,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , BankCustPaymIdTable);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41661,7 +41729,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , MainContactWorker);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #}
         #
@@ -41703,7 +41771,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , BankAccount);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41722,7 +41790,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , BankCentralBankPurposeCode);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41741,7 +41809,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , BankCustPaymIdTable);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41760,7 +41828,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , BirthCountyCode_IT);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41779,7 +41847,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , CashDisc);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41798,7 +41866,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , CommissionGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41817,7 +41885,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , SalesGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41836,7 +41904,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , CompanyNAFCode);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41855,7 +41923,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , ContactPersonId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41874,7 +41942,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , Currency);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41884,7 +41952,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , Currency);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #}
         #//------End RelationGroup : Currency ----------------
         #
@@ -41900,7 +41968,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , CustClassificationId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41919,7 +41987,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , CustGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41929,7 +41997,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , CustGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #}
         #//------End RelationGroup : CustGroup ----------------
         #
@@ -41945,7 +42013,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , PaymSpec);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , "PaymMode  and " + sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , "PaymMode  and " + sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41964,7 +42032,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , PaymMode);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -41983,7 +42051,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , StatisticsGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42002,7 +42070,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , FactoringAccount);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42021,7 +42089,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , InvoiceAccount);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42040,7 +42108,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , CustItemGroupId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42059,7 +42127,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , DefaultDimension);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42078,7 +42146,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , DestinationCodeId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42097,7 +42165,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , Party);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42116,7 +42184,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , DlvMode);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42135,7 +42203,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , DlvReason);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42154,7 +42222,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , DlvTerm);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42173,7 +42241,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , InventLocation);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42192,7 +42260,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , OrderEntryDeadlineGroupId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42211,7 +42279,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , InventSiteId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42230,7 +42298,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , LineOfBusinessId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42249,7 +42317,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , PartyCountry);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42268,7 +42336,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , ResidenceForeignCountryRegionId_IT);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42287,7 +42355,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , MainContactWorker);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42306,7 +42374,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , MarkupGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42325,7 +42393,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , numberSequenceGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42344,7 +42412,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , numberSequenceGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , 'State and Country' ,'Customer'));
+        #        throw error(strFmt("@TRI9" , 'State and Country' ,'Customer'));
         #    }
         #
         #}
@@ -42363,7 +42431,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , PaymDayId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42382,7 +42450,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , PaymSched);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42401,7 +42469,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , ClearingPeriod);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42420,7 +42488,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , PaymTermId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42439,7 +42507,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , PBACustGroupId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42458,7 +42526,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , EndDisc);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42477,7 +42545,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , LineDisc);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42496,7 +42564,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , MultiLineDisc);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42515,7 +42583,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , PriceGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42534,7 +42602,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , SalesPoolId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42553,7 +42621,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , ShipCarrierId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42572,7 +42640,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , CompanyChainId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42591,7 +42659,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , SalesDistrictId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42610,7 +42678,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , SegmentId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42629,7 +42697,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , SegmentId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , 'Segment and SubsegmentId ','Customer'));
+        #        throw error(strFmt("@TRI9" , 'Segment and SubsegmentId ','Customer'));
         #    }
         #
         #}
@@ -42648,7 +42716,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , SuppItemGroupId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42667,7 +42735,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , TaxGroup);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42686,7 +42754,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , TaxWithholdGroup_TH);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42705,7 +42773,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , VATNum);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42724,7 +42792,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , VendAccount);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42743,7 +42811,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable , SalesCalendarId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42791,7 +42859,7 @@ Formatversion: 1
         #    {
         #        fieldID= fieldNum( triDMCustTable, DunsNumber);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Customer'));
         #    }
         #}
         #
@@ -42803,7 +42871,7 @@ Formatversion: 1
         #    {
         #        fieldID= fieldNum( triDMCustTable, DunsNumberRecId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label(),'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label(),'Customer'));
         #
         #    }
         #
@@ -42831,7 +42899,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, Name);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #}
         #
         #
@@ -42845,7 +42913,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, LanguageId);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42880,7 +42948,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, DisplayAs);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #}
         #
@@ -42892,7 +42960,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, AffixPersonalTitle);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #}
         #
@@ -42904,7 +42972,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, PersonalSuffix);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42943,7 +43011,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, PersonalSuffix);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42962,7 +43030,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, PersonalTitle);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42981,7 +43049,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, NameSequence);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -42991,7 +43059,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, NameSequence);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #}
         #//------End RelationGroup : DirNameSequence_FK ----------------
         #
@@ -43007,7 +43075,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, CommunicatorSignIn);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -43041,7 +43109,7 @@ Formatversion: 1
         #         //Throw Error
         #        fieldID= fieldNum( triDMCustTable, triDMlegacyID);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #}
         #
@@ -43065,7 +43133,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable, FirstName);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #}
         #
         #if(! _tbl.MiddleName) //Middle name
@@ -43073,7 +43141,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable, MiddleName);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #}
         #
         #if(! _tbl.LastName) //Last name
@@ -43081,7 +43149,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable, LastName);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #}
         #
         #
@@ -43096,7 +43164,7 @@ Formatversion: 1
         #        //Throw Error
         #        fieldID= fieldNum( triDMCustTable, Person);
         #        sysDictField = new SysDictField(stagetblID , fieldID );
-        #        throw error(strFmt("@TRL13" , sysDictField.label() ,'Customer'));
+        #        throw error(strFmt("@TRI9" , sysDictField.label() ,'Customer'));
         #    }
         #
         #}
@@ -43111,6 +43179,16 @@ Formatversion: 1
       ENDSOURCE
     ENDMETHODS
   ENDCLASS
+<Table:Record name="TmpSysLabel"
+       xmlns:Table='urn:www.microsoft.com/Formats/Table'>
+    <Table:Field name="Language">en-us</Table:Field>
+    <Table:Field name="Label">"%1 is invalid, unable to import %2</Table:Field>
+    <Table:Field name="Description"></Table:Field>
+    <Table:Field name="LabelId">@TRI9</Table:Field>
+    <Table:Field name="SysLabelApplModule">0</Table:Field>
+    <Table:Field name="recVersion">0</Table:Field>
+</Table:Record>
+
 
 ***Element: CLS
 
@@ -43729,7 +43807,7 @@ Formatversion: 1
         #
         #    dialog.addGroup('@SYS345624');
         #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
-        #
+        #    dialog.filenameLookupFilter(this.filenameLookupFilter());
         #
         #
         #    dialog.addGroup('@SYS345629');
@@ -43740,6 +43818,12 @@ Formatversion: 1
         #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
         #
         #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #filenameLookupFilter
+        #container filenameLookupFilter()
+        #{
+        #    return ["Excel Files",#XLS + ';' + #XLSX,#AllFilesType,#AllFiles];
         #}
       ENDSOURCE
       SOURCE #getFromDialog
@@ -44032,6 +44116,7 @@ Formatversion: 1
         #        wrkSheetNum
         #
         #    #endmacro
+        #
         #}
       ENDSOURCE
       SOURCE #CleanUp
@@ -44116,7 +44201,7 @@ Formatversion: 1
         #
         #    dialog.addGroup('@SYS345624');
         #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
-        #
+        #    dialog.filenameLookupFilter(this.filenameLookupFilter());
         #    dialog.addGroup('@SYS345629');
         #
         #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,"Transactions Start on Row",'@SYS345631');
@@ -44125,6 +44210,12 @@ Formatversion: 1
         #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
         #
         #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #filenameLookupFilter
+        #container filenameLookupFilter()
+        #{
+        #    return ["Excel Files",#XLS + ';' + #XLSX,#AllFilesType,#AllFiles];
         #}
       ENDSOURCE
       SOURCE #getFromDialog
@@ -44567,7 +44658,7 @@ Formatversion: 1
         #
         #    dialog.addGroup('@SYS345624');
         #    dlgInboundFile  = dialog.addFieldValue( extendedtypestr(FilenameOpen),inboundFile,'@SYS345625','@SYS345626');
-        #
+        #    dialog.filenameLookupFilter(this.filenameLookupFilter());
         #    dialog.addGroup('@SYS345629');
         #
         #    dlgstartRow     = dialog.addFieldValue(extendedtypestr(integer),startRow,"Transactions Start on Row",'@SYS345631');
@@ -44576,6 +44667,12 @@ Formatversion: 1
         #    dlgWrkSheetNum  = dialog.addFieldValue(extendedtypestr(integer),wrkSheetNum,'@SYS345635','@SYS345637');
         #
         #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #filenameLookupFilter
+        #container filenameLookupFilter()
+        #{
+        #    return ["Excel Files",#XLS + ';' + #XLSX,#AllFilesType,#AllFiles];
         #}
       ENDSOURCE
       SOURCE #getFromDialog
@@ -45324,43 +45421,38 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #createNewParty
-        #public DirPartyTable createNewParty(DirPartyType _partyType, Name _name, DirPartyNumber _partyNumber = '')
+      SOURCE #findDefaultDimRecID
+        #protected recid findDefaultDimRecID(MainAccount _mainAccount , str _fullDimensionText)
         #{
-        #    DirPartyTable   partyTable;
-        #    DirPerson       person;
-        #    DirOrganization organization;
-        #    CompanyInfo     companyInfo;
+        #    container   seg;
         #
-        #    switch (_partyType)
-        #    {
-        #        case DirPartyType::Person :
-        #        person.initValue();
-        #        partyTable = person as DirPartyTable;
-        #        break;
+        #    seg = this.BuildSegementContainer(_fullDimensionText);
         #
-        #        case DirPartyType::Organization :
-        #        organization.initValue();
-        #        partyTable = organization as DirPartyTable;
-        #        break;
+        #    return AxdDimensionUtil::getDimensionAttributeSetId(seg);
+        #}
+      ENDSOURCE
+      SOURCE #findNONLedgerDIMRecId
+        #protected recid findNONLedgerDIMRecId(LedgerJournalAC _mainAccount , ledgerjournalACtype _type )
+        #{
         #
-        #        case DirPartyType::LegalEntity :
-        #        companyInfo.initValue();
-        #        partyTable = companyInfo as DirPartyTable;
-        #        break;
-        #    }
+        #    return DimensionStorage::accountNum2LedgerDimension(_mainAccount, _type);
         #
-        #    partyTable.initValue();
-        #    partyTable.PartyNumber = _partyNumber;
-        #    partyTable.Name = _name;
-        #
-        #    partyTable.insert();
-        #
-        #
-        #    return partyTable;
         #}
       ENDSOURCE
       SOURCE #addAddress
+        #/// <summary>
+        #/// add a standard postal address
+        #/// </summary>
+        #/// <param name="_tbl">
+        #///     table buffer associated with the map "triStageAddress"
+        #/// </param>
+        #/// <remarks>
+        #/// based on finding the base entity in the ax system. expecting to match by the legacy id
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #/// execption may not be throw by the GAB classes they will fill the infolog
+        #/// </exception>
+        #
         #public void addAddress(common _tbl)
         #{
         #    LogisticsPostalAddress      address;
@@ -45383,12 +45475,12 @@ Formatversion: 1
         #    try
         #    {
         #        ttsBegin;
-        #        address.CountryRegionId     = addrStage.CountryRegionId; //validate
-        #        address.State               = addrStage.State; // validate
-        #        address.ZipCode             = addrStage.ZipCode; //validate
+        #        address.CountryRegionId     = addrStage.CountryRegionId;    //validate
+        #        address.State               = addrStage.State;              // validate
+        #        address.ZipCode             = addrStage.ZipCode;            //validate
         #        address.Street              = this.strAddCRLF( addrStage.Street);
         #        address.StreetNumber        = addrStage.StreetNumber;
-        #        address.City                = addrStage.City; //validate
+        #        address.City                = addrStage.City;               //validate
         #
         #        addressView.LocationName    = addrStage.Description;
         #        addressView.IsPrimary       = addrStage.IsPrimary;
@@ -45445,6 +45537,19 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #addSimpleMainContactInfo
+        #/// <summary>
+        #/// process asssume one of each type of contact information
+        #/// </summary>
+        #/// <param name="_tbl">
+        #///  expects the table buure to one ssociated with the map "triStageSimpleContact"
+        #/// </param>
+        #/// <param name="_Party">
+        #///  expects the GAB party id associated with this contact
+        #/// </param>
+        #/// <remarks>
+        #///  a basic flatend out structure. if more than one type is require anothe rprocess must be used.
+        #/// </remarks>
+        #
         #public void addSimpleMainContactInfo(Common _tbl, dirPartyRecID _Party)
         #{
         #    DirPartyContactInfoView     contactView;
@@ -45508,14 +45613,90 @@ Formatversion: 1
         #
         #}
       ENDSOURCE
-      SOURCE #BuildSegementContainer
-        #protected container BuildSegementContainer(str fullDimensionText)
-        #{
-        #    // string has full accoutn code and segments.
-        #    // breakdown into ABC container
-        #    // validate each segment
-        #    container    con;
+      SOURCE #buildDimensionContainer
+        #/// <summary>
+        #/// builds up the expected container for GAB fuctions
+        #/// </summary>
+        #/// <param name="mainAccount">
+        #///     the main chart of account
+        #/// </param>
+        #/// <param name="segments">
+        #///  a conatianer with dimension segments
+        #/// </param>
+        #/// <param name="numOfSeg">
+        #///  the number of dimension segments
+        #/// </param>
+        #/// <returns>
+        #///  a container ready for use by COS functions
+        #/// </returns>
+        #/// <remarks>
+        #///
+        #/// </remarks>
         #
+        #private container buildDimensionContainer(MainAccount mainAccount,
+        #                                 container  segments,
+        #                                 int        numOfSeg)
+        #{
+        #
+        #    container   con;
+        #    str         fullLedgerDim;
+        #    int         i ;
+        #    int         offset = 3;
+        #
+        #    fullLedgerDim = strFmt('%1', mainAccount);
+        #
+        #
+        #    for (i=1; i <= numOfSeg ; i++ )
+        #    {
+        #
+        #        fullLedgerDim = strFmt('-%1', conPeek(segments, i));
+        #
+        #    }
+        #
+        #    con = conPoke(con,1,fullLedgerDim);
+        #    con = conPoke(con,2,numOfSeg);
+        #
+        #    for (i=1; i <= numOfSeg ; i++ )
+        #    {
+        #        offset = offset + i;
+        #
+        #        con = conPoke(con,offset,strFmt('-%1', conPeek(segments, i)));
+        #
+        #
+        #    }
+        #    return con;
+        #
+        #
+        #}
+      ENDSOURCE
+      SOURCE #BuildSegementContainer
+        #/// <summary>
+        #///  a process to take a text, uually from a import process and break that string of dimension up into a container
+        #///  to be used by other AX processes for the chart of accounts structure
+        #/// </summary>
+        #/// <param name="_fullDimensionText">
+        #///   a string value seprated by a dash "-"
+        #/// </param>
+        #/// <returns>
+        #///  a conatiner of dimensions
+        #/// </returns>
+        #/// <remarks>
+        #///  it is expected that the string of dimensions are constructed in teh proper sequence
+        #/// </remarks>
+        #
+        #private container BuildSegementContainer(str _fullDimensionText)
+        #{
+        #    container   con;
+        #    TextBuffer  buffer = new TextBuffer();
+        #    int         i;
+        #
+        #    buffer.setText(_fullDimensionText);
+        #
+        #    while (buffer.nextToken(0,'-' ))
+        #    {
+        #        i++;
+        #        con = conIns(con,i,buffer.token());
+        #    }
         #
         #
         #    return con;
@@ -45525,7 +45706,8 @@ Formatversion: 1
       SOURCE #classDeclaration
         # abstract class   triDM_ProcessStageData extends RunBaseBatch
         #{
-        #
+        #    #Excel
+        #    #File
         #    triDMImportType importType;
         #    Map             mapFields;
         #    int             recErrors;
@@ -45535,6 +45717,11 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #CleanUp
+        #/// <summary>
+        #///  used to force child classes to be aware to clean up any import data
+        #/// </summary>
+        #
+        #
         #abstract void CleanUp()
         #{
         #   // use this to clean up processed data from staging tables
@@ -45547,7 +45734,7 @@ Formatversion: 1
         #    ExecutePermission       perm;
         #    SysExcelWorkbooks       workbooks;
         #
-        #     // perm = new FileIoPermission(filename, #io_read);
+        #
         #    perm = new ExecutePermission();
         #    perm.assert();
         #
@@ -45563,7 +45750,73 @@ Formatversion: 1
         #
         #}
       ENDSOURCE
+      SOURCE #createNewParty
+        #/// <summary>
+        #/// used by the imports to create the correct GAB by partytype
+        #/// </summary>
+        #/// <param name="_partyType">
+        #///  identify the party type to be created
+        #/// </param>
+        #/// <param name="_name">
+        #/// the erson or buisness name
+        #/// </param>
+        #/// <param name="_partyNumber">
+        #///  option reference to a particualr party
+        #/// </param>
+        #/// <returns>
+        #///
+        #/// </returns>
+        #/// <remarks>
+        #///  the other elemts of language id etc are validaed created elsewhere
+        #/// </remarks>
+        #
+        #public DirPartyTable createNewParty(DirPartyType _partyType, Name _name, DirPartyNumber _partyNumber = '')
+        #{
+        #    DirPartyTable   partyTable;
+        #    DirPerson       person;
+        #    DirOrganization organization;
+        #    CompanyInfo     companyInfo;
+        #
+        #    switch (_partyType)
+        #    {
+        #        case DirPartyType::Person :
+        #        person.initValue();
+        #        partyTable = person as DirPartyTable;
+        #        break;
+        #
+        #        case DirPartyType::Organization :
+        #        organization.initValue();
+        #        partyTable = organization as DirPartyTable;
+        #        break;
+        #
+        #        case DirPartyType::LegalEntity :
+        #        companyInfo.initValue();
+        #        partyTable = companyInfo as DirPartyTable;
+        #        break;
+        #    }
+        #
+        #    partyTable.initValue();
+        #    partyTable.PartyNumber = _partyNumber;
+        #    partyTable.Name = _name;
+        #
+        #    partyTable.insert();
+        #
+        #
+        #    return partyTable;
+        #}
+      ENDSOURCE
       SOURCE #excelValue
+        #/// <summary>
+        #///  used to format the return data out of an spreadsheet cell
+        #/// </summary>
+        #/// <param name="value">
+        #///  the cell object
+        #/// </param>
+        #/// <returns>
+        #///  formated value
+        #/// </returns>
+        #
+        #
         #anytype excelValue(COMVariant  value)
         #{
         #
@@ -45615,44 +45868,33 @@ Formatversion: 1
         #
         #}
       ENDSOURCE
-      SOURCE #FindDimension
-        #private container FindDimension(MainAccount mainAccount,
-        #                                 container  segments,
-        #                                 int        numOfSeg)
+      SOURCE #findDimRecID
+        #protected recid findDimRecID(MainAccount _mainAccount , str _fullDimensionText)
         #{
+        #    container   seg;
+        #    container   ledgerDim;
         #
-        #    container   con;
-        #    str         fullLedgerDim;
-        #    int         i ;
-        #    int         offset = 3;
+        #    seg = this.BuildSegementContainer(_fullDimensionText);
+        #    ledgerDim = this.buildDimensionContainer(_mainAccount,seg, conLen(seg));
         #
-        #    fullLedgerDim = strFmt('%1', mainAccount);
-        #
-        #
-        #    for (i=1; i <= numOfSeg ; i++ )
-        #    {
-        #
-        #        fullLedgerDim = strFmt('-%1', conPeek(segments, i));
-        #
-        #    }
-        #
-        #    con = conPoke(con,1,fullLedgerDim);
-        #    con = conPoke(con,2,numOfSeg);
-        #
-        #    for (i=1; i <= numOfSeg ; i++ )
-        #    {
-        #        offset = offset + i;
-        #
-        #        con = conPoke(con,offset,strFmt('-%1', conPeek(segments, i)));
-        #
-        #
-        #    }
-        #    return con;
-        #
+        #    return AxdDimensionUtil::getLedgerAccountId(ledgerDim);
         #
         #}
       ENDSOURCE
       SOURCE #findPartyRecID
+        #/// <summary>
+        #/// returns the AX value for an entity that was imported
+        #/// </summary>
+        #/// <param name="_legacyID">
+        #/// the leagacy sysytem isdentifier that was stored durring the import
+        #/// </param>
+        #/// <returns>
+        #/// the recID for use in teh normilized data structure
+        #/// </returns>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #
         #public DirPartyRecId findPartyRecID(triDMlegacyID _legacyID)
         #{
         #    DirPartyRecId   recId;
@@ -45720,6 +45962,16 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #initMap
+        #/// <summary>
+        #/// fills a map with the col in the file and the tables field id
+        #/// </summary>
+        #/// <param name="_tableId">
+        #/// the table to retieve from teh mapping table
+        #/// </param>
+        #/// <remarks>
+        #/// allows dynamic mapping on each import
+        #/// </remarks>
+        #
         #protected void initMap(TableId  _tableId)
         #{
         #    triDMFieldMapping   dmField;
@@ -45736,6 +45988,7 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #mapExcelData
+        #
         #protected void mapExcelData(SysExcelCells  _cells, int _row, TableId _tableId)
         #{
         #
@@ -45826,6 +46079,19 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #strAddCRLF
+        #/// <summary>
+        #/// replace a special char with line breaks. typical use is address.
+        #/// </summary>
+        #/// <param name="sText">
+        #/// test that needs to have line breaks added
+        #/// </param>
+        #/// <returns>
+        #/// formated text
+        #/// </returns>
+        #/// <remarks>
+        #/// the expected special charater is the pipe  "|"
+        #/// </remarks>
+        #
         #public str strAddCRLF(str sText)
         #{
         #    container   Con;        // force string into a container
@@ -45857,6 +46123,16 @@ Formatversion: 1
         #
       ENDSOURCE
       SOURCE #updateStage
+        #/// <summary>
+        #/// update the status for a imported record to imported
+        #/// </summary>
+        #/// <param name="stageTable">
+        #///  any table in the map "triStageError"
+        #/// </param>
+        #/// <remarks>
+        #/// used to indacte a recoed has been imported inot AX sucessfully
+        #/// </remarks>
+        #
         #protected void updateStage(Common stageTable)
         #{
         #    triStageError   stage;
@@ -45875,6 +46151,23 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #validateField_CallTableMethod
+        #/// <summary>
+        #/// call any tables validate field method
+        #/// </summary>
+        #/// <param name="_tableIN">
+        #///  teh AX table that will be validated
+        #/// </param>
+        #/// <returns>
+        #/// true if validation passes
+        #/// </returns>
+        #/// <remarks>
+        #/// calls the internal AX baser table filed level validation
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #///  most time a check failed, not error are thrown byt he validate. this makes it an error
+        #/// for the calling process to handle
+        #/// </exception>
+        #
         #protected boolean validateField_CallTableMethod(Common _tableIN)
         #{
         #    int i;
@@ -45900,6 +46193,25 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #writeErrorToExcel
+        #/// <summary>
+        #/// places an error message directly on an excel row
+        #/// </summary>
+        #/// <param name="excelWorkSheet">
+        #/// active worksheet being processed
+        #/// </param>
+        #/// <param name="_row">
+        #/// current row
+        #/// </param>
+        #/// <param name="_col">
+        #/// the col to place the error
+        #/// </param>
+        #/// <param name="_err">
+        #/// error message
+        #/// </param>
+        #/// <remarks>
+        #/// used primarily for direct imports to ax from an excel template
+        #/// </remarks>
+        #
         #protected void writeErrorToExcel( SysExcelWorkSheet excelWorkSheet, int _row, int _col, str _err)
         #{
         #    recErrors++;
@@ -45909,6 +46221,16 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #writeErrorToStageTbl
+        #/// <summary>
+        #/// wites error meeasges back teo the import table
+        #/// </summary>
+        #/// <param name="stageTable">
+        #/// any table in teh map "triStageError"
+        #/// </param>
+        #/// <remarks>
+        #/// increments the interanl error counter
+        #/// </remarks>
+        #
         #protected void writeErrorToStageTbl(Common stageTable)
         #{
         #    triStageError   stage;
@@ -48696,6 +49018,54 @@ ENDFORM
     ENDPROPERTIES
     
     METHODS
+      SOURCE #buildDefaultSegments
+        #private container buildDefaultSegments(SysExcelCells  cells, int row)
+        #{
+        #    container   con;
+        #    str         fullLedgerDim;
+        #
+        #    str         seg1;
+        #    str         seg2;
+        #    str         seg3;
+        #    str         seg4;
+        #    str         seg5;
+        #    str         seg6;
+        #    str         seg7;
+        #    int         intMainAcct;
+        #
+        #
+        #    seg1 = this.value(cells.item(row, #Dim_1).value());
+        #    seg2 = this.value(cells.item(row, #Dim_2).value());
+        #    seg3 = CustTable::FindByLegacyID(this.value(cells.item(row, #Dim_3).value())).AccountNum;
+        #    seg4 = this.value(cells.item(row, #Dim_4).value());
+        #    seg5 = this.value(cells.item(row, #Dim_5).value());
+        #    seg6 = this.value(cells.item(row, #Dim_6).value());
+        #    seg7 = this.value(cells.item(row, #Dim_7).value());
+        #
+        #
+        #
+        #
+        #
+        #    if (intMainAcct > 8999 || intMainAcct < 5000   )
+        #    {
+        #       con = conNull();
+        #    }
+        #    if (intMainAcct > 4999 && intMainAcct < 8000)
+        #    {
+        #
+        #        con = [seg1, seg2,seg3,seg4,seg6,seg7 ];
+        #    }
+        #    if (intMainAcct > 7999 && intMainAcct < 9000  )
+        #    {
+        #
+        #        con = [seg1, seg5 ];
+        #    }
+        #
+        #
+        #
+        #    return con;
+        #}
+      ENDSOURCE
       SOURCE #buildDimension
         #private container buildDimension(SysExcelCells  cells, int row)
         #{
@@ -48891,17 +49261,24 @@ ENDFORM
         #    boolean                 ret;
         #    AxLedgerJournalTrans    journalTrans;
         #    container               ledgerDimensions;
+        #    CustTable               custTable;
+        #
+        #    custTable = CustTable::FindByLegacyID(this.value(cells.item(row, #Dim_3).value()));
+        #    if(custTable.RecId == 0)
+        #        throw error(strfmt("Row #: %1. The customer account could not be found. ", row));
         #
         #    journalTrans = AxLedgerJournalTrans::construct();
         #    journalTrans.parmJournalNum(_journalNum);
         #
-        #    ledgerDimensions = this.buildDimension(cells,row);
+        #    //ledgerDimensions = this.buildDimension(cells,row);
         #
-        #    journalTrans.parmLedgerDimension(AxdDimensionUtil::getLedgerAccountId(ledgerDimensions));
-        #
+        #    //journalTrans.parmLedgerDimension(AxdDimensionUtil::getLedgerAccountId(ledgerDimensions));
+        #    journalTrans.parmAccountType(this.value(cells.item(row,#Accounttype).value()));
+        #    journalTrans.parmLedgerDimension(DimensionStorage::accountNum2LedgerDimension(custTable.AccountNum,journalTrans.parmAccountType()));
+        #    journalTrans.parmDefaultDimension(AxdDimensionUtil::getDimensionAttributeSetId(this.buildDefaultSegments(cells,row)));
         #    journalTrans.parmTxt(this.value(cells.item(row,#Description).value()) );
         #    journalTrans.parmTransDate(this.value(cells.item(row,#transdate).value()));
-        #    journalTrans.parmAccountType(this.value(cells.item(row,#Accounttype).value()));
+        #
         #    journalTrans.parmDocumentNum(this.value(cells.item(row,#Document).value()));
         #    journalTrans.parmDocumentDate(this.value(cells.item(row,#Documentdate).value()) );
         #    journalTrans.parmDue(this.value(cells.item(row,#Duedate).value()) );
@@ -49523,6 +49900,54 @@ ENDFORM
     ENDPROPERTIES
     
     METHODS
+      SOURCE #buildDefaultSegments
+        #private container buildDefaultSegments(SysExcelCells  cells, int row)
+        #{
+        #    container   con;
+        #    str         fullLedgerDim;
+        #
+        #    str         seg1;
+        #    str         seg2;
+        #    str         seg3;
+        #    str         seg4;
+        #    str         seg5;
+        #    str         seg6;
+        #    str         seg7;
+        #    int         intMainAcct;
+        #
+        #
+        #    seg1 = this.value(cells.item(row, #Dim_1).value());
+        #    seg2 = this.value(cells.item(row, #Dim_2).value());
+        #    seg3 = vendtable::FindByLegacyID(this.value(cells.item(row, #Dim_3).value())).AccountNum;
+        #    seg4 = this.value(cells.item(row, #Dim_4).value());
+        #    seg5 = this.value(cells.item(row, #Dim_5).value());
+        #    seg6 = this.value(cells.item(row, #Dim_6).value());
+        #    seg7 = this.value(cells.item(row, #Dim_7).value());
+        #
+        #
+        #
+        #
+        #
+        #    if (intMainAcct > 8999 || intMainAcct < 5000   )
+        #    {
+        #       con = conNull();
+        #    }
+        #    if (intMainAcct > 4999 && intMainAcct < 8000)
+        #    {
+        #
+        #        con = [seg1, seg2,seg3,seg4,seg6,seg7 ];
+        #    }
+        #    if (intMainAcct > 7999 && intMainAcct < 9000  )
+        #    {
+        #
+        #        con = [seg1, seg5 ];
+        #    }
+        #
+        #
+        #
+        #    return con;
+        #}
+      ENDSOURCE
       SOURCE #buildDimension
         #private container buildDimension(SysExcelCells  cells, int row)
         #{
@@ -49717,14 +50142,19 @@ ENDFORM
         #    boolean                 ret = true;
         #    AxLedgerJournalTrans    journalTrans;
         #    container               ledgerDimensions;
+        #    VendTable               vendTable;
         #
+        #    vendTable =  VendTable::FindByLegacyID( this.value(cells.item(row, #Account).value()));
+        #    if(vendTable.RecId == 0)
+        #        throw error(strfmt("Row #: %1. The vendor account could not be found",row));
         #    journalTrans = AxLedgerJournalTrans::construct();
         #    journalTrans.parmJournalNum(_journalNum);
         #
-        #    ledgerDimensions = this.buildDimension(cells,row);
-        #
-        #    journalTrans.parmLedgerDimension(AxdDimensionUtil::getLedgerAccountId(ledgerDimensions));
+        #    //ledgerDimensions = this.buildDimension(cells,row);
         #    journalTrans.parmAccountType(this.value(cells.item(row,#Accounttype).value()));
+        #    //journalTrans.parmLedgerDimension(AxdDimensionUtil::getLedgerAccountId(ledgerDimensions));
+        #    journalTrans.parmLedgerDimension(DimensionStorage::accountNum2LedgerDimension(vendtable.AccountNum,journalTrans.parmAccountType()));
+        #    journalTrans.parmDefaultDimension(AxdDimensionUtil::getDimensionAttributeSetId(this.buildDefaultSegments(cells,row)));
         #    journalTrans.parmTransDate(this.value(cells.item(row,#transdate).value()));
         #    journalTrans.parmTxt(this.value(cells.item(row,#Description).value()) );
         #    //journalTrans.parmDocumentNum(this.value(cells.item(row,#Document).value()));
@@ -52851,6 +53281,13 @@ ENDFORM
           PreventEditProperties #No
         ENDPROPERTIES
         
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 41
+          UTILOBJECTID 100835
+          NODETYPE 234
+          NAME #triDimensionString
+        ENDNODE
         BEGINNODE
           FILETYPE 0
           UTILTYPE 41
