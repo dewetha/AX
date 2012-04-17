@@ -37483,8 +37483,13 @@ Formatversion: 1
     EnforceFKRelation 1
     PROPERTIES
       Name                #triDMFieldMapping
+      Label               #Field Mapping
+      TitleField2         #refTableName
+      TableContents       #Base data
       CreateRecIdIndex    #Yes
       SaveDataPerCompany  #No
+      PrimaryIndex        #SurrogateKey
+      ClusterIndex        #PKidx
       Origin              #{5F3940B4-EB1B-4BF3-9B2B-EC92144FD8C1}
     ENDPROPERTIES
     
@@ -37495,6 +37500,16 @@ Formatversion: 1
           Name                #FileCol
           Table               #triDMFieldMapping
           Origin              #{23802D28-DCA6-42FF-8D8A-28F7C8049989}
+        ENDPROPERTIES
+        
+      FIELD #ImportID
+        ENUM
+        PROPERTIES
+          Name                #ImportID
+          Table               #triDMFieldMapping
+          Origin              #{41C4EE1F-C448-477D-AF4D-4796BEC1C399}
+          ExtendedDataType    #triImportID
+          EnumType            #triDMImportType
         ENDPROPERTIES
         
       FIELD #refFieldID
@@ -37542,15 +37557,6 @@ Formatversion: 1
           ExtendedDataType    #TableId
         ENDPROPERTIES
         
-      FIELD #triDMImportType
-        ENUM
-        PROPERTIES
-          Name                #triDMImportType
-          Table               #triDMFieldMapping
-          Origin              #{F21F5EE5-5EE8-4CF1-857E-A5A7484C1FC6}
-          EnumType            #triDMImportType
-        ENDPROPERTIES
-        
     ENDFIELDS
     GROUPS
       GROUP #AutoReport
@@ -37577,22 +37583,35 @@ Formatversion: 1
         #refFieldID
       ENDINDEXFIELDS
       
+      #triDMImportIdx
+      PROPERTIES
+        Name                #triDMImportIdx
+        Origin              #{E00C5076-73B7-4186-B854-F7D1BF4E1FAB}
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+        #
+      ENDINDEXFIELDS
+      
     ENDINDICES
     FULLTEXTINDICES
     ENDFULLTEXTINDICES
     REFERENCES
-      REFERENCE #importRel
+      REFERENCE #tridmImport
         PROPERTIES
-          Name                #importRel
+          Name                #tridmImport
           Table               #triDMImport
+          RelatedTableCardinality   #ZeroOne
+          Cardinality         #OneMore
+          RelationshipType    #Association
           UseDefaultRoleNames #Yes
         ENDPROPERTIES
         
         FIELDREFERENCES
           REFERENCETYPE NORMAL
           PROPERTIES
-            Field               #triDMImportType
-            RelatedField        #ImportType
+            Field               #ImportID
+            RelatedField        #ImportID
           ENDPROPERTIES
           
         ENDFIELDREFERENCES
@@ -37603,17 +37622,73 @@ Formatversion: 1
     ENDDELETEACTIONS
     
     METHODS
+      SOURCE #initFromDMImport
+        #static void initFromDMImport(triDMImport import)
+        #{
+        #
+        #    DictTable               dictTable; // change table name here
+        #    SysDictField            sysDictField;
+        #    SysDictType             sysDictType;
+        #    int                     i;
+        #    triDMFieldMapping       dmTable;
+        #    str                     nameOfTable;
+        #    triDMFieldMapping       dmFieldMapping;
+        #
+        #    if (import.StageTableName)
+        #    {
+        #        nameOfTable = import.StageTableName;
+        #    }
+        #    else
+        #    {
+        #        nameOfTable = import.PrimaryTable;
+        #    }
+        #
+        #    if (!nameOfTable)
+        #        return;
+        #
+        #    select dmFieldMapping where dmFieldMapping.ImportID == import.ImportID ;
+        #    if(dmFieldMapping.RecId > 0)
+        #        return;
+        #
+        #
+        #    dictTable = new DictTable(tableName2id(nameOfTable));
+        #    for (i=1; i<=dictTable.fieldCnt(); i++)
+        #    {
+        #        sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
+        #        if(sysDictField.visible() &&
+        #            sysDictField.isSystem() == false &&
+        #            strScan(sysDictField.name(), 'DEL_',1,4) == 0
+        #
+        #            )
+        #        {
+        #            dmTable.clear();
+        #            dmTable.refTableNum     = dictTable.id();
+        #            dmTable.refTableName    = nameOfTable;
+        #            dmTable.refFieldID      = sysDictField.id(); // field id
+        #            dmTable.refFieldName    = sysDictField.name(); // table field name
+        #            dmTAble.ImportID        = import.ImportID;
+        #            dmTable.insert();
+        #        }
+        #
+        #    }
+        #
+        #}
+      ENDSOURCE
       SOURCE #FormFieldName
         #display FieldName FormFieldName()
         #{
-        #    str ret;
+        #    str             ret;
+        #    SysDictField    sysDictField;
+        #    DictTable       dictTable;// = new DictTable(this.refTableNum);
         #
-        #    SysDictField  sysDictField;
-        #    DictTable dictTable = new DictTable(this.refTableNum);
+        #    if(this.refTableNum)
+        #    {
+        #        dictTable   = new DictTable(this.refTableNum);
+        #        sysDictField = new SysDictField(this.refTableNum, this.refFieldID);
         #
-        #    sysDictField = new SysDictField(this.refTableNum, this.refFieldID);
-        #    ret = sysDictField.label();
         #
+        #        ret = sysDictField.label();
+        #    }
         #    return ret;
         #
         #}
@@ -37625,10 +37700,12 @@ Formatversion: 1
         #    DictTable     dictTable = new DictTable(this.refTableNum);
         #    SysDictField  sysDictField;
         #
-        #
-        #    sysDictField = new SysDictField(dictTable.id(), this.refFieldID);
-        #    ret = strReplace( strReplace( sysDictField.help(), '\r\n', ' '), ',', ' '); // help text
-        #
+        #    if(this.refTableNum)
+        #    {
+        #        dictTable = new DictTable(this.refTableNum);
+        #        sysDictField = new SysDictField(dictTable.id(), this.refFieldID);
+        #        ret = strReplace( strReplace( sysDictField.help(), '\r\n', ' '), ',', ' '); // help text
+        #    }
         #    return ret;
         #
         #}
@@ -37649,12 +37726,13 @@ Formatversion: 1
       Name                #triDMImport
       Label               #Data Import
       FormRef             #import process
-      TitleField1         #ImportType
+      TitleField1         #ImportID
       TitleField2         #ImportDesc
+      TableContents       #Base data
       CreateRecIdIndex    #Yes
       SaveDataPerCompany  #No
       PrimaryIndex        #SurrogateKey
-      ClusterIndex        #SurrogateKey
+      ClusterIndex        #primaryIDX
       Origin              #{10D46851-06C7-42B7-83CE-69E6318A6587}
     ENDPROPERTIES
     
@@ -37669,12 +37747,13 @@ Formatversion: 1
           StringSize          #60
         ENDPROPERTIES
         
-      FIELD #ImportType
+      FIELD #ImportID
         ENUM
         PROPERTIES
-          Name                #ImportType
+          Name                #ImportID
           Table               #triDMImport
-          Origin              #{55A2080E-E124-408E-ACB7-6EDB34D39080}
+          Origin              #{23801A51-9C1B-4896-9D13-9E8D91F1AE0A}
+          ExtendedDataType    #triImportID
           EnumType            #triDMImportType
         ENDPROPERTIES
         
@@ -37694,7 +37773,6 @@ Formatversion: 1
         STRING
         PROPERTIES
           Name                #StageTableName
-          AllowEdit           #No
           Table               #triDMImport
           Origin              #{64E03C2B-2787-4BE3-91B6-ECB064E2BFF0}
           ExtendedDataType    #triDMStageTableName
@@ -37725,6 +37803,17 @@ Formatversion: 1
     ENDGROUPS
     
     INDICES
+      #primaryIDX
+      PROPERTIES
+        Name                #primaryIDX
+        AllowDuplicates     #No
+        Origin              #{DF3388E8-6A92-4E88-84AF-87F80F169F63}
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+        #ImportID
+      ENDINDEXFIELDS
+      
     ENDINDICES
     FULLTEXTINDICES
     ENDFULLTEXTINDICES
@@ -37741,7 +37830,7 @@ Formatversion: 1
 <Table:Record name="TmpSysLabel"
        xmlns:Table='urn:www.microsoft.com/Formats/Table'>
     <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Weekly cash receipts</Table:Field>
+    <Table:Field name="Label">@TRI5</Table:Field>
     <Table:Field name="Description"></Table:Field>
     <Table:Field name="LabelId">@TRI5</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
@@ -37751,7 +37840,7 @@ Formatversion: 1
 <Table:Record name="TmpSysLabel"
        xmlns:Table='urn:www.microsoft.com/Formats/Table'>
     <Table:Field name="Language">en-us</Table:Field>
-    <Table:Field name="Label">Beginning Date</Table:Field>
+    <Table:Field name="Label">@TRI6</Table:Field>
     <Table:Field name="Description"></Table:Field>
     <Table:Field name="LabelId">@TRI6</Table:Field>
     <Table:Field name="SysLabelApplModule">0</Table:Field>
@@ -38705,6 +38794,32 @@ Formatversion: 1
   ENDMAP
   
 
+***Element: UTE
+
+; Microsoft Dynamics AX Enum: triImportID unloaded
+; --------------------------------------------------------------------------------
+  USERTYPEVERSION 6
+  
+  USERTYPE #triImportID
+  ENUM
+    PROPERTIES
+      Name                #triImportID
+      Origin              #{5735BD36-A8FC-4B05-BC62-2DD38D788A53}
+      EnumType            #triDMImportType
+    ENDPROPERTIES
+    
+    TYPEELEMENTS
+    ENDTYPEELEMENTS
+    
+    TYPEREFERENCES
+    ENDTYPEREFERENCES
+    
+    TYPELOOKUPS
+    ENDTYPELOOKUPS
+    
+  ENDUSERTYPE
+  
+
 ***Element: UTS
 
 ; Microsoft Dynamics AX String: triDimensionString unloaded
@@ -39126,6 +39241,215 @@ Formatversion: 1
     ENDTYPEELEMENTS
   ENDENUMTYPE
   
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: testJCP unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #testJCP
+    PROPERTIES
+      Name                #testJCP
+      Extends             #RunBaseBatch
+      Origin              #{154ED345-76A5-4D52-A51A-4E18DFFA63AB}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #caption
+        #public ClassDescription caption()
+        #{
+        #    ClassDescription ret;
+        #
+        #    ret = "copy Current Company config data";
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #class testJCP extends RunBaseBatch
+        #{
+        #    DataAreaId  destDataAreaID;
+        #
+        #    DialogField dfDestDataAreaID;
+        #
+        #    #define.CurrentVersion(1)
+        #    #define.Version1(1)
+        #    #localmacro.CurrentList
+        #        destDataAreaID
+        #    #endmacro
+        #}
+      ENDSOURCE
+      SOURCE #CopyFields
+        #private void CopyFields(Common _from, Common _to)
+        #{
+        #    DictTable           t;
+        #    DictField           f;
+        #    int                 i;
+        #    fieldId             id;
+        #    FieldName           fieldname;
+        #    ;
+        #
+        #    t = new DictTable(_to.TableId);
+        #    if (t)
+        #    {
+        #        for (i=1; i<=t.fieldCnt(); i++)
+        #        {
+        #            id = t.fieldCnt2Id(i);
+        #            f  = new DictField(_to.TableId,t.fieldCnt2Id(i));
+        #// excluding system fields (or add other fields to exclude during
+        #// the copy action
+        #            if (f && !f.isSystem())
+        #            {
+        #                _to.(id) = _from.(id);
+        #            }
+        #        }
+        #    }
+        #}
+        #
+      ENDSOURCE
+      SOURCE #dialog
+        #protected Object dialog()
+        #{
+        #    DialogRunbase       dialog = super();
+        #
+        #;
+        #    dialog.caption(this.caption());
+        #    dfDestDataAreaID = dialog.addFieldValue(extendedTypeStr(DataAreaId),destDataAreaID,"destination Compnay");
+        #
+        #
+        #
+        #    return dialog;
+        #}
+      ENDSOURCE
+      SOURCE #getFromDialog
+        #public boolean getFromDialog()
+        #{
+        #    ;
+        #
+        #    destDataAreaID   = dfDestDataAreaID.value();
+        #
+        #    return super();
+        #}
+      ENDSOURCE
+      SOURCE #pack
+        #public container pack()
+        #{
+        #    return [#CurrentVersion,#CurrentList];
+        #
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #public void run()
+        #{
+        #    Dictionary  dictionary  = new Dictionary();
+        #
+        #    int x;
+        #    DictTable   dictTable;
+        #    Common      curTable;
+        #    Common      desTable;
+        #    void CopyFields(Common _from, Common _to)
+        #    {
+        #        DictTable           t;
+        #        DictField           f;
+        #        int                 i;
+        #        fieldId             id;
+        #        FieldName           fieldname;
+        #        ;
+        #        t = new DictTable(_to.TableId);
+        #        if (t)
+        #        {
+        #            for (i=1; i<=t.fieldCnt(); i++)
+        #            {
+        #                id = t.fieldCnt2Id(i);
+        #                f  = new DictField(_to.TableId,t.fieldCnt2Id(i));
+        #                // excluding system fields (or add other fields to exclude during
+        #                // the copy action
+        #                if (f && !f.isSystem())
+        #                {
+        #                    _to.(id) = _from.(id);
+        #                }
+        #            }
+        #        }
+        #    }
+        #
+        #
+        #    for(x=1; x <=dictionary.tableCnt() ; x++)
+        #    {
+        #
+        #        dictTable = new DictTable(dictionary.tableCnt2Id(x));
+        #
+        #        if (dictTable.dataPrCompany() && (
+        #            dictTable.tableGroup() == TableGroup::Parameter ||
+        #            dictTable.tableGroup() == TableGroup::Group ) &&
+        #            !dictTable.isSystemTable() &&
+        #            !dictTable.isMap() &&
+        #            !dictTable.isTmp() &&
+        #            strScan(dictTable.name(), 'DEL_',1,4) == 0
+        #            // debug code
+        #            //&& dictTable.id() == 12
+        #            )
+        #
+        #
+        #        {
+        #            //info(strfmt("%1", dictTable.name()));
+        #
+        #            curTable = DictTable.makeRecord();
+        #
+        #
+        #            while select    curTable
+        #            {
+        #
+        #                //desTable = null;
+        #                ttsBegin;
+        #                changeCompany( destDataAreaID)
+        #                {
+        #                    desTable = null;
+        #                    desTable = DictTable.makeRecord();
+        #                    desTable.selectForUpdate();
+        #                    this.CopyFields(curTable,desTable);
+        #
+        #                    desTable.insert();
+        #
+        #                }
+        #                ttsCommit;
+        #            } // while records exists.
+        #
+        #
+        #        } // if right table
+        #
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #unpack
+        #public boolean unpack(container packedClass)
+        #{
+        #    Version version = runbase::getVersion(packedClass);
+        #;
+        #    switch (version)
+        #    {
+        #        case #CurrentVersion:
+        #            [version,#CurrentList] = packedClass;
+        #            break;
+        #        default:
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+      ENDSOURCE
+      SOURCE #main
+        #public static void main(Args args)
+        #{
+        #    testJCP testJCP = new testJCP();
+        #
+        #
+        #    if(testJCP.prompt())
+        #        testJCP.run();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
 
 ***Element: CLS
 
@@ -43307,7 +43631,7 @@ Formatversion: 1
         #{
         #    ClassDescription ret;
         #
-        #    ret = 'Vendor Address';
+        #    ret = 'Address';
         #
         #    return ret;
         #}
@@ -43340,7 +43664,6 @@ Formatversion: 1
         #
         #        try
         #        {
-        #
         #            ttsBegin;
         #            this.addAddress(addrStage);
         #            ttsCommit;
@@ -45421,24 +45744,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #findDefaultDimRecID
-        #protected recid findDefaultDimRecID(MainAccount _mainAccount , str _fullDimensionText)
-        #{
-        #    container   seg;
-        #
-        #    seg = this.BuildSegementContainer(_fullDimensionText);
-        #
-        #    return AxdDimensionUtil::getDimensionAttributeSetId(seg);
-        #}
-      ENDSOURCE
-      SOURCE #findNONLedgerDIMRecId
-        #protected recid findNONLedgerDIMRecId(LedgerJournalAC _mainAccount , ledgerjournalACtype _type )
-        #{
-        #
-        #    return DimensionStorage::accountNum2LedgerDimension(_mainAccount, _type);
-        #
-        #}
-      ENDSOURCE
       SOURCE #addAddress
         #/// <summary>
         #/// add a standard postal address
@@ -45476,7 +45781,7 @@ Formatversion: 1
         #    {
         #        ttsBegin;
         #        address.CountryRegionId     = addrStage.CountryRegionId;    //validate
-        #        address.State               = addrStage.State;              // validate
+        #        address.State               = addrStage.State;              //validate
         #        address.ZipCode             = addrStage.ZipCode;            //validate
         #        address.Street              = this.strAddCRLF( addrStage.Street);
         #        address.StreetNumber        = addrStage.StreetNumber;
@@ -45868,6 +46173,16 @@ Formatversion: 1
         #
         #}
       ENDSOURCE
+      SOURCE #findDefaultDimRecID
+        #protected recid findDefaultDimRecID(MainAccount _mainAccount , str _fullDimensionText)
+        #{
+        #    container   seg;
+        #
+        #    seg = this.BuildSegementContainer(_fullDimensionText);
+        #
+        #    return AxdDimensionUtil::getDimensionAttributeSetId(seg);
+        #}
+      ENDSOURCE
       SOURCE #findDimRecID
         #protected recid findDimRecID(MainAccount _mainAccount , str _fullDimensionText)
         #{
@@ -45878,6 +46193,14 @@ Formatversion: 1
         #    ledgerDim = this.buildDimensionContainer(_mainAccount,seg, conLen(seg));
         #
         #    return AxdDimensionUtil::getLedgerAccountId(ledgerDim);
+        #
+        #}
+      ENDSOURCE
+      SOURCE #findNONLedgerDIMRecId
+        #protected recid findNONLedgerDIMRecId(LedgerJournalAC _mainAccount , ledgerjournalACtype _type )
+        #{
+        #
+        #    return DimensionStorage::accountNum2LedgerDimension(_mainAccount, _type);
         #
         #}
       ENDSOURCE
@@ -45926,7 +46249,7 @@ Formatversion: 1
         #
         #    triDMImport import;
         #
-        #    select import where import.ImportType == importType;
+        #    select import where import.ImportID == importType;
         #
         #    return tableName2id( import.PrimaryTable );
         #}
@@ -46299,7 +46622,7 @@ Formatversion: 1
         #    import = args.record();
         #
         #
-        #    triDM_ProcessStageData = triDM_ProcessStageData::construct(import.ImportType);
+        #    triDM_ProcessStageData = triDM_ProcessStageData::construct(import.ImportID);
         #
         #    if(triDM_ProcessStageData.prompt() )
         #    {
@@ -46369,6 +46692,7 @@ Formatversion: 1
         #    Counter             icounter;
         #    RunbaseProgress     progressbar;
         #    int                 tableId;
+        #    triImportID       importID;
         #
         #    // Dialog fields
         #    DialogField     dlgHasHeader;
@@ -46468,7 +46792,8 @@ Formatversion: 1
         #
         #    mapFields = new  Map(Types::Integer,Types::Integer);
         #
-        #    while select dmField where dmField.refTableName == tableId2name(_tableId)
+        #    //while select dmField where dmField.refTableName == tableId2name(_tableId)
+        #    while select dmField where dmField.ImportID == importID
         #                            && dmField.FileCol > 0
         #    {
         #         mapFields.insert(dmField.refFieldID, dmField.FileCol);
@@ -46546,6 +46871,14 @@ Formatversion: 1
         #{
         #    return [#CurrentVersion,#CurrentList];
         #
+        #}
+      ENDSOURCE
+      SOURCE #parmImportID
+        #public triImportID parmImportID(Triimportid _importID = importID)
+        #{
+        #    importID = _importID;
+        #
+        #    return importID;
         #}
       ENDSOURCE
       SOURCE #parmTableId
@@ -46897,6 +47230,7 @@ Formatversion: 1
         #    fileProcess = new triDMTextFileImport();
         #
         #    fileProcess.parmTableId( tableName2id(import.StageTableName ) );
+        #    fileProcess.parmImportID(import.ImportID);
         #
         #    if( fileProcess.prompt())
         #        fileProcess.run();
@@ -46962,6 +47296,7 @@ FORM #triDMmapFields
         PROPERTIES
           Name                #triDMFieldMapping
           Table               #triDMFieldMapping
+          Index               #PKidx
         ENDPROPERTIES
         
         FIELDLIST
@@ -46991,6 +47326,8 @@ FORM #triDMmapFields
   
   DESIGN
     PROPERTIES
+      TitleDatasource     #triDMFieldMapping
+      DataSource          #triDMFieldMapping
     ENDPROPERTIES
     
     CONTAINER
@@ -47242,7 +47579,7 @@ FORM #triDMDataMigration
       #                    con = conins(con, 3, tbl.refFieldName);
       #                    con = conins(con, 4, tbl.refTableName);
       #                    con = conins(con, 5, tbl.refTableNum);
-      #                    con = conins(con, 6, tbl.triDMImportType);
+      #                    //con = conins(con, 6, tbl.triDMImportType);
       #                    // Write the container to the file
       #                    file.writeExp(con);
       #                }
@@ -47297,7 +47634,7 @@ FORM #triDMDataMigration
       #                    tbl.refFieldName    = conPeek(con,3);
       #                    tbl.refTableName    = conPeek(con,4);
       #                    tbl.refTableNum     = conPeek(con,5);
-      #                    tbl.triDMImportType = conPeek(con,6);
+      #                    //tbl.triDMImportType = conPeek(con,6);
       #                    tbl.insert();
       #
       #                }
@@ -47401,7 +47738,7 @@ FORM #triDMDataMigration
           Top                 #Top edge
           Width               #Column width
           Height              #Column height
-          ElementPosition     #805306366
+          ElementPosition     #827675986
           HierarchyParent     #Group
           DataSource          #triDMImport
         ENDPROPERTIES
@@ -47475,11 +47812,11 @@ FORM #triDMDataMigration
       
       CONTROL COMBOBOX
         PROPERTIES
-          Name                #triDMImport_ImportType
+          Name                #triDMImport_ImportID
           ElementPosition     #858993458
           HierarchyParent     #Grid
           DataSource          #triDMImport
-          DataField           #ImportType
+          DataField           #ImportID
         ENDPROPERTIES
         
         METHODS
@@ -47536,6 +47873,13 @@ FORM #triDMDataMigration
         ENDPROPERTIES
         
         METHODS
+          SOURCE #clicked
+            #void clicked()
+            #{
+            #    triDMFieldMapping::initFromDMImport(triDMImport);
+            #    super();
+            #}
+          ENDSOURCE
         ENDMETHODS
       ENDCONTROL 
       
@@ -47679,7 +48023,7 @@ ENDFORM
       Name                #triDMmapFileds
       Label               #Map Fields
       HelpText            #map import file to table
-      Object              #triDMmapFileds
+      Object              #triDMmapFields
       Origin              #{3A1E3CC3-3855-45BA-AF85-986C540EE8F6}
     ENDPROPERTIES
     
@@ -47781,14 +48125,17 @@ ENDFORM
     #
     #static void utilScriptFillDataMigrationTable(Args _args)
     #{
-    #
-    #    DictTable dictTable = new DictTable(tableNum(triDMCustTable)); // change table name here
-    #
+    #    //////// chage vales per import)////////////////////////////////////////////////////////////////////
+    #    DictTable dictTable = new DictTable(tableNum(triDMVendTable)); // change table name here
+    #    triDMImportType importid = triDMImportType::Vendor;            // change import id here
+    #    /////////////////////////////////////////////////////////////////////////////////////////////////
     #    SysDictField                sysDictField;
     #    SysDictType                 sysDictType;
     #    int i;
     #    triDMFieldMapping           dmTable;
     #    str                         nameOfTable;
+    #
+    #
     #    //#define.nameOfTable('triDMVendTable')
     #
     #    nameOfTable = dictTable.name();
@@ -47796,13 +48143,18 @@ ENDFORM
     #    for (i=1; i<=dictTable.fieldCnt(); i++)
     #    {
     #        sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
-    #        if(sysDictField.visible())
+    #        if(sysDictField.visible() &&
+    #            sysDictField.isSystem() == false &&
+    #            strScan(sysDictField.name(), 'DEL_',1,4) == 0
+    #
+    #            )
     #        {
     #            dmTable.clear();
     #            dmTable.refTableNum     = dictTable.id();
     #            dmTable.refTableName    = nameOfTable;
     #            dmTable.refFieldID      = sysDictField.id(); // field id
     #            dmTable.refFieldName    = sysDictField.name(); // table field name
+    #            dmTAble.ImportID        = importid;
     #            dmTable.insert();
     #        }
     #        //info(strFmt("table name %1 refFieldid %2", dmTable.refTableName,dmTable.refFieldID));
@@ -47980,7 +48332,9 @@ ENDFORM
     #        for (i=1; i<=dictTable.fieldCnt(); i++)
     #        {
     #            sysDictField = new SysDictField(dictTable.id(), dictTable.fieldCnt2Id(i));
-    #            if(sysDictField.visible())
+    #            if(sysDictField.visible() &&
+    #                sysDictField.isSystem() == false &&
+    #                strScan(sysDictField.name(), 'DEL_',1,4) == 0)
     #            {
     #                comment = '';
     #                label = int2str( sysDictField.id()) + ","  ; // field id
@@ -48029,8 +48383,9 @@ ENDFORM
     #
     #                    }
     #                }
+    #                info( label);
     #            }
-    #            info( label);
+    #
     #        }
     #
     #    }
@@ -48053,118 +48408,118 @@ ENDFORM
     #
     #    delete_from import;
     #
-    #    import.ImportType       = triDMImportType::Vendor;
+    #    import.IMportID         = triDMImportType::Vendor;
     #    import.ImportDesc       = 'Import vendors to Staging tables';
     #    import.StageTableName   = 'triDMVendTable';
     #    import.PrimaryTable     = 'VendTable';
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::VendAddr;
+    #    import.IMportID       = triDMImportType::VendAddr;
     #    import.ImportDesc       = 'Import address for vendor';
     #    import.StageTableName   = 'triDMAddress';
     #    import.insert();
     #    import.clear();
     #
     #
-    #    import.ImportType       = triDMImportType::VendContact;
+    #    import.IMportID       = triDMImportType::VendContact;
     #    import.ImportDesc       = 'Import contact information for vendor';
     #
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::VendBank;
+    #    import.IMportID       = triDMImportType::VendBank;
     #    import.ImportDesc       = 'Import vendor bank accounts';
     #    import.StageTableName   = 'triDMVendBankAcct';
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::Customer;
+    #    import.IMportID       = triDMImportType::Customer;
     #    import.ImportDesc       = 'Import Customers to Staging tables';
     #    import.StageTableName   = 'triDMCustTable';
     #    import.insert();
     #    import.clear();
     #
     #
-    #    import.ImportType       = triDMImportType::CustAddr;
+    #    import.IMportID       = triDMImportType::CustAddr;
     #    import.ImportDesc       = 'Import address for Customers';
     #    import.StageTableName   = 'triDMCustTable';
     #    import.insert();
     #    import.clear();
     #
     #
-    #    import.ImportType       = triDMImportType::CustCont;
+    #    import.IMportID       = triDMImportType::CustCont;
     #    import.ImportDesc       = 'Import contact information for Customers';
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::CustBank;
+    #    import.IMportID       = triDMImportType::CustBank;
     #    import.ImportDesc       = 'Import Customer bank accounts';
     #    import.StageTableName   = 'triDMCustBankAccount';
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::USZipCode;
+    #    import.IMportID       = triDMImportType::USZipCode;
     #    import.ImportDesc       = 'Import Zip Codes to Staging tables';
     #    import.insert();
     #    import.clear();
     #
     #
-    #    import.ImportType       = triDMImportType::CADZipCode;
+    #    import.IMportID       = triDMImportType::CADZipCode;
     #    import.ImportDesc       = 'Import Zip Codes to Staging tables';
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::GenJrnl;
+    #    import.IMportID       = triDMImportType::GenJrnl;
     #    import.ImportDesc       = 'Import General Journal';
     #    import.StageTableName   = '';
     #    import.PrimaryTable     = '';
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::GLOpenAP ;
+    #    import.IMportID       = triDMImportType::GLOpenAP ;
     #    import.ImportDesc       = 'Import Open AP via GL';
     #    import.StageTableName   = '';
     #    import.PrimaryTable     = '';
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::GLOpenAR;
+    #    import.IMportID       = triDMImportType::GLOpenAR;
     #    import.ImportDesc       = 'Import Open AR via GL';
     #    import.StageTableName   = '';
     #    import.PrimaryTable     = '';
     #    import.insert();
     #    import.clear();
     #
-    #      import.ImportType       = triDMImportType::AssetBook;
+    #      import.IMportID       = triDMImportType::AssetBook;
     #    import.ImportDesc       = 'Import Asset Book';
     #    import.StageTableName   = '';
     #    import.PrimaryTable     = 'AssetBook' ;
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::AssetBookTable ;
+    #    import.IMportID       = triDMImportType::AssetBookTable ;
     #    import.ImportDesc       = 'Import Asset Book Table';
     #    import.StageTableName   = '';
     #    import.PrimaryTable     = 'AssetBookTable' ;
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::AssetTable ;
+    #    import.IMportID       = triDMImportType::AssetTable ;
     #    import.ImportDesc       = 'Import Asset Table';
     #    import.StageTableName   = '';
     #    import.PrimaryTable     = 'AssetTable' ;
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::assetDepProfile ;
+    #    import.IMportID       = triDMImportType::assetDepProfile ;
     #    import.ImportDesc       = 'Import Asset Depriciation file';
     #    import.StageTableName   = '';
     #    import.PrimaryTable     = 'AssetDepreciationProfile' ;
     #    import.insert();
     #    import.clear();
     #
-    #    import.ImportType       = triDMImportType::AssetJournal ;
+    #    import.IMportID       = triDMImportType::AssetJournal ;
     #    import.ImportDesc       = 'Import Asset Journal';
     #    import.StageTableName   = '';
     #    import.PrimaryTable     = '' ;
@@ -53284,6 +53639,13 @@ ENDFORM
         BEGINNODE
           FILETYPE 0
           UTILTYPE 41
+          UTILOBJECTID 100853
+          NODETYPE 228
+          NAME #triImportID
+        ENDNODE
+        BEGINNODE
+          FILETYPE 0
+          UTILTYPE 41
           UTILOBJECTID 100835
           NODETYPE 234
           NAME #triDimensionString
@@ -53373,6 +53735,13 @@ ENDFORM
         PreventEditProperties #No
       ENDPROPERTIES
       
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1024712
+        NODETYPE 329
+        NAME #testJCP
+      ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
